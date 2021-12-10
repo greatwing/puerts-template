@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: static_shaders
+  m_EditorClassIdentifier: 
+  m_GroupName: static_shaders
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 30eab17e6cf0bec4d988a595e860329f
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3d8eb5ae83fa54847acef405014f58ac, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d33382b94f5074041ba933ca2b11d051, type: 2}
+    - {fileID: 11400000, guid: 8b4e5e46eb7c2f34aba1b2d46602790f, type: 2}
