@@ -69,3 +69,6 @@ crashlytics-build.properties
 /.vsconfig
 /TsProj/node_modules
 /TsProj/yarn-error.log
+/Assets/AssetGraph/AssetBundles/Cache
+/Assets/Res/Js/bundle.js.meta
+/Assets/Res/Js/bundle.js
