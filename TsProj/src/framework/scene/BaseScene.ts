@@ -28,7 +28,7 @@ export abstract class BaseScene{
     }
 
     public abstract onEnter();
-    public abstract onComplete();
+    public abstract onComplete():Promise<any>;
     public abstract onLeave();
 
     public async loadAssetsAsync(){

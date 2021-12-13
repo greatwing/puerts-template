@@ -14,7 +14,1906 @@ declare module 'csharp' {
     
     type $Task<T> = System.Threading.Tasks.Task$1<T>
     
+    namespace UnityEngine.AI {
+        /** Status of path. */
+        enum NavMeshPathStatus{ PathComplete = 0, PathPartial = 1, PathInvalid = 2 }
+        
+        /** A path as calculated by the navigation system. */
+        class NavMeshPath extends System.Object{ 
+            /** Corner points of the path. (Read Only) */
+            public get corners(): System.Array$1<UnityEngine.Vector3>;
+            
+            /** Status of the path. (Read Only) */
+            public get status(): UnityEngine.AI.NavMeshPathStatus;
+            
+            /** Calculate the corners for the path.
+             * @param results Array to store path corners.
+             * @returns The number of corners along the path - including start and end points. 
+             */
+            public GetCornersNonAlloc($results: System.Array$1<UnityEngine.Vector3>):number;
+            
+            public ClearCorners():void;
+            
+            public constructor();
+            
+        }
+        
+        
+        class NavMeshBuilder extends System.Object{ 
+            
+            public static CollectSources($includedWorldBounds: UnityEngine.Bounds, $includedLayerMask: number, $geometry: UnityEngine.AI.NavMeshCollectGeometry, $defaultArea: number, $markups: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildMarkup>, $results: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildSource>):void;
+            
+            public static CollectSources($root: UnityEngine.Transform, $includedLayerMask: number, $geometry: UnityEngine.AI.NavMeshCollectGeometry, $defaultArea: number, $markups: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildMarkup>, $results: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildSource>):void;
+            
+            public static BuildNavMeshData($buildSettings: UnityEngine.AI.NavMeshBuildSettings, $sources: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildSource>, $localBounds: UnityEngine.Bounds, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):UnityEngine.AI.NavMeshData;
+            
+            public static UpdateNavMeshData($data: UnityEngine.AI.NavMeshData, $buildSettings: UnityEngine.AI.NavMeshBuildSettings, $sources: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildSource>, $localBounds: UnityEngine.Bounds):boolean;
+            
+            public static UpdateNavMeshDataAsync($data: UnityEngine.AI.NavMeshData, $buildSettings: UnityEngine.AI.NavMeshBuildSettings, $sources: System.Collections.Generic.List$1<UnityEngine.AI.NavMeshBuildSource>, $localBounds: UnityEngine.Bounds):UnityEngine.AsyncOperation;
+            
+            public static Cancel($data: UnityEngine.AI.NavMeshData):void;
+            
+        }
+        
+        /** Used for specifying the type of geometry to collect. Used with NavMeshBuilder.CollectSources. */
+        enum NavMeshCollectGeometry{ RenderMeshes = 0, PhysicsColliders = 1 }
+        
+        /** The NavMesh build markup allows you to control how certain objects are treated during the NavMesh build process, specifically when collecting sources for building. */
+        class NavMeshBuildMarkup extends System.ValueType{ 
+            /** Use this to specify whether the area type of the GameObject and its children should be overridden by the area type specified in this struct. */
+            public get overrideArea(): boolean;
+            public set overrideArea(value: boolean);
+            /** The area type to use when override area is enabled. */
+            public get area(): number;
+            public set area(value: number);
+            /** Use this to specify whether the GameObject and its children should be ignored. */
+            public get ignoreFromBuild(): boolean;
+            public set ignoreFromBuild(value: boolean);
+            /** Use this to specify which GameObject (including the GameObject’s children) the markup should be applied to. */
+            public get root(): UnityEngine.Transform;
+            public set root(value: UnityEngine.Transform);
+            
+        }
+        
+        /** The input to the NavMesh builder is a list of NavMesh build sources. */
+        class NavMeshBuildSource extends System.ValueType{ 
+            /** Describes the local to world transformation matrix of the build source. That is, position and orientation and scale of the shape. */
+            public get transform(): UnityEngine.Matrix4x4;
+            public set transform(value: UnityEngine.Matrix4x4);
+            /** Describes the dimensions of the shape. */
+            public get size(): UnityEngine.Vector3;
+            public set size(value: UnityEngine.Vector3);
+            /** The type of the shape this source describes. See Also: NavMeshBuildSourceShape. */
+            public get shape(): UnityEngine.AI.NavMeshBuildSourceShape;
+            public set shape(value: UnityEngine.AI.NavMeshBuildSourceShape);
+            /** Describes the area type of the NavMesh surface for this object. */
+            public get area(): number;
+            public set area(value: number);
+            /** Describes the object referenced for Mesh and Terrain types of input sources. */
+            public get sourceObject(): UnityEngine.Object;
+            public set sourceObject(value: UnityEngine.Object);
+            /** Points to the owning component - if available, otherwise null. */
+            public get component(): UnityEngine.Component;
+            public set component(value: UnityEngine.Component);
+            
+        }
+        
+        /** Contains and represents NavMesh data. */
+        class NavMeshData extends UnityEngine.Object{ 
+            /** Returns the bounding volume of the input geometry used to build this NavMesh (Read Only). */
+            public get sourceBounds(): UnityEngine.Bounds;
+            
+            /** Gets or sets the world space position of the NavMesh data. */
+            public get position(): UnityEngine.Vector3;
+            public set position(value: UnityEngine.Vector3);
+            /** Gets or sets the orientation of the NavMesh data. */
+            public get rotation(): UnityEngine.Quaternion;
+            public set rotation(value: UnityEngine.Quaternion);
+            
+            public constructor();
+            
+            public constructor($agentTypeID: number);
+            
+        }
+        
+        /** The NavMeshBuildSettings struct allows you to specify a collection of settings which describe the dimensions and limitations of a particular agent type. */
+        class NavMeshBuildSettings extends System.ValueType{ 
+            /** The agent type ID the NavMesh will be baked for. */
+            public get agentTypeID(): number;
+            public set agentTypeID(value: number);
+            /** The radius of the agent for baking in world units. */
+            public get agentRadius(): number;
+            public set agentRadius(value: number);
+            /** The height of the agent for baking in world units. */
+            public get agentHeight(): number;
+            public set agentHeight(value: number);
+            /** The maximum slope angle which is walkable (angle in degrees). */
+            public get agentSlope(): number;
+            public set agentSlope(value: number);
+            /** The maximum vertical step size an agent can take. */
+            public get agentClimb(): number;
+            public set agentClimb(value: number);
+            /** The approximate minimum area of individual NavMesh regions. */
+            public get minRegionArea(): number;
+            public set minRegionArea(value: number);
+            /** Enables overriding the default voxel size. See Also: voxelSize. */
+            public get overrideVoxelSize(): boolean;
+            public set overrideVoxelSize(value: boolean);
+            /** Sets the voxel size in world length units. */
+            public get voxelSize(): number;
+            public set voxelSize(value: number);
+            /** Enables overriding the default tile size. See Also: tileSize. */
+            public get overrideTileSize(): boolean;
+            public set overrideTileSize(value: boolean);
+            /** Sets the tile size in voxel units. */
+            public get tileSize(): number;
+            public set tileSize(value: number);
+            /** The maximum number of worker threads that the build process can utilize when building a NavMesh with these settings. */
+            public get maxJobWorkers(): number;
+            public set maxJobWorkers(value: number);
+            
+            public get preserveTilesOutsideBounds(): boolean;
+            public set preserveTilesOutsideBounds(value: boolean);
+            /** Options for collecting debug data during the build process. */
+            public get debug(): UnityEngine.AI.NavMeshBuildDebugSettings;
+            public set debug(value: UnityEngine.AI.NavMeshBuildDebugSettings);
+            /** Validates the properties of NavMeshBuildSettings.
+             * @param buildBounds Describes the volume to build NavMesh for.
+             * @returns The list of violated constraints. 
+             */
+            public ValidationReport($buildBounds: UnityEngine.Bounds):System.Array$1<string>;
+            
+        }
+        
+        /** Level of obstacle avoidance. */
+        enum ObstacleAvoidanceType{ NoObstacleAvoidance = 0, LowQualityObstacleAvoidance = 1, MedQualityObstacleAvoidance = 2, GoodQualityObstacleAvoidance = 3, HighQualityObstacleAvoidance = 4 }
+        
+        /** Navigation mesh agent. */
+        class NavMeshAgent extends UnityEngine.Behaviour{ 
+            /** Gets or attempts to set the destination of the agent in world-space units. */
+            public get destination(): UnityEngine.Vector3;
+            public set destination(value: UnityEngine.Vector3);
+            /** Stop within this distance from the target position. */
+            public get stoppingDistance(): number;
+            public set stoppingDistance(value: number);
+            /** Access the current velocity of the NavMeshAgent component, or set a velocity to control the agent manually. */
+            public get velocity(): UnityEngine.Vector3;
+            public set velocity(value: UnityEngine.Vector3);
+            /** Gets or sets the simulation position of the navmesh agent. */
+            public get nextPosition(): UnityEngine.Vector3;
+            public set nextPosition(value: UnityEngine.Vector3);
+            /** Get the current steering target along the path. (Read Only) */
+            public get steeringTarget(): UnityEngine.Vector3;
+            
+            /** The desired velocity of the agent including any potential contribution from avoidance. (Read Only) */
+            public get desiredVelocity(): UnityEngine.Vector3;
+            
+            /** The distance between the agent's position and the destination on the current path. (Read Only) */
+            public get remainingDistance(): number;
+            
+            /** The relative vertical displacement of the owning GameObject. */
+            public get baseOffset(): number;
+            public set baseOffset(value: number);
+            /** Is the agent currently positioned on an OffMeshLink? (Read Only) */
+            public get isOnOffMeshLink(): boolean;
+            
+            /** The current OffMeshLinkData. */
+            public get currentOffMeshLinkData(): UnityEngine.AI.OffMeshLinkData;
+            
+            /** The next OffMeshLinkData on the current path. */
+            public get nextOffMeshLinkData(): UnityEngine.AI.OffMeshLinkData;
+            
+            /** Should the agent move across OffMeshLinks automatically? */
+            public get autoTraverseOffMeshLink(): boolean;
+            public set autoTraverseOffMeshLink(value: boolean);
+            /** Should the agent brake automatically to avoid overshooting the destination point? */
+            public get autoBraking(): boolean;
+            public set autoBraking(value: boolean);
+            /** Should the agent attempt to acquire a new path if the existing path becomes invalid? */
+            public get autoRepath(): boolean;
+            public set autoRepath(value: boolean);
+            /** Does the agent currently have a path? (Read Only) */
+            public get hasPath(): boolean;
+            
+            /** Is a path in the process of being computed but not yet ready? (Read Only) */
+            public get pathPending(): boolean;
+            
+            /** Is the current path stale. (Read Only) */
+            public get isPathStale(): boolean;
+            
+            /** The status of the current path (complete, partial or invalid). */
+            public get pathStatus(): UnityEngine.AI.NavMeshPathStatus;
+            
+            
+            public get pathEndPosition(): UnityEngine.Vector3;
+            
+            /** This property holds the stop or resume condition of the NavMesh agent. */
+            public get isStopped(): boolean;
+            public set isStopped(value: boolean);
+            /** Property to get and set the current path. */
+            public get path(): UnityEngine.AI.NavMeshPath;
+            public set path(value: UnityEngine.AI.NavMeshPath);
+            /** Returns the owning object of the NavMesh the agent is currently placed on (Read Only). */
+            public get navMeshOwner(): UnityEngine.Object;
+            
+            /** The type ID for the agent. */
+            public get agentTypeID(): number;
+            public set agentTypeID(value: number);
+            /** Specifies which NavMesh areas are passable. Changing areaMask will make the path stale (see isPathStale). */
+            public get areaMask(): number;
+            public set areaMask(value: number);
+            /** Maximum movement speed when following a path. */
+            public get speed(): number;
+            public set speed(value: number);
+            /** Maximum turning speed in (deg/s) while following a path. */
+            public get angularSpeed(): number;
+            public set angularSpeed(value: number);
+            /** The maximum acceleration of an agent as it follows a path, given in units / sec^2. */
+            public get acceleration(): number;
+            public set acceleration(value: number);
+            /** Gets or sets whether the transform position is synchronized with the simulated agent position. The default value is true. */
+            public get updatePosition(): boolean;
+            public set updatePosition(value: boolean);
+            /** Should the agent update the transform orientation? */
+            public get updateRotation(): boolean;
+            public set updateRotation(value: boolean);
+            /** Allows you to specify whether the agent should be aligned to the up-axis of the NavMesh or link that it is placed on. */
+            public get updateUpAxis(): boolean;
+            public set updateUpAxis(value: boolean);
+            /** The avoidance radius for the agent. */
+            public get radius(): number;
+            public set radius(value: number);
+            /** The height of the agent for purposes of passing under obstacles, etc. */
+            public get height(): number;
+            public set height(value: number);
+            /** The level of quality of avoidance. */
+            public get obstacleAvoidanceType(): UnityEngine.AI.ObstacleAvoidanceType;
+            public set obstacleAvoidanceType(value: UnityEngine.AI.ObstacleAvoidanceType);
+            /** The avoidance priority level. */
+            public get avoidancePriority(): number;
+            public set avoidancePriority(value: number);
+            /** Is the agent currently bound to the navmesh? (Read Only) */
+            public get isOnNavMesh(): boolean;
+            
+            /** Sets or updates the destination thus triggering the calculation for a new path.
+             * @param target The target point to navigate to.
+             * @returns True if the destination was requested successfully, otherwise false. 
+             */
+            public SetDestination($target: UnityEngine.Vector3):boolean;
+            /** Enables or disables the current off-mesh link. * @param activated Is the link activated?
+             */
+            public ActivateCurrentOffMeshLink($activated: boolean):void;
+            
+            public CompleteOffMeshLink():void;
+            /** Warps agent to the provided position.
+             * @param newPosition New position to warp the agent to.
+             * @returns True if agent is successfully warped, otherwise false. 
+             */
+            public Warp($newPosition: UnityEngine.Vector3):boolean;
+            /** Apply relative movement to current position. * @param offset The relative movement vector.
+             */
+            public Move($offset: UnityEngine.Vector3):void;
+            
+            public ResetPath():void;
+            /** Assign a new path to this agent.
+             * @param path New path to follow.
+             * @returns True if the path is succesfully assigned. 
+             */
+            public SetPath($path: UnityEngine.AI.NavMeshPath):boolean;
+            /** Locate the closest NavMesh edge.
+             * @param hit Holds the properties of the resulting location.
+             * @returns True if a nearest edge is found. 
+             */
+            public FindClosestEdge($hit: $Ref<UnityEngine.AI.NavMeshHit>):boolean;
+            /** Trace a straight path towards a target postion in the NavMesh without moving the agent.
+             * @param targetPosition The desired end position of movement.
+             * @param hit Properties of the obstacle detected by the ray (if any).
+             * @returns True if there is an obstacle between the agent and the target position, otherwise false. 
+             */
+            public Raycast($targetPosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>):boolean;
+            /** Calculate a path to a specified point and store the resulting path.
+             * @param targetPosition The final position of the path requested.
+             * @param path The resulting path.
+             * @returns True if a path is found. 
+             */
+            public CalculatePath($targetPosition: UnityEngine.Vector3, $path: UnityEngine.AI.NavMeshPath):boolean;
+            /** Sample a position along the current path.
+             * @param areaMask A bitfield mask specifying which NavMesh areas can be passed when tracing the path.
+             * @param maxDistance Terminate scanning the path at this distance.
+             * @param hit Holds the properties of the resulting location.
+             * @returns True if terminated before reaching the position at maxDistance, false otherwise. 
+             */
+            public SamplePathPosition($areaMask: number, $maxDistance: number, $hit: $Ref<UnityEngine.AI.NavMeshHit>):boolean;
+            /** Sets the cost for traversing over areas of the area type. * @param areaIndex Area cost.
+             * @param areaCost New cost for the specified area index.
+             */
+            public SetAreaCost($areaIndex: number, $areaCost: number):void;
+            /** Gets the cost for path calculation when crossing area of a particular type.
+             * @param areaIndex Area Index.
+             * @returns Current cost for specified area index. 
+             */
+            public GetAreaCost($areaIndex: number):number;
+            
+            public constructor();
+            
+        }
+        
+        /** State of OffMeshLink. */
+        class OffMeshLinkData extends System.ValueType{ 
+            /** Is link valid (Read Only). */
+            public get valid(): boolean;
+            
+            /** Is link active (Read Only). */
+            public get activated(): boolean;
+            
+            /** Link type specifier (Read Only). */
+            public get linkType(): UnityEngine.AI.OffMeshLinkType;
+            
+            /** Link start world position (Read Only). */
+            public get startPos(): UnityEngine.Vector3;
+            
+            /** Link end world position (Read Only). */
+            public get endPos(): UnityEngine.Vector3;
+            
+            /** The OffMeshLink if the link type is a manually placed Offmeshlink (Read Only). */
+            public get offMeshLink(): UnityEngine.AI.OffMeshLink;
+            
+            
+        }
+        
+        /** Result information for NavMesh queries. */
+        class NavMeshHit extends System.ValueType{ 
+            /** Position of hit. */
+            public get position(): UnityEngine.Vector3;
+            public set position(value: UnityEngine.Vector3);
+            /** Normal at the point of hit. */
+            public get normal(): UnityEngine.Vector3;
+            public set normal(value: UnityEngine.Vector3);
+            /** Distance to the point of hit. */
+            public get distance(): number;
+            public set distance(value: number);
+            /** Mask specifying NavMesh area at point of hit. */
+            public get mask(): number;
+            public set mask(value: number);
+            /** Flag set when hit. */
+            public get hit(): boolean;
+            public set hit(value: boolean);
+            
+        }
+        
+        /** Shape of the obstacle. */
+        enum NavMeshObstacleShape{ Capsule = 0, Box = 1 }
+        
+        /** An obstacle for NavMeshAgents to avoid. */
+        class NavMeshObstacle extends UnityEngine.Behaviour{ 
+            /** Height of the obstacle's cylinder shape. */
+            public get height(): number;
+            public set height(value: number);
+            /** Radius of the obstacle's capsule shape. */
+            public get radius(): number;
+            public set radius(value: number);
+            /** Velocity at which the obstacle moves around the NavMesh. */
+            public get velocity(): UnityEngine.Vector3;
+            public set velocity(value: UnityEngine.Vector3);
+            /** Should this obstacle make a cut-out in the navmesh. */
+            public get carving(): boolean;
+            public set carving(value: boolean);
+            /** Should this obstacle be carved when it is constantly moving? */
+            public get carveOnlyStationary(): boolean;
+            public set carveOnlyStationary(value: boolean);
+            /** Threshold distance for updating a moving carved hole (when carving is enabled). */
+            public get carvingMoveThreshold(): number;
+            public set carvingMoveThreshold(value: number);
+            /** Time to wait until obstacle is treated as stationary (when carving and carveOnlyStationary are enabled). */
+            public get carvingTimeToStationary(): number;
+            public set carvingTimeToStationary(value: number);
+            /** The shape of the obstacle. */
+            public get shape(): UnityEngine.AI.NavMeshObstacleShape;
+            public set shape(value: UnityEngine.AI.NavMeshObstacleShape);
+            /** The center of the obstacle, measured in the object's local space. */
+            public get center(): UnityEngine.Vector3;
+            public set center(value: UnityEngine.Vector3);
+            /** The size of the obstacle, measured in the object's local space. */
+            public get size(): UnityEngine.Vector3;
+            public set size(value: UnityEngine.Vector3);
+            
+            public constructor();
+            
+        }
+        
+        /** Link type specifier. */
+        enum OffMeshLinkType{ LinkTypeManual = 0, LinkTypeDropDown = 1, LinkTypeJumpAcross = 2 }
+        
+        /** Link allowing movement outside the planar navigation mesh. */
+        class OffMeshLink extends UnityEngine.Behaviour{ 
+            /** Is link active. */
+            public get activated(): boolean;
+            public set activated(value: boolean);
+            /** Is link occupied. (Read Only) */
+            public get occupied(): boolean;
+            
+            /** Modify pathfinding cost for the link. */
+            public get costOverride(): number;
+            public set costOverride(value: number);
+            /** Can link be traversed in both directions. */
+            public get biDirectional(): boolean;
+            public set biDirectional(value: boolean);
+            /** NavMesh area index for this OffMeshLink component. */
+            public get area(): number;
+            public set area(value: number);
+            /** Automatically update endpoints. */
+            public get autoUpdatePositions(): boolean;
+            public set autoUpdatePositions(value: boolean);
+            /** The transform representing link start position. */
+            public get startTransform(): UnityEngine.Transform;
+            public set startTransform(value: UnityEngine.Transform);
+            /** The transform representing link end position. */
+            public get endTransform(): UnityEngine.Transform;
+            public set endTransform(value: UnityEngine.Transform);
+            
+            public UpdatePositions():void;
+            
+            public constructor();
+            
+        }
+        
+        /** Contains data describing a triangulation of a navmesh. */
+        class NavMeshTriangulation extends System.ValueType{ 
+            /** Vertices for the navmesh triangulation. */
+            public vertices: System.Array$1<UnityEngine.Vector3>;
+            /** Triangle indices for the navmesh triangulation. */
+            public indices: System.Array$1<number>;
+            /** NavMesh area indices for the navmesh triangulation. */
+            public areas: System.Array$1<number>;
+            
+        }
+        
+        /** The instance is returned when adding NavMesh data. */
+        class NavMeshDataInstance extends System.ValueType{ 
+            /** True if the NavMesh data is added to the navigation system - otherwise false (Read Only). */
+            public get valid(): boolean;
+            
+            /** Get or set the owning Object. */
+            public get owner(): UnityEngine.Object;
+            public set owner(value: UnityEngine.Object);
+            
+            public Remove():void;
+            
+        }
+        
+        /** Used for runtime manipulation of links connecting polygons of the NavMesh. */
+        class NavMeshLinkData extends System.ValueType{ 
+            /** Start position of the link. */
+            public get startPosition(): UnityEngine.Vector3;
+            public set startPosition(value: UnityEngine.Vector3);
+            /** End position of the link. */
+            public get endPosition(): UnityEngine.Vector3;
+            public set endPosition(value: UnityEngine.Vector3);
+            /** If positive, overrides the pathfinder cost to traverse the link. */
+            public get costModifier(): number;
+            public set costModifier(value: number);
+            /** If true, the link can be traversed in both directions, otherwise only from start to end position. */
+            public get bidirectional(): boolean;
+            public set bidirectional(value: boolean);
+            /** If positive, the link will be rectangle aligned along the line from start to end. */
+            public get width(): number;
+            public set width(value: number);
+            /** Area type of the link. */
+            public get area(): number;
+            public set area(value: number);
+            /** Specifies which agent type this link is available for. */
+            public get agentTypeID(): number;
+            public set agentTypeID(value: number);
+            
+        }
+        
+        /** An instance representing a link available for pathfinding. */
+        class NavMeshLinkInstance extends System.ValueType{ 
+            /** True if the NavMesh link is added to the navigation system - otherwise false (Read Only). */
+            public get valid(): boolean;
+            
+            /** Get or set the owning Object. */
+            public get owner(): UnityEngine.Object;
+            public set owner(value: UnityEngine.Object);
+            
+            public Remove():void;
+            
+        }
+        
+        /** Specifies which agent type and areas to consider when searching the NavMesh. */
+        class NavMeshQueryFilter extends System.ValueType{ 
+            /** A bitmask representing the traversable area types. */
+            public get areaMask(): number;
+            public set areaMask(value: number);
+            /** The agent type ID, specifying which navigation meshes to consider for the query functions. */
+            public get agentTypeID(): number;
+            public set agentTypeID(value: number);
+            /** Returns the area cost multiplier for the given area type for this filter.
+             * @param areaIndex Index to retreive the cost for.
+             * @returns The cost multiplier for the supplied area index. 
+             */
+            public GetAreaCost($areaIndex: number):number;
+            /** Sets the pathfinding cost multiplier for this filter for a given area type. * @param areaIndex The area index to set the cost for.
+             * @param cost The cost for the supplied area index.
+             */
+            public SetAreaCost($areaIndex: number, $cost: number):void;
+            
+        }
+        
+        /** Singleton class to access the baked NavMesh. */
+        class NavMesh extends System.Object{ 
+            /** Area mask constant that includes all NavMesh areas. */
+            public static AllAreas: number;
+            /** Set a function to be called before the NavMesh is updated during the frame update execution. */
+            public static onPreUpdate: UnityEngine.AI.NavMesh.OnNavMeshPreUpdate;
+            /** Describes how far in the future the agents predict collisions for avoidance. */
+            public static get avoidancePredictionTime(): number;
+            public static set avoidancePredictionTime(value: number);
+            /** The maximum number of nodes processed for each frame during the asynchronous pathfinding process. */
+            public static get pathfindingIterationsPerFrame(): number;
+            public static set pathfindingIterationsPerFrame(value: number);
+            /** Trace a line between two points on the NavMesh.
+             * @param sourcePosition The origin of the ray.
+             * @param targetPosition The end of the ray.
+             * @param hit Holds the properties of the ray cast resulting location.
+             * @param areaMask A bitfield mask specifying which NavMesh areas can be passed when tracing the ray.
+             * @returns True if the ray is terminated before reaching target position. Otherwise returns false. 
+             */
+            public static Raycast($sourcePosition: UnityEngine.Vector3, $targetPosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $areaMask: number):boolean;
+            /** Calculate a path between two points and store the resulting path.
+             * @param sourcePosition The initial position of the path requested.
+             * @param targetPosition The final position of the path requested.
+             * @param areaMask A bitfield mask specifying which NavMesh areas can be passed when calculating a path.
+             * @param path The resulting path.
+             * @returns True if either a complete or partial path is found. False otherwise. 
+             */
+            public static CalculatePath($sourcePosition: UnityEngine.Vector3, $targetPosition: UnityEngine.Vector3, $areaMask: number, $path: UnityEngine.AI.NavMeshPath):boolean;
+            /** Locate the closest NavMesh edge from a point on the NavMesh.
+             * @param sourcePosition The origin of the distance query.
+             * @param hit Holds the properties of the resulting location.
+             * @param areaMask A bitfield mask specifying which NavMesh areas can be passed when finding the nearest edge.
+             * @returns True if the nearest edge is found. 
+             */
+            public static FindClosestEdge($sourcePosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $areaMask: number):boolean;
+            /** Finds the nearest point based on the NavMesh within a specified range.
+             * @param sourcePosition The origin of the sample query.
+             * @param hit Holds the properties of the resulting location. The value of hit.normal is never computed. It is always (0,0,0).
+             * @param maxDistance Sample within this distance from sourcePosition.
+             * @param areaMask A mask that specifies the NavMesh areas allowed when finding the nearest point.
+             * @returns True if the nearest point is found. 
+             */
+            public static SamplePosition($sourcePosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $maxDistance: number, $areaMask: number):boolean;
+            /** Sets the cost for finding path over geometry of the area type on all agents. * @param areaIndex Index of the area to set.
+             * @param cost New cost.
+             */
+            public static SetAreaCost($areaIndex: number, $cost: number):void;
+            /** Gets the cost for path finding over geometry of the area type. * @param areaIndex Index of the area to get.
+             */
+            public static GetAreaCost($areaIndex: number):number;
+            /** Returns the area index for a named NavMesh area type.
+             * @param areaName Name of the area to look up.
+             * @returns Index if the specified are, or -1 if no area found. 
+             */
+            public static GetAreaFromName($areaName: string):number;
+            
+            public static CalculateTriangulation():UnityEngine.AI.NavMeshTriangulation;
+            /** Adds the specified NavMeshData to the game.
+             * @param navMeshData Contains the data for the navmesh.
+             * @returns Representing the added navmesh. 
+             */
+            public static AddNavMeshData($navMeshData: UnityEngine.AI.NavMeshData):UnityEngine.AI.NavMeshDataInstance;
+            /** Adds the specified NavMeshData to the game.
+             * @param navMeshData Contains the data for the navmesh.
+             * @param position Translate the navmesh to this position.
+             * @param rotation Rotate the navmesh to this orientation.
+             * @returns Representing the added navmesh. 
+             */
+            public static AddNavMeshData($navMeshData: UnityEngine.AI.NavMeshData, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):UnityEngine.AI.NavMeshDataInstance;
+            /** Removes the specified NavMeshDataInstance from the game, making it unavailable for agents and queries. * @param handle The instance of a NavMesh to remove.
+             */
+            public static RemoveNavMeshData($handle: UnityEngine.AI.NavMeshDataInstance):void;
+            /** Adds a link to the NavMesh. The link is described by the NavMeshLinkData struct.
+             * @param link Describing the properties of the link.
+             * @returns Representing the added link. 
+             */
+            public static AddLink($link: UnityEngine.AI.NavMeshLinkData):UnityEngine.AI.NavMeshLinkInstance;
+            /** Adds a link to the NavMesh. The link is described by the NavMeshLinkData struct.
+             * @param link Describing the properties of the link.
+             * @param position Translate the link to this position.
+             * @param rotation Rotate the link to this orientation.
+             * @returns Representing the added link. 
+             */
+            public static AddLink($link: UnityEngine.AI.NavMeshLinkData, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):UnityEngine.AI.NavMeshLinkInstance;
+            /** Removes a link from the NavMesh. * @param handle The instance of a link to remove.
+             */
+            public static RemoveLink($handle: UnityEngine.AI.NavMeshLinkInstance):void;
+            /** Samples the position nearest the sourcePosition on any NavMesh built for the agent type specified by the filter.
+             * @param sourcePosition The origin of the sample query.
+             * @param hit Holds the properties of the resulting location. The value of hit.normal is never computed. It is always (0,0,0).
+             * @param maxDistance Sample within this distance from sourcePosition.
+             * @param filter A filter specifying which NavMesh areas are allowed when finding the nearest point.
+             * @returns True if the nearest point is found. 
+             */
+            public static SamplePosition($sourcePosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $maxDistance: number, $filter: UnityEngine.AI.NavMeshQueryFilter):boolean;
+            /** Locate the closest NavMesh edge from a point on the NavMesh, subject to the constraints of the filter argument.
+             * @param sourcePosition The origin of the distance query.
+             * @param hit Holds the properties of the resulting location.
+             * @param filter A filter specifying which NavMesh areas can be passed when finding the nearest edge.
+             * @returns True if the nearest edge is found. 
+             */
+            public static FindClosestEdge($sourcePosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $filter: UnityEngine.AI.NavMeshQueryFilter):boolean;
+            /** Traces a line between two positions on the NavMesh, subject to the constraints defined by the filter argument.
+             * @param sourcePosition The origin of the ray.
+             * @param targetPosition The end of the ray.
+             * @param hit Holds the properties of the ray cast resulting location.
+             * @param filter A filter specifying which NavMesh areas can be passed when tracing the ray.
+             * @returns True if the ray is terminated before reaching target position. Otherwise returns false. 
+             */
+            public static Raycast($sourcePosition: UnityEngine.Vector3, $targetPosition: UnityEngine.Vector3, $hit: $Ref<UnityEngine.AI.NavMeshHit>, $filter: UnityEngine.AI.NavMeshQueryFilter):boolean;
+            /** Calculates a path between two positions mapped to the NavMesh, subject to the constraints and costs defined by the filter argument.
+             * @param sourcePosition The initial position of the path requested.
+             * @param targetPosition The final position of the path requested.
+             * @param filter A filter specifying the cost of NavMesh areas that can be passed when calculating a path.
+             * @param path The resulting path.
+             * @returns True if a either a complete or partial path is found and false otherwise. 
+             */
+            public static CalculatePath($sourcePosition: UnityEngine.Vector3, $targetPosition: UnityEngine.Vector3, $filter: UnityEngine.AI.NavMeshQueryFilter, $path: UnityEngine.AI.NavMeshPath):boolean;
+            
+            public static CreateSettings():UnityEngine.AI.NavMeshBuildSettings;
+            /** Removes the build settings matching the agent type ID. * @param agentTypeID The ID of the entry to remove.
+             */
+            public static RemoveSettings($agentTypeID: number):void;
+            /** Returns an existing entry of NavMesh build settings.
+             * @param agentTypeID The ID to look for.
+             * @returns The settings found. 
+             */
+            public static GetSettingsByID($agentTypeID: number):UnityEngine.AI.NavMeshBuildSettings;
+            
+            public static GetSettingsCount():number;
+            /** Returns an existing entry of NavMesh build settings by its ordered index.
+             * @param index The index to retrieve from.
+             * @returns The found settings. 
+             */
+            public static GetSettingsByIndex($index: number):UnityEngine.AI.NavMeshBuildSettings;
+            /** Returns the name associated with the NavMesh build settings matching the provided agent type ID.
+             * @param agentTypeID The ID to look for.
+             * @returns The name associated with the ID found. 
+             */
+            public static GetSettingsNameFromID($agentTypeID: number):string;
+            
+            public static RemoveAllNavMeshData():void;
+            
+        }
+        
+        /** Bitmask used for operating with debug data from the NavMesh build process. */
+        enum NavMeshBuildDebugFlags{ None = 0, InputGeometry = 1, Voxels = 2, Regions = 4, RawContours = 8, SimplifiedContours = 16, PolygonMeshes = 32, PolygonMeshesDetail = 64, All = 127 }
+        
+        /** Used with NavMeshBuildSource to define the shape for building NavMesh. */
+        enum NavMeshBuildSourceShape{ Mesh = 0, Terrain = 1, Box = 2, Sphere = 3, Capsule = 4, ModifierBox = 5 }
+        
+        /** Specify which of the temporary data generated while building the NavMesh should be retained in memory after the process has completed. */
+        class NavMeshBuildDebugSettings extends System.ValueType{ 
+            /** Specify which types of debug data to collect when building the NavMesh. */
+            public get flags(): UnityEngine.AI.NavMeshBuildDebugFlags;
+            public set flags(value: UnityEngine.AI.NavMeshBuildDebugFlags);
+            
+        }
+        
+        
+    }
+    namespace System {
+        
+        class Enum extends System.ValueType implements System.IComparable, System.IConvertible, System.IFormattable{ 
+            
+        }
+        
+        
+        class ValueType extends System.Object{ 
+            
+        }
+        
+        
+        class Object{ 
+            
+        }
+        
+        
+        interface IComparable{ 
+            
+        }
+        
+        
+        interface IConvertible{ 
+            
+        }
+        
+        
+        interface IFormattable{ 
+            
+        }
+        
+        
+        class Int32 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        interface IComparable$1<T>{ 
+            
+        }
+        
+        
+        interface IEquatable$1<T>{ 
+            
+        }
+        
+        
+        class Array extends System.Object implements System.ICloneable, System.Collections.IEnumerable, System.Collections.IList, System.Collections.IStructuralComparable, System.Collections.IStructuralEquatable, System.Collections.ICollection{ 
+            
+        }
+        
+        
+        interface ICloneable{ 
+            
+        }
+        
+        
+        class Void extends System.ValueType{ 
+            
+        }
+        
+        
+        class Boolean extends System.ValueType implements System.IComparable, System.IComparable$1<boolean>, System.IConvertible, System.IEquatable$1<boolean>{ 
+            
+        }
+        
+        
+        class Single extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        interface MulticastDelegate { (...args:any[]) : any; } 
+        var MulticastDelegate: {new (func: (...args:any[]) => any): MulticastDelegate;}
+        
+        
+        class Delegate extends System.Object implements System.ICloneable, System.Runtime.Serialization.ISerializable{ 
+            
+        }
+        
+        
+        class String extends System.Object implements System.ICloneable, System.Collections.IEnumerable, System.IComparable, System.IComparable$1<string>, System.IConvertible, System.IEquatable$1<string>, System.Collections.Generic.IEnumerable$1<number>{ 
+            
+        }
+        
+        
+        class Char extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>{ 
+            
+        }
+        
+        
+        interface IAsyncResult{ 
+            
+        }
+        
+        
+        interface AsyncCallback { (ar: System.IAsyncResult) : void; } 
+        var AsyncCallback: {new (func: (ar: System.IAsyncResult) => void): AsyncCallback;}
+        
+        
+        class IntPtr extends System.ValueType implements System.Runtime.Serialization.ISerializable{ 
+            
+        }
+        
+        
+        class UInt32 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Exception extends System.Object implements System.Runtime.InteropServices._Exception, System.Runtime.Serialization.ISerializable{ 
+            
+        }
+        
+        
+        interface IDisposable{ 
+            
+        }
+        
+        
+        class SByte extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Int16 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Int64 extends System.ValueType implements System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Double extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Byte extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class Attribute extends System.Object implements System.Runtime.InteropServices._Attribute{ 
+            
+        }
+        
+        
+        class Type extends System.Reflection.MemberInfo implements System.Reflection.IReflect, System.Runtime.InteropServices._Type, System.Reflection.ICustomAttributeProvider, System.Runtime.InteropServices._MemberInfo{ 
+            
+        }
+        
+        
+        class UInt64 extends System.ValueType implements System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>, System.IFormattable{ 
+            
+        }
+        
+        
+        class MarshalByRefObject extends System.Object{ 
+            
+        }
+        
+        
+        interface Action$1<T> { (obj: T) : void; } 
+        
+        
+        class Nullable$1<T> extends System.ValueType{ 
+            
+        }
+        
+        
+        interface Func$1<TResult> { () : TResult; } 
+        
+        
+        interface Action { () : void; } 
+        var Action: {new (func: () => void): Action;}
+        
+        
+        interface Action$2<T1, T2> { (arg1: T1, arg2: T2) : void; } 
+        
+        
+        class DateTime extends System.ValueType implements System.IComparable, System.IComparable$1<Date>, System.IConvertible, System.IEquatable$1<Date>, System.Runtime.Serialization.ISerializable, System.IFormattable{ 
+            
+        }
+        
+        
+        interface IFormatProvider{ 
+            
+        }
+        
+        
+        class UInt16 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
+            
+        }
+        
+        
+        class SystemException extends System.Exception implements System.Runtime.InteropServices._Exception, System.Runtime.Serialization.ISerializable{ 
+            
+        }
+        
+        
+        interface Action$3<T1, T2, T3> { (arg1: T1, arg2: T2, arg3: T3) : void; } 
+        
+        
+        interface Func$2<T, TResult> { (arg: T) : TResult; } 
+        
+        
+    }
     namespace UnityEngine {
+        /** Representation of 3D vectors and points. */
+        class Vector3 extends System.ValueType implements System.IEquatable$1<UnityEngine.Vector3>, System.IFormattable{ 
+            
+            public static kEpsilon: number;
+            
+            public static kEpsilonNormalSqrt: number;
+            /** X component of the vector. */
+            public x: number;
+            /** Y component of the vector. */
+            public y: number;
+            /** Z component of the vector. */
+            public z: number;
+            /** Returns this vector with a magnitude of 1 (Read Only). */
+            public get normalized(): UnityEngine.Vector3;
+            
+            /** Returns the length of this vector (Read Only). */
+            public get magnitude(): number;
+            
+            /** Returns the squared length of this vector (Read Only). */
+            public get sqrMagnitude(): number;
+            
+            /** Shorthand for writing Vector3(0, 0, 0). */
+            public static get zero(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(1, 1, 1). */
+            public static get one(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(0, 0, 1). */
+            public static get forward(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(0, 0, -1). */
+            public static get back(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(0, 1, 0). */
+            public static get up(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(0, -1, 0). */
+            public static get down(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(-1, 0, 0). */
+            public static get left(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(1, 0, 0). */
+            public static get right(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity). */
+            public static get positiveInfinity(): UnityEngine.Vector3;
+            
+            /** Shorthand for writing Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity). */
+            public static get negativeInfinity(): UnityEngine.Vector3;
+            
+            /** Spherically interpolates between two vectors. */
+            public static Slerp($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
+            /** Spherically interpolates between two vectors. */
+            public static SlerpUnclamped($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
+            /** Makes vectors normalized and orthogonal to each other. */
+            public static OrthoNormalize($normal: $Ref<UnityEngine.Vector3>, $tangent: $Ref<UnityEngine.Vector3>):void;
+            /** Makes vectors normalized and orthogonal to each other. */
+            public static OrthoNormalize($normal: $Ref<UnityEngine.Vector3>, $tangent: $Ref<UnityEngine.Vector3>, $binormal: $Ref<UnityEngine.Vector3>):void;
+            /** Rotates a vector current towards target.
+             * @param current The vector being managed.
+             * @param target The vector.
+             * @param maxRadiansDelta The maximum angle in radians allowed for this rotation.
+             * @param maxMagnitudeDelta The maximum allowed change in vector magnitude for this rotation.
+             * @returns The location that RotateTowards generates. 
+             */
+            public static RotateTowards($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $maxRadiansDelta: number, $maxMagnitudeDelta: number):UnityEngine.Vector3;
+            /** Linearly interpolates between two points.
+             * @param a Start value, returned when t = 0.
+             * @param b End value, returned when t = 1.
+             * @param t Value used to interpolate between a and b.
+             * @returns Interpolated value, equals to a + (b - a) * t. 
+             */
+            public static Lerp($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
+            /** Linearly interpolates between two vectors. */
+            public static LerpUnclamped($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
+            /** Calculate a position between the points specified by current and target, moving no farther than the distance specified by maxDistanceDelta.
+             * @param current The position to move from.
+             * @param target The position to move towards.
+             * @param maxDistanceDelta Distance to move current per call.
+             * @returns The new position. 
+             */
+            public static MoveTowards($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $maxDistanceDelta: number):UnityEngine.Vector3;
+            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
+             * @param target The position we are trying to reach.
+             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
+             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
+             * @param maxSpeed Optionally allows you to clamp the maximum speed.
+             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
+             */
+            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number, $maxSpeed: number):UnityEngine.Vector3;
+            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
+             * @param target The position we are trying to reach.
+             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
+             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
+             * @param maxSpeed Optionally allows you to clamp the maximum speed.
+             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
+             */
+            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number):UnityEngine.Vector3;
+            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
+             * @param target The position we are trying to reach.
+             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
+             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
+             * @param maxSpeed Optionally allows you to clamp the maximum speed.
+             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
+             */
+            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number, $maxSpeed: number, $deltaTime: number):UnityEngine.Vector3;
+            
+            public get_Item($index: number):number;
+            
+            public set_Item($index: number, $value: number):void;
+            /** Set x, y and z components of an existing Vector3. */
+            public Set($newX: number, $newY: number, $newZ: number):void;
+            /** Multiplies two vectors component-wise. */
+            public static Scale($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Multiplies every component of this vector by the same component of scale. */
+            public Scale($scale: UnityEngine.Vector3):void;
+            /** Cross Product of two vectors. */
+            public static Cross($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Returns true if the given vector is exactly equal to this vector. */
+            public Equals($other: any):boolean;
+            
+            public Equals($other: UnityEngine.Vector3):boolean;
+            /** Reflects a vector off the plane defined by a normal. */
+            public static Reflect($inDirection: UnityEngine.Vector3, $inNormal: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Makes this vector have a magnitude of 1. */
+            public static Normalize($value: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public Normalize():void;
+            /** Dot Product of two vectors. */
+            public static Dot($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):number;
+            /** Projects a vector onto another vector. */
+            public static Project($vector: UnityEngine.Vector3, $onNormal: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Projects a vector onto a plane defined by a normal orthogonal to the plane.
+             * @param planeNormal The direction from the vector towards the plane.
+             * @param vector The location of the vector above the plane.
+             * @returns The location of the vector on the plane. 
+             */
+            public static ProjectOnPlane($vector: UnityEngine.Vector3, $planeNormal: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Returns the angle in degrees between from and to.
+             * @param from The vector from which the angular difference is measured.
+             * @param to The vector to which the angular difference is measured.
+             * @returns The angle in degrees between the two vectors. 
+             */
+            public static Angle($from: UnityEngine.Vector3, $to: UnityEngine.Vector3):number;
+            /** Returns the signed angle in degrees between from and to. * @param from The vector from which the angular difference is measured.
+             * @param to The vector to which the angular difference is measured.
+             * @param axis A vector around which the other vectors are rotated.
+             */
+            public static SignedAngle($from: UnityEngine.Vector3, $to: UnityEngine.Vector3, $axis: UnityEngine.Vector3):number;
+            /** Returns the distance between a and b. */
+            public static Distance($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):number;
+            /** Returns a copy of vector with its magnitude clamped to maxLength. */
+            public static ClampMagnitude($vector: UnityEngine.Vector3, $maxLength: number):UnityEngine.Vector3;
+            
+            public static Magnitude($vector: UnityEngine.Vector3):number;
+            
+            public static SqrMagnitude($vector: UnityEngine.Vector3):number;
+            /** Returns a vector that is made from the smallest components of two vectors. */
+            public static Min($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Returns a vector that is made from the largest components of two vectors. */
+            public static Max($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_Addition($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_Subtraction($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_UnaryNegation($a: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_Multiply($a: UnityEngine.Vector3, $d: number):UnityEngine.Vector3;
+            
+            public static op_Multiply($d: number, $a: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_Division($a: UnityEngine.Vector3, $d: number):UnityEngine.Vector3;
+            
+            public static op_Equality($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):boolean;
+            
+            public static op_Inequality($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):boolean;
+            
+            public ToString():string;
+            /** Returns a formatted string for this vector. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string):string;
+            /** Returns a formatted string for this vector. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
+            
+            public constructor($x: number, $y: number, $z: number);
+            
+            public constructor($x: number, $y: number);
+            
+        }
+        
+        /** Represents an axis aligned bounding box. */
+        class Bounds extends System.ValueType implements System.IEquatable$1<UnityEngine.Bounds>, System.IFormattable{ 
+            /** The center of the bounding box. */
+            public get center(): UnityEngine.Vector3;
+            public set center(value: UnityEngine.Vector3);
+            /** The total size of the box. This is always twice as large as the extents. */
+            public get size(): UnityEngine.Vector3;
+            public set size(value: UnityEngine.Vector3);
+            /** The extents of the Bounding Box. This is always half of the size of the Bounds. */
+            public get extents(): UnityEngine.Vector3;
+            public set extents(value: UnityEngine.Vector3);
+            /** The minimal point of the box. This is always equal to center-extents. */
+            public get min(): UnityEngine.Vector3;
+            public set min(value: UnityEngine.Vector3);
+            /** The maximal point of the box. This is always equal to center+extents. */
+            public get max(): UnityEngine.Vector3;
+            public set max(value: UnityEngine.Vector3);
+            
+            public Equals($other: any):boolean;
+            
+            public Equals($other: UnityEngine.Bounds):boolean;
+            
+            public static op_Equality($lhs: UnityEngine.Bounds, $rhs: UnityEngine.Bounds):boolean;
+            
+            public static op_Inequality($lhs: UnityEngine.Bounds, $rhs: UnityEngine.Bounds):boolean;
+            /** Sets the bounds to the min and max value of the box. */
+            public SetMinMax($min: UnityEngine.Vector3, $max: UnityEngine.Vector3):void;
+            /** Grows the Bounds to include the point. */
+            public Encapsulate($point: UnityEngine.Vector3):void;
+            /** Grow the bounds to encapsulate the bounds. */
+            public Encapsulate($bounds: UnityEngine.Bounds):void;
+            /** Expand the bounds by increasing its size by amount along each side. */
+            public Expand($amount: number):void;
+            /** Expand the bounds by increasing its size by amount along each side. */
+            public Expand($amount: UnityEngine.Vector3):void;
+            /** Does another bounding box intersect with this bounding box? */
+            public Intersects($bounds: UnityEngine.Bounds):boolean;
+            /** Does ray intersect this bounding box? */
+            public IntersectRay($ray: UnityEngine.Ray):boolean;
+            /** Does ray intersect this bounding box? */
+            public IntersectRay($ray: UnityEngine.Ray, $distance: $Ref<number>):boolean;
+            
+            public ToString():string;
+            /** Returns a formatted string for the bounds. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string):string;
+            /** Returns a formatted string for the bounds. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
+            /** Is point contained in the bounding box? */
+            public Contains($point: UnityEngine.Vector3):boolean;
+            /** The smallest squared distance between the point and this bounding box. */
+            public SqrDistance($point: UnityEngine.Vector3):number;
+            /** The closest point on the bounding box.
+             * @param point Arbitrary point.
+             * @returns The point on the bounding box or inside the bounding box. 
+             */
+            public ClosestPoint($point: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public constructor($center: UnityEngine.Vector3, $size: UnityEngine.Vector3);
+            
+        }
+        
+        /** Position, rotation and scale of an object. */
+        class Transform extends UnityEngine.Component implements System.Collections.IEnumerable{ 
+            /** The world space position of the Transform. */
+            public get position(): UnityEngine.Vector3;
+            public set position(value: UnityEngine.Vector3);
+            /** Position of the transform relative to the parent transform. */
+            public get localPosition(): UnityEngine.Vector3;
+            public set localPosition(value: UnityEngine.Vector3);
+            /** The rotation as Euler angles in degrees. */
+            public get eulerAngles(): UnityEngine.Vector3;
+            public set eulerAngles(value: UnityEngine.Vector3);
+            /** The rotation as Euler angles in degrees relative to the parent transform's rotation. */
+            public get localEulerAngles(): UnityEngine.Vector3;
+            public set localEulerAngles(value: UnityEngine.Vector3);
+            /** The red axis of the transform in world space. */
+            public get right(): UnityEngine.Vector3;
+            public set right(value: UnityEngine.Vector3);
+            /** The green axis of the transform in world space. */
+            public get up(): UnityEngine.Vector3;
+            public set up(value: UnityEngine.Vector3);
+            /** Returns a normalized vector representing the blue axis of the transform in world space. */
+            public get forward(): UnityEngine.Vector3;
+            public set forward(value: UnityEngine.Vector3);
+            /** A Quaternion that stores the rotation of the Transform in world space. */
+            public get rotation(): UnityEngine.Quaternion;
+            public set rotation(value: UnityEngine.Quaternion);
+            /** The rotation of the transform relative to the transform rotation of the parent. */
+            public get localRotation(): UnityEngine.Quaternion;
+            public set localRotation(value: UnityEngine.Quaternion);
+            /** The scale of the transform relative to the GameObjects parent. */
+            public get localScale(): UnityEngine.Vector3;
+            public set localScale(value: UnityEngine.Vector3);
+            /** The parent of the transform. */
+            public get parent(): UnityEngine.Transform;
+            public set parent(value: UnityEngine.Transform);
+            /** Matrix that transforms a point from world space into local space (Read Only). */
+            public get worldToLocalMatrix(): UnityEngine.Matrix4x4;
+            
+            /** Matrix that transforms a point from local space into world space (Read Only). */
+            public get localToWorldMatrix(): UnityEngine.Matrix4x4;
+            
+            /** Returns the topmost transform in the hierarchy. */
+            public get root(): UnityEngine.Transform;
+            
+            /** The number of children the parent Transform has. */
+            public get childCount(): number;
+            
+            /** The global scale of the object (Read Only). */
+            public get lossyScale(): UnityEngine.Vector3;
+            
+            /** Has the transform changed since the last time the flag was set to 'false'? */
+            public get hasChanged(): boolean;
+            public set hasChanged(value: boolean);
+            /** The transform capacity of the transform's hierarchy data structure. */
+            public get hierarchyCapacity(): number;
+            public set hierarchyCapacity(value: number);
+            /** The number of transforms in the transform's hierarchy data structure. */
+            public get hierarchyCount(): number;
+            
+            /** Set the parent of the transform. * @param parent The parent Transform to use.
+             * @param worldPositionStays If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.
+             */
+            public SetParent($p: UnityEngine.Transform):void;
+            /** Set the parent of the transform. * @param parent The parent Transform to use.
+             * @param worldPositionStays If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.
+             */
+            public SetParent($parent: UnityEngine.Transform, $worldPositionStays: boolean):void;
+            /** Sets the world space position and rotation of the Transform component. */
+            public SetPositionAndRotation($position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):void;
+            /** Moves the transform in the direction and distance of translation. */
+            public Translate($translation: UnityEngine.Vector3, $relativeTo: UnityEngine.Space):void;
+            /** Moves the transform in the direction and distance of translation. */
+            public Translate($translation: UnityEngine.Vector3):void;
+            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
+            public Translate($x: number, $y: number, $z: number, $relativeTo: UnityEngine.Space):void;
+            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
+            public Translate($x: number, $y: number, $z: number):void;
+            /** Moves the transform in the direction and distance of translation. */
+            public Translate($translation: UnityEngine.Vector3, $relativeTo: UnityEngine.Transform):void;
+            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
+            public Translate($x: number, $y: number, $z: number, $relativeTo: UnityEngine.Transform):void;
+            /** Applies a rotation of eulerAngles.z degrees around the z-axis, eulerAngles.x degrees around the x-axis, and eulerAngles.y degrees around the y-axis (in that order). * @param eulers The rotation to apply in euler angles.
+             * @param relativeTo Determines whether to rotate the GameObject either locally to  the GameObject or relative to the Scene in world space.
+             */
+            public Rotate($eulers: UnityEngine.Vector3, $relativeTo: UnityEngine.Space):void;
+            /** Applies a rotation of eulerAngles.z degrees around the z-axis, eulerAngles.x degrees around the x-axis, and eulerAngles.y degrees around the y-axis (in that order). * @param eulers The rotation to apply in euler angles.
+             */
+            public Rotate($eulers: UnityEngine.Vector3):void;
+            /** The implementation of this method applies a rotation of zAngle degrees around the z axis, xAngle degrees around the x axis, and yAngle degrees around the y axis (in that order). * @param relativeTo Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.
+             * @param xAngle Degrees to rotate the GameObject around the X axis.
+             * @param yAngle Degrees to rotate the GameObject around the Y axis.
+             * @param zAngle Degrees to rotate the GameObject around the Z axis.
+             */
+            public Rotate($xAngle: number, $yAngle: number, $zAngle: number, $relativeTo: UnityEngine.Space):void;
+            /** The implementation of this method applies a rotation of zAngle degrees around the z axis, xAngle degrees around the x axis, and yAngle degrees around the y axis (in that order). * @param xAngle Degrees to rotate the GameObject around the X axis.
+             * @param yAngle Degrees to rotate the GameObject around the Y axis.
+             * @param zAngle Degrees to rotate the GameObject around the Z axis.
+             */
+            public Rotate($xAngle: number, $yAngle: number, $zAngle: number):void;
+            /** Rotates the object around the given axis by the number of degrees defined by the given angle. * @param angle The degrees of rotation to apply.
+             * @param axis The axis to apply rotation to.
+             * @param relativeTo Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.
+             */
+            public Rotate($axis: UnityEngine.Vector3, $angle: number, $relativeTo: UnityEngine.Space):void;
+            /** Rotates the object around the given axis by the number of degrees defined by the given angle. * @param axis The axis to apply rotation to.
+             * @param angle The degrees of rotation to apply.
+             */
+            public Rotate($axis: UnityEngine.Vector3, $angle: number):void;
+            /** Rotates the transform about axis passing through point in world coordinates by angle degrees. */
+            public RotateAround($point: UnityEngine.Vector3, $axis: UnityEngine.Vector3, $angle: number):void;
+            /** Rotates the transform so the forward vector points at target's current position. * @param target Object to point towards.
+             * @param worldUp Vector specifying the upward direction.
+             */
+            public LookAt($target: UnityEngine.Transform, $worldUp: UnityEngine.Vector3):void;
+            /** Rotates the transform so the forward vector points at target's current position. * @param target Object to point towards.
+             * @param worldUp Vector specifying the upward direction.
+             */
+            public LookAt($target: UnityEngine.Transform):void;
+            /** Rotates the transform so the forward vector points at worldPosition. * @param worldPosition Point to look at.
+             * @param worldUp Vector specifying the upward direction.
+             */
+            public LookAt($worldPosition: UnityEngine.Vector3, $worldUp: UnityEngine.Vector3):void;
+            /** Rotates the transform so the forward vector points at worldPosition. * @param worldPosition Point to look at.
+             * @param worldUp Vector specifying the upward direction.
+             */
+            public LookAt($worldPosition: UnityEngine.Vector3):void;
+            /** Transforms direction from local space to world space. */
+            public TransformDirection($direction: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms direction x, y, z from local space to world space. */
+            public TransformDirection($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            /** Transforms a direction from world space to local space. The opposite of Transform.TransformDirection. */
+            public InverseTransformDirection($direction: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms the direction x, y, z from world space to local space. The opposite of Transform.TransformDirection. */
+            public InverseTransformDirection($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            /** Transforms vector from local space to world space. */
+            public TransformVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms vector x, y, z from local space to world space. */
+            public TransformVector($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            /** Transforms a vector from world space to local space. The opposite of Transform.TransformVector. */
+            public InverseTransformVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms the vector x, y, z from world space to local space. The opposite of Transform.TransformVector. */
+            public InverseTransformVector($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            /** Transforms position from local space to world space. */
+            public TransformPoint($position: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms the position x, y, z from local space to world space. */
+            public TransformPoint($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            /** Transforms position from world space to local space. */
+            public InverseTransformPoint($position: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms the position x, y, z from world space to local space. The opposite of Transform.TransformPoint. */
+            public InverseTransformPoint($x: number, $y: number, $z: number):UnityEngine.Vector3;
+            
+            public DetachChildren():void;
+            
+            public SetAsFirstSibling():void;
+            
+            public SetAsLastSibling():void;
+            /** Sets the sibling index. * @param index Index to set.
+             */
+            public SetSiblingIndex($index: number):void;
+            
+            public GetSiblingIndex():number;
+            /** Finds a child by n and returns it.
+             * @param n Name of child to be found.
+             * @returns The returned child transform or null if no child is found. 
+             */
+            public Find($n: string):UnityEngine.Transform;
+            /** Is this transform a child of parent? */
+            public IsChildOf($parent: UnityEngine.Transform):boolean;
+            
+            public GetEnumerator():System.Collections.IEnumerator;
+            /** Returns a transform child by index.
+             * @param index Index of the child transform to return. Must be smaller than Transform.childCount.
+             * @returns Transform child by index. 
+             */
+            public GetChild($index: number):UnityEngine.Transform;
+            
+        }
+        
+        /** Base class for everything attached to GameObjects. */
+        class Component extends UnityEngine.Object{ 
+            /** The Transform attached to this GameObject. */
+            public get transform(): UnityEngine.Transform;
+            
+            /** The game object this component is attached to. A component is always attached to a game object. */
+            public get gameObject(): UnityEngine.GameObject;
+            
+            /** The tag of this game object. */
+            public get tag(): string;
+            public set tag(value: string);
+            /** Returns the component of Type type if the GameObject has one attached, null if it doesn't. Will also return disabled components. * @param type The type of Component to retrieve.
+             */
+            public GetComponent($type: System.Type):UnityEngine.Component;
+            /** Gets the component of the specified type, if it exists.
+             * @param type The type of the component to retrieve.
+             * @param component The output argument that will contain the component or null.
+             * @returns Returns true if the component is found, false otherwise. 
+             */
+            public TryGetComponent($type: System.Type, $component: $Ref<UnityEngine.Component>):boolean;
+            /** Returns the component with name type if the GameObject has one attached, null if it doesn't. */
+            public GetComponent($type: string):UnityEngine.Component;
+            
+            public GetComponentInChildren($t: System.Type, $includeInactive: boolean):UnityEngine.Component;
+            /** Returns the component of Type type in the GameObject or any of its children using depth first search.
+             * @param t The type of Component to retrieve.
+             * @returns A component of the matching type, if found. 
+             */
+            public GetComponentInChildren($t: System.Type):UnityEngine.Component;
+            /** Returns all components of Type type in the GameObject or any of its children. Works recursively. * @param t The type of Component to retrieve.
+             * @param includeInactive Should Components on inactive GameObjects be included in the found set? includeInactive decides which children of the GameObject will be searched.  The GameObject that you call GetComponentsInChildren on is always searched regardless. Default is false.
+             */
+            public GetComponentsInChildren($t: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Component>;
+            
+            public GetComponentsInChildren($t: System.Type):System.Array$1<UnityEngine.Component>;
+            /** Returns the component of Type type in the GameObject or any of its parents.
+             * @param t The type of Component to retrieve.
+             * @returns A component of the matching type, if found. 
+             */
+            public GetComponentInParent($t: System.Type):UnityEngine.Component;
+            /** Returns all components of Type type in the GameObject or any of its parents. * @param t The type of Component to retrieve.
+             * @param includeInactive Should inactive Components be included in the found set?
+             */
+            public GetComponentsInParent($t: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Component>;
+            
+            public GetComponentsInParent($t: System.Type):System.Array$1<UnityEngine.Component>;
+            /** Returns all components of Type type in the GameObject. * @param type The type of Component to retrieve.
+             */
+            public GetComponents($type: System.Type):System.Array$1<UnityEngine.Component>;
+            
+            public GetComponents($type: System.Type, $results: System.Collections.Generic.List$1<UnityEngine.Component>):void;
+            /** Is this game object tagged with tag ? * @param tag The tag to compare.
+             */
+            public CompareTag($tag: string):boolean;
+            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
+             * @param value Optional parameter value for the method.
+             * @param options Should an error be raised if the method does not exist on the target object?
+             */
+            public SendMessageUpwards($methodName: string, $value: any, $options: UnityEngine.SendMessageOptions):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
+             * @param value Optional parameter value for the method.
+             * @param options Should an error be raised if the method does not exist on the target object?
+             */
+            public SendMessageUpwards($methodName: string, $value: any):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
+             * @param value Optional parameter value for the method.
+             * @param options Should an error be raised if the method does not exist on the target object?
+             */
+            public SendMessageUpwards($methodName: string):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
+             * @param value Optional parameter value for the method.
+             * @param options Should an error be raised if the method does not exist on the target object?
+             */
+            public SendMessageUpwards($methodName: string, $options: UnityEngine.SendMessageOptions):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
+             * @param value Optional parameter for the method.
+             * @param options Should an error be raised if the target object doesn't implement the method for the message?
+             */
+            public SendMessage($methodName: string, $value: any):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
+             * @param value Optional parameter for the method.
+             * @param options Should an error be raised if the target object doesn't implement the method for the message?
+             */
+            public SendMessage($methodName: string):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
+             * @param value Optional parameter for the method.
+             * @param options Should an error be raised if the target object doesn't implement the method for the message?
+             */
+            public SendMessage($methodName: string, $value: any, $options: UnityEngine.SendMessageOptions):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
+             * @param value Optional parameter for the method.
+             * @param options Should an error be raised if the target object doesn't implement the method for the message?
+             */
+            public SendMessage($methodName: string, $options: UnityEngine.SendMessageOptions):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
+             * @param parameter Optional parameter to pass to the method (can be any value).
+             * @param options Should an error be raised if the method does not exist for a given target object?
+             */
+            public BroadcastMessage($methodName: string, $parameter: any, $options: UnityEngine.SendMessageOptions):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
+             * @param parameter Optional parameter to pass to the method (can be any value).
+             * @param options Should an error be raised if the method does not exist for a given target object?
+             */
+            public BroadcastMessage($methodName: string, $parameter: any):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
+             * @param parameter Optional parameter to pass to the method (can be any value).
+             * @param options Should an error be raised if the method does not exist for a given target object?
+             */
+            public BroadcastMessage($methodName: string):void;
+            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
+             * @param parameter Optional parameter to pass to the method (can be any value).
+             * @param options Should an error be raised if the method does not exist for a given target object?
+             */
+            public BroadcastMessage($methodName: string, $options: UnityEngine.SendMessageOptions):void;
+            
+            public constructor();
+            
+        }
+        
+        /** Base class for all objects Unity can reference. */
+        class Object extends System.Object{ 
+            /** The name of the object. */
+            public get name(): string;
+            public set name(value: string);
+            /** Should the object be hidden, saved with the Scene or modifiable by the user? */
+            public get hideFlags(): UnityEngine.HideFlags;
+            public set hideFlags(value: UnityEngine.HideFlags);
+            
+            public GetInstanceID():number;
+            
+            public static op_Implicit($exists: UnityEngine.Object):boolean;
+            /** Clones the object original and returns the clone.
+             * @param original An existing object that you want to make a copy of.
+             * @param position Position for the new object.
+             * @param rotation Orientation of the new object.
+             * @param parent Parent that will be assigned to the new object.
+             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
+             * @returns The instantiated clone. 
+             */
+            public static Instantiate($original: UnityEngine.Object, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):UnityEngine.Object;
+            /** Clones the object original and returns the clone.
+             * @param original An existing object that you want to make a copy of.
+             * @param position Position for the new object.
+             * @param rotation Orientation of the new object.
+             * @param parent Parent that will be assigned to the new object.
+             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
+             * @returns The instantiated clone. 
+             */
+            public static Instantiate($original: UnityEngine.Object, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion, $parent: UnityEngine.Transform):UnityEngine.Object;
+            /** Clones the object original and returns the clone.
+             * @param original An existing object that you want to make a copy of.
+             * @param position Position for the new object.
+             * @param rotation Orientation of the new object.
+             * @param parent Parent that will be assigned to the new object.
+             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
+             * @returns The instantiated clone. 
+             */
+            public static Instantiate($original: UnityEngine.Object):UnityEngine.Object;
+            /** Clones the object original and returns the clone.
+             * @param original An existing object that you want to make a copy of.
+             * @param position Position for the new object.
+             * @param rotation Orientation of the new object.
+             * @param parent Parent that will be assigned to the new object.
+             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
+             * @returns The instantiated clone. 
+             */
+            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform):UnityEngine.Object;
+            /** Clones the object original and returns the clone.
+             * @param original An existing object that you want to make a copy of.
+             * @param position Position for the new object.
+             * @param rotation Orientation of the new object.
+             * @param parent Parent that will be assigned to the new object.
+             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
+             * @returns The instantiated clone. 
+             */
+            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform, $instantiateInWorldSpace: boolean):UnityEngine.Object;
+            
+            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform, $worldPositionStays: boolean):UnityEngine.Object;
+            /** Removes a GameObject, component or asset. * @param obj The object to destroy.
+             * @param t The optional amount of time to delay before destroying the object.
+             */
+            public static Destroy($obj: UnityEngine.Object, $t: number):void;
+            /** Removes a GameObject, component or asset. * @param obj The object to destroy.
+             * @param t The optional amount of time to delay before destroying the object.
+             */
+            public static Destroy($obj: UnityEngine.Object):void;
+            /** Destroys the object obj immediately. You are strongly recommended to use Destroy instead. * @param obj Object to be destroyed.
+             * @param allowDestroyingAssets Set to true to allow assets to be destroyed.
+             */
+            public static DestroyImmediate($obj: UnityEngine.Object, $allowDestroyingAssets: boolean):void;
+            /** Destroys the object obj immediately. You are strongly recommended to use Destroy instead. * @param obj Object to be destroyed.
+             * @param allowDestroyingAssets Set to true to allow assets to be destroyed.
+             */
+            public static DestroyImmediate($obj: UnityEngine.Object):void;
+            /** Gets a list of all loaded objects of Type type.
+             * @param type The type of object to find.
+             * @param includeInactive If true, components attached to inactive GameObjects are also included.
+             * @returns The array of objects found matching the type specified. 
+             */
+            public static FindObjectsOfType($type: System.Type):System.Array$1<UnityEngine.Object>;
+            /** Gets a list of all loaded objects of Type type.
+             * @param type The type of object to find.
+             * @param includeInactive If true, components attached to inactive GameObjects are also included.
+             * @returns The array of objects found matching the type specified. 
+             */
+            public static FindObjectsOfType($type: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Object>;
+            /** Do not destroy the target Object when loading a new Scene. * @param target An Object not destroyed on Scene change.
+             */
+            public static DontDestroyOnLoad($target: UnityEngine.Object):void;
+            /** Returns the first active loaded object of Type type.
+             * @param type The type of object to find.
+             * @returns Object The first active loaded object that matches the specified type. It returns null if no Object matches the type. 
+             */
+            public static FindObjectOfType($type: System.Type):UnityEngine.Object;
+            /** Returns the first active loaded object of Type type.
+             * @param type The type of object to find.
+             * @returns Object The first active loaded object that matches the specified type. It returns null if no Object matches the type. 
+             */
+            public static FindObjectOfType($type: System.Type, $includeInactive: boolean):UnityEngine.Object;
+            
+            public static op_Equality($x: UnityEngine.Object, $y: UnityEngine.Object):boolean;
+            
+            public static op_Inequality($x: UnityEngine.Object, $y: UnityEngine.Object):boolean;
+            
+            public constructor();
+            
+        }
+        
+        /** Base class for all objects Unity can reference. */
+        interface Object {
+            
+            IsNull():boolean;
+            
+        }
+        
+        /** Quaternions are used to represent rotations. */
+        class Quaternion extends System.ValueType implements System.IEquatable$1<UnityEngine.Quaternion>, System.IFormattable{ 
+            /** X component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
+            public x: number;
+            /** Y component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
+            public y: number;
+            /** Z component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
+            public z: number;
+            /** W component of the Quaternion. Do not directly modify quaternions. */
+            public w: number;
+            
+            public static kEpsilon: number;
+            /** The identity rotation (Read Only). */
+            public static get identity(): UnityEngine.Quaternion;
+            
+            /** Returns or sets the euler angle representation of the rotation. */
+            public get eulerAngles(): UnityEngine.Vector3;
+            public set eulerAngles(value: UnityEngine.Vector3);
+            /** Returns this quaternion with a magnitude of 1 (Read Only). */
+            public get normalized(): UnityEngine.Quaternion;
+            
+            /** Creates a rotation which rotates from fromDirection to toDirection. */
+            public static FromToRotation($fromDirection: UnityEngine.Vector3, $toDirection: UnityEngine.Vector3):UnityEngine.Quaternion;
+            /** Returns the Inverse of rotation. */
+            public static Inverse($rotation: UnityEngine.Quaternion):UnityEngine.Quaternion;
+            /** Spherically interpolates between quaternions a and b by ratio t. The parameter t is clamped to the range [0, 1].
+             * @param a Start value, returned when t = 0.
+             * @param b End value, returned when t = 1.
+             * @param t Interpolation ratio.
+             * @returns A quaternion spherically interpolated between quaternions a and b. 
+             */
+            public static Slerp($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
+            /** Spherically interpolates between a and b by t. The parameter t is not clamped. */
+            public static SlerpUnclamped($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
+            /** Interpolates between a and b by t and normalizes the result afterwards. The parameter t is clamped to the range [0, 1]. */
+            public static Lerp($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
+            /** Interpolates between a and b by t and normalizes the result afterwards. The parameter t is not clamped. */
+            public static LerpUnclamped($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
+            /** Creates a rotation which rotates angle degrees around axis. */
+            public static AngleAxis($angle: number, $axis: UnityEngine.Vector3):UnityEngine.Quaternion;
+            /** Creates a rotation with the specified forward and upwards directions. * @param forward The direction to look in.
+             * @param upwards The vector that defines in which direction up is.
+             */
+            public static LookRotation($forward: UnityEngine.Vector3, $upwards: UnityEngine.Vector3):UnityEngine.Quaternion;
+            /** Creates a rotation with the specified forward and upwards directions. * @param forward The direction to look in.
+             * @param upwards The vector that defines in which direction up is.
+             */
+            public static LookRotation($forward: UnityEngine.Vector3):UnityEngine.Quaternion;
+            
+            public get_Item($index: number):number;
+            
+            public set_Item($index: number, $value: number):void;
+            /** Set x, y, z and w components of an existing Quaternion. */
+            public Set($newX: number, $newY: number, $newZ: number, $newW: number):void;
+            
+            public static op_Multiply($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):UnityEngine.Quaternion;
+            
+            public static op_Multiply($rotation: UnityEngine.Quaternion, $point: UnityEngine.Vector3):UnityEngine.Vector3;
+            
+            public static op_Equality($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):boolean;
+            
+            public static op_Inequality($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):boolean;
+            /** The dot product between two rotations. */
+            public static Dot($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion):number;
+            /** Creates a rotation with the specified forward and upwards directions. * @param view The direction to look in.
+             * @param up The vector that defines in which direction up is.
+             */
+            public SetLookRotation($view: UnityEngine.Vector3):void;
+            /** Creates a rotation with the specified forward and upwards directions. * @param view The direction to look in.
+             * @param up The vector that defines in which direction up is.
+             */
+            public SetLookRotation($view: UnityEngine.Vector3, $up: UnityEngine.Vector3):void;
+            /** Returns the angle in degrees between two rotations a and b. */
+            public static Angle($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion):number;
+            /** Returns a rotation that rotates z degrees around the z axis, x degrees around the x axis, and y degrees around the y axis; applied in that order. */
+            public static Euler($x: number, $y: number, $z: number):UnityEngine.Quaternion;
+            /** Returns a rotation that rotates z degrees around the z axis, x degrees around the x axis, and y degrees around the y axis. */
+            public static Euler($euler: UnityEngine.Vector3):UnityEngine.Quaternion;
+            /** Converts a rotation to angle-axis representation (angles in degrees). */
+            public ToAngleAxis($angle: $Ref<number>, $axis: $Ref<UnityEngine.Vector3>):void;
+            /** Creates a rotation which rotates from fromDirection to toDirection. */
+            public SetFromToRotation($fromDirection: UnityEngine.Vector3, $toDirection: UnityEngine.Vector3):void;
+            /** Rotates a rotation from towards to. */
+            public static RotateTowards($from: UnityEngine.Quaternion, $to: UnityEngine.Quaternion, $maxDegreesDelta: number):UnityEngine.Quaternion;
+            /** Converts this quaternion to one with the same orientation but with a magnitude of 1. */
+            public static Normalize($q: UnityEngine.Quaternion):UnityEngine.Quaternion;
+            
+            public Normalize():void;
+            
+            public Equals($other: any):boolean;
+            
+            public Equals($other: UnityEngine.Quaternion):boolean;
+            
+            public ToString():string;
+            /** Returns a formatted string of the Quaternion. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string):string;
+            /** Returns a formatted string of the Quaternion. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
+            
+            public constructor($x: number, $y: number, $z: number, $w: number);
+            
+        }
+        
+        /** Asynchronous operation coroutine. */
+        class AsyncOperation extends UnityEngine.YieldInstruction{ 
+            /** Has the operation finished? (Read Only) */
+            public get isDone(): boolean;
+            
+            /** What's the operation's progress. (Read Only) */
+            public get progress(): number;
+            
+            /** Priority lets you tweak in which order async operation calls will be performed. */
+            public get priority(): number;
+            public set priority(value: number);
+            /** Allow Scenes to be activated as soon as it is ready. */
+            public get allowSceneActivation(): boolean;
+            public set allowSceneActivation(value: boolean);
+            
+            public add_completed($value: System.Action$1<UnityEngine.AsyncOperation>):void;
+            
+            public remove_completed($value: System.Action$1<UnityEngine.AsyncOperation>):void;
+            
+            public constructor();
+            
+        }
+        
+        /** Base class for all yield instructions. */
+        class YieldInstruction extends System.Object{ 
+            
+            public constructor();
+            
+        }
+        
+        /** Behaviours are Components that can be enabled or disabled. */
+        class Behaviour extends UnityEngine.Component{ 
+            /** Enabled Behaviours are Updated, disabled Behaviours are not. */
+            public get enabled(): boolean;
+            public set enabled(value: boolean);
+            /** Has the Behaviour had active and enabled called? */
+            public get isActiveAndEnabled(): boolean;
+            
+            
+            public constructor();
+            
+        }
+        
+        /** A standard 4x4 transformation matrix. */
+        class Matrix4x4 extends System.ValueType implements System.IEquatable$1<UnityEngine.Matrix4x4>, System.IFormattable{ 
+            
+            public m00: number;
+            
+            public m10: number;
+            
+            public m20: number;
+            
+            public m30: number;
+            
+            public m01: number;
+            
+            public m11: number;
+            
+            public m21: number;
+            
+            public m31: number;
+            
+            public m02: number;
+            
+            public m12: number;
+            
+            public m22: number;
+            
+            public m32: number;
+            
+            public m03: number;
+            
+            public m13: number;
+            
+            public m23: number;
+            
+            public m33: number;
+            /** Attempts to get a rotation quaternion from this matrix. */
+            public get rotation(): UnityEngine.Quaternion;
+            
+            /** Attempts to get a scale value from the matrix. (Read Only) */
+            public get lossyScale(): UnityEngine.Vector3;
+            
+            /** Checks whether this is an identity matrix. (Read Only) */
+            public get isIdentity(): boolean;
+            
+            /** The determinant of the matrix. (Read Only) */
+            public get determinant(): number;
+            
+            /** This property takes a projection matrix and returns the six plane coordinates that define a projection frustum. */
+            public get decomposeProjection(): UnityEngine.FrustumPlanes;
+            
+            /** The inverse of this matrix. (Read Only) */
+            public get inverse(): UnityEngine.Matrix4x4;
+            
+            /** Returns the transpose of this matrix (Read Only). */
+            public get transpose(): UnityEngine.Matrix4x4;
+            
+            /** Returns a matrix with all elements set to zero (Read Only). */
+            public static get zero(): UnityEngine.Matrix4x4;
+            
+            /** Returns the identity matrix (Read Only). */
+            public static get identity(): UnityEngine.Matrix4x4;
+            
+            
+            public ValidTRS():boolean;
+            
+            public static Determinant($m: UnityEngine.Matrix4x4):number;
+            /** Creates a translation, rotation and scaling matrix. */
+            public static TRS($pos: UnityEngine.Vector3, $q: UnityEngine.Quaternion, $s: UnityEngine.Vector3):UnityEngine.Matrix4x4;
+            /** Sets this matrix to a translation, rotation and scaling matrix. */
+            public SetTRS($pos: UnityEngine.Vector3, $q: UnityEngine.Quaternion, $s: UnityEngine.Vector3):void;
+            /** Computes the inverse of a 3D affine matrix.
+             * @param input Input matrix to invert.
+             * @param result The result of the inversion. Equal to the input matrix if the function fails.
+             * @returns Returns true and a valid result if the function succeeds, false and a copy of the input matrix if the function fails. 
+             */
+            public static Inverse3DAffine($input: UnityEngine.Matrix4x4, $result: $Ref<UnityEngine.Matrix4x4>):boolean;
+            
+            public static Inverse($m: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
+            
+            public static Transpose($m: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
+            /** Create an orthogonal projection matrix.
+             * @param left Left-side x-coordinate.
+             * @param right Right-side x-coordinate.
+             * @param bottom Bottom y-coordinate.
+             * @param top Top y-coordinate.
+             * @param zNear Near depth clipping plane value.
+             * @param zFar Far depth clipping plane value.
+             * @returns The projection matrix. 
+             */
+            public static Ortho($left: number, $right: number, $bottom: number, $top: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
+            /** Create a perspective projection matrix.
+             * @param fov Vertical field-of-view in degrees.
+             * @param aspect Aspect ratio (width divided by height).
+             * @param zNear Near depth clipping plane value.
+             * @param zFar Far depth clipping plane value.
+             * @returns The projection matrix. 
+             */
+            public static Perspective($fov: number, $aspect: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
+            /** Create a "look at" matrix.
+             * @param from The source point.
+             * @param to The target point.
+             * @param up The vector describing the up direction (typically Vector3.up).
+             * @returns The resulting transformation matrix. 
+             */
+            public static LookAt($from: UnityEngine.Vector3, $to: UnityEngine.Vector3, $up: UnityEngine.Vector3):UnityEngine.Matrix4x4;
+            /** This function returns a projection matrix with viewing frustum that has a near plane defined by the coordinates that were passed in.
+             * @param left The X coordinate of the left side of the near projection plane in view space.
+             * @param right The X coordinate of the right side of the near projection plane in view space.
+             * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
+             * @param top The Y coordinate of the top side of the near projection plane in view space.
+             * @param zNear Z distance to the near plane from the origin in view space.
+             * @param zFar Z distance to the far plane from the origin in view space.
+             * @param frustumPlanes Frustum planes struct that contains the view space coordinates of that define a viewing frustum.
+             * @returns A projection matrix with a viewing frustum defined by the plane coordinates passed in. 
+             */
+            public static Frustum($left: number, $right: number, $bottom: number, $top: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
+            /** This function returns a projection matrix with viewing frustum that has a near plane defined by the coordinates that were passed in.
+             * @param left The X coordinate of the left side of the near projection plane in view space.
+             * @param right The X coordinate of the right side of the near projection plane in view space.
+             * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
+             * @param top The Y coordinate of the top side of the near projection plane in view space.
+             * @param zNear Z distance to the near plane from the origin in view space.
+             * @param zFar Z distance to the far plane from the origin in view space.
+             * @param frustumPlanes Frustum planes struct that contains the view space coordinates of that define a viewing frustum.
+             * @returns A projection matrix with a viewing frustum defined by the plane coordinates passed in. 
+             */
+            public static Frustum($fp: UnityEngine.FrustumPlanes):UnityEngine.Matrix4x4;
+            
+            public get_Item($index: number):number;
+            
+            public set_Item($index: number, $value: number):void;
+            
+            public Equals($other: any):boolean;
+            
+            public Equals($other: UnityEngine.Matrix4x4):boolean;
+            
+            public static op_Multiply($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
+            
+            public static op_Multiply($lhs: UnityEngine.Matrix4x4, $vector: UnityEngine.Vector4):UnityEngine.Vector4;
+            
+            public static op_Equality($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):boolean;
+            
+            public static op_Inequality($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):boolean;
+            /** Get a column of the matrix. */
+            public GetColumn($index: number):UnityEngine.Vector4;
+            /** Returns a row of the matrix. */
+            public GetRow($index: number):UnityEngine.Vector4;
+            /** Sets a column of the matrix. */
+            public SetColumn($index: number, $column: UnityEngine.Vector4):void;
+            /** Sets a row of the matrix. */
+            public SetRow($index: number, $row: UnityEngine.Vector4):void;
+            /** Transforms a position by this matrix (generic). */
+            public MultiplyPoint($point: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms a position by this matrix (fast). */
+            public MultiplyPoint3x4($point: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Transforms a direction by this matrix. */
+            public MultiplyVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
+            /** Returns a plane that is transformed in space. */
+            public TransformPlane($plane: UnityEngine.Plane):UnityEngine.Plane;
+            /** Creates a scaling matrix. */
+            public static Scale($vector: UnityEngine.Vector3):UnityEngine.Matrix4x4;
+            /** Creates a translation matrix. */
+            public static Translate($vector: UnityEngine.Vector3):UnityEngine.Matrix4x4;
+            /** Creates a rotation matrix. */
+            public static Rotate($q: UnityEngine.Quaternion):UnityEngine.Matrix4x4;
+            
+            public ToString():string;
+            /** Returns a formatted string for this matrix. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string):string;
+            /** Returns a formatted string for this matrix. * @param format A numeric format string.
+             * @param formatProvider An object that specifies culture-specific formatting.
+             */
+            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
+            
+            public constructor($column0: UnityEngine.Vector4, $column1: UnityEngine.Vector4, $column2: UnityEngine.Vector4, $column3: UnityEngine.Vector4);
+            
+        }
+        
         /** AndroidJavaRunnable is the Unity representation of a java.lang.Runnable object. */
         interface AndroidJavaRunnable { () : void; } 
         var AndroidJavaRunnable: {new (func: () => void): AndroidJavaRunnable;}
@@ -1051,551 +2950,8 @@ declare module 'csharp' {
             
         }
         
-        /** Behaviours are Components that can be enabled or disabled. */
-        class Behaviour extends UnityEngine.Component{ 
-            /** Enabled Behaviours are Updated, disabled Behaviours are not. */
-            public get enabled(): boolean;
-            public set enabled(value: boolean);
-            /** Has the Behaviour had active and enabled called? */
-            public get isActiveAndEnabled(): boolean;
-            
-            
-            public constructor();
-            
-        }
-        
-        /** Base class for everything attached to GameObjects. */
-        class Component extends UnityEngine.Object{ 
-            /** The Transform attached to this GameObject. */
-            public get transform(): UnityEngine.Transform;
-            
-            /** The game object this component is attached to. A component is always attached to a game object. */
-            public get gameObject(): UnityEngine.GameObject;
-            
-            /** The tag of this game object. */
-            public get tag(): string;
-            public set tag(value: string);
-            /** Returns the component of Type type if the GameObject has one attached, null if it doesn't. Will also return disabled components. * @param type The type of Component to retrieve.
-             */
-            public GetComponent($type: System.Type):UnityEngine.Component;
-            /** Gets the component of the specified type, if it exists.
-             * @param type The type of the component to retrieve.
-             * @param component The output argument that will contain the component or null.
-             * @returns Returns true if the component is found, false otherwise. 
-             */
-            public TryGetComponent($type: System.Type, $component: $Ref<UnityEngine.Component>):boolean;
-            /** Returns the component with name type if the GameObject has one attached, null if it doesn't. */
-            public GetComponent($type: string):UnityEngine.Component;
-            
-            public GetComponentInChildren($t: System.Type, $includeInactive: boolean):UnityEngine.Component;
-            /** Returns the component of Type type in the GameObject or any of its children using depth first search.
-             * @param t The type of Component to retrieve.
-             * @returns A component of the matching type, if found. 
-             */
-            public GetComponentInChildren($t: System.Type):UnityEngine.Component;
-            /** Returns all components of Type type in the GameObject or any of its children. Works recursively. * @param t The type of Component to retrieve.
-             * @param includeInactive Should Components on inactive GameObjects be included in the found set? includeInactive decides which children of the GameObject will be searched.  The GameObject that you call GetComponentsInChildren on is always searched regardless. Default is false.
-             */
-            public GetComponentsInChildren($t: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Component>;
-            
-            public GetComponentsInChildren($t: System.Type):System.Array$1<UnityEngine.Component>;
-            /** Returns the component of Type type in the GameObject or any of its parents.
-             * @param t The type of Component to retrieve.
-             * @returns A component of the matching type, if found. 
-             */
-            public GetComponentInParent($t: System.Type):UnityEngine.Component;
-            /** Returns all components of Type type in the GameObject or any of its parents. * @param t The type of Component to retrieve.
-             * @param includeInactive Should inactive Components be included in the found set?
-             */
-            public GetComponentsInParent($t: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Component>;
-            
-            public GetComponentsInParent($t: System.Type):System.Array$1<UnityEngine.Component>;
-            /** Returns all components of Type type in the GameObject. * @param type The type of Component to retrieve.
-             */
-            public GetComponents($type: System.Type):System.Array$1<UnityEngine.Component>;
-            
-            public GetComponents($type: System.Type, $results: System.Collections.Generic.List$1<UnityEngine.Component>):void;
-            /** Is this game object tagged with tag ? * @param tag The tag to compare.
-             */
-            public CompareTag($tag: string):boolean;
-            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
-             * @param value Optional parameter value for the method.
-             * @param options Should an error be raised if the method does not exist on the target object?
-             */
-            public SendMessageUpwards($methodName: string, $value: any, $options: UnityEngine.SendMessageOptions):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
-             * @param value Optional parameter value for the method.
-             * @param options Should an error be raised if the method does not exist on the target object?
-             */
-            public SendMessageUpwards($methodName: string, $value: any):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
-             * @param value Optional parameter value for the method.
-             * @param options Should an error be raised if the method does not exist on the target object?
-             */
-            public SendMessageUpwards($methodName: string):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour. * @param methodName Name of method to call.
-             * @param value Optional parameter value for the method.
-             * @param options Should an error be raised if the method does not exist on the target object?
-             */
-            public SendMessageUpwards($methodName: string, $options: UnityEngine.SendMessageOptions):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
-             * @param value Optional parameter for the method.
-             * @param options Should an error be raised if the target object doesn't implement the method for the message?
-             */
-            public SendMessage($methodName: string, $value: any):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
-             * @param value Optional parameter for the method.
-             * @param options Should an error be raised if the target object doesn't implement the method for the message?
-             */
-            public SendMessage($methodName: string):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
-             * @param value Optional parameter for the method.
-             * @param options Should an error be raised if the target object doesn't implement the method for the message?
-             */
-            public SendMessage($methodName: string, $value: any, $options: UnityEngine.SendMessageOptions):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object. * @param methodName Name of the method to call.
-             * @param value Optional parameter for the method.
-             * @param options Should an error be raised if the target object doesn't implement the method for the message?
-             */
-            public SendMessage($methodName: string, $options: UnityEngine.SendMessageOptions):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
-             * @param parameter Optional parameter to pass to the method (can be any value).
-             * @param options Should an error be raised if the method does not exist for a given target object?
-             */
-            public BroadcastMessage($methodName: string, $parameter: any, $options: UnityEngine.SendMessageOptions):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
-             * @param parameter Optional parameter to pass to the method (can be any value).
-             * @param options Should an error be raised if the method does not exist for a given target object?
-             */
-            public BroadcastMessage($methodName: string, $parameter: any):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
-             * @param parameter Optional parameter to pass to the method (can be any value).
-             * @param options Should an error be raised if the method does not exist for a given target object?
-             */
-            public BroadcastMessage($methodName: string):void;
-            /** Calls the method named methodName on every MonoBehaviour in this game object or any of its children. * @param methodName Name of the method to call.
-             * @param parameter Optional parameter to pass to the method (can be any value).
-             * @param options Should an error be raised if the method does not exist for a given target object?
-             */
-            public BroadcastMessage($methodName: string, $options: UnityEngine.SendMessageOptions):void;
-            
-            public constructor();
-            
-        }
-        
-        /** Base class for all objects Unity can reference. */
-        class Object extends System.Object{ 
-            /** The name of the object. */
-            public get name(): string;
-            public set name(value: string);
-            /** Should the object be hidden, saved with the Scene or modifiable by the user? */
-            public get hideFlags(): UnityEngine.HideFlags;
-            public set hideFlags(value: UnityEngine.HideFlags);
-            
-            public GetInstanceID():number;
-            
-            public static op_Implicit($exists: UnityEngine.Object):boolean;
-            /** Clones the object original and returns the clone.
-             * @param original An existing object that you want to make a copy of.
-             * @param position Position for the new object.
-             * @param rotation Orientation of the new object.
-             * @param parent Parent that will be assigned to the new object.
-             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
-             * @returns The instantiated clone. 
-             */
-            public static Instantiate($original: UnityEngine.Object, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):UnityEngine.Object;
-            /** Clones the object original and returns the clone.
-             * @param original An existing object that you want to make a copy of.
-             * @param position Position for the new object.
-             * @param rotation Orientation of the new object.
-             * @param parent Parent that will be assigned to the new object.
-             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
-             * @returns The instantiated clone. 
-             */
-            public static Instantiate($original: UnityEngine.Object, $position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion, $parent: UnityEngine.Transform):UnityEngine.Object;
-            /** Clones the object original and returns the clone.
-             * @param original An existing object that you want to make a copy of.
-             * @param position Position for the new object.
-             * @param rotation Orientation of the new object.
-             * @param parent Parent that will be assigned to the new object.
-             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
-             * @returns The instantiated clone. 
-             */
-            public static Instantiate($original: UnityEngine.Object):UnityEngine.Object;
-            /** Clones the object original and returns the clone.
-             * @param original An existing object that you want to make a copy of.
-             * @param position Position for the new object.
-             * @param rotation Orientation of the new object.
-             * @param parent Parent that will be assigned to the new object.
-             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
-             * @returns The instantiated clone. 
-             */
-            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform):UnityEngine.Object;
-            /** Clones the object original and returns the clone.
-             * @param original An existing object that you want to make a copy of.
-             * @param position Position for the new object.
-             * @param rotation Orientation of the new object.
-             * @param parent Parent that will be assigned to the new object.
-             * @param instantiateInWorldSpace When you assign a parent Object, pass true to position the new object directly in world space. Pass false to set the Object’s position relative to its new parent..
-             * @returns The instantiated clone. 
-             */
-            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform, $instantiateInWorldSpace: boolean):UnityEngine.Object;
-            
-            public static Instantiate($original: UnityEngine.Object, $parent: UnityEngine.Transform, $worldPositionStays: boolean):UnityEngine.Object;
-            /** Removes a GameObject, component or asset. * @param obj The object to destroy.
-             * @param t The optional amount of time to delay before destroying the object.
-             */
-            public static Destroy($obj: UnityEngine.Object, $t: number):void;
-            /** Removes a GameObject, component or asset. * @param obj The object to destroy.
-             * @param t The optional amount of time to delay before destroying the object.
-             */
-            public static Destroy($obj: UnityEngine.Object):void;
-            /** Destroys the object obj immediately. You are strongly recommended to use Destroy instead. * @param obj Object to be destroyed.
-             * @param allowDestroyingAssets Set to true to allow assets to be destroyed.
-             */
-            public static DestroyImmediate($obj: UnityEngine.Object, $allowDestroyingAssets: boolean):void;
-            /** Destroys the object obj immediately. You are strongly recommended to use Destroy instead. * @param obj Object to be destroyed.
-             * @param allowDestroyingAssets Set to true to allow assets to be destroyed.
-             */
-            public static DestroyImmediate($obj: UnityEngine.Object):void;
-            /** Gets a list of all loaded objects of Type type.
-             * @param type The type of object to find.
-             * @param includeInactive If true, components attached to inactive GameObjects are also included.
-             * @returns The array of objects found matching the type specified. 
-             */
-            public static FindObjectsOfType($type: System.Type):System.Array$1<UnityEngine.Object>;
-            /** Gets a list of all loaded objects of Type type.
-             * @param type The type of object to find.
-             * @param includeInactive If true, components attached to inactive GameObjects are also included.
-             * @returns The array of objects found matching the type specified. 
-             */
-            public static FindObjectsOfType($type: System.Type, $includeInactive: boolean):System.Array$1<UnityEngine.Object>;
-            /** Do not destroy the target Object when loading a new Scene. * @param target An Object not destroyed on Scene change.
-             */
-            public static DontDestroyOnLoad($target: UnityEngine.Object):void;
-            /** Returns the first active loaded object of Type type.
-             * @param type The type of object to find.
-             * @returns Object The first active loaded object that matches the specified type. It returns null if no Object matches the type. 
-             */
-            public static FindObjectOfType($type: System.Type):UnityEngine.Object;
-            /** Returns the first active loaded object of Type type.
-             * @param type The type of object to find.
-             * @returns Object The first active loaded object that matches the specified type. It returns null if no Object matches the type. 
-             */
-            public static FindObjectOfType($type: System.Type, $includeInactive: boolean):UnityEngine.Object;
-            
-            public static op_Equality($x: UnityEngine.Object, $y: UnityEngine.Object):boolean;
-            
-            public static op_Inequality($x: UnityEngine.Object, $y: UnityEngine.Object):boolean;
-            
-            public constructor();
-            
-        }
-        
         /** Information about what animation clips is played and its weight. */
         class AnimationInfo extends System.ValueType{ 
-            
-        }
-        
-        /** Representation of 3D vectors and points. */
-        class Vector3 extends System.ValueType implements System.IEquatable$1<UnityEngine.Vector3>, System.IFormattable{ 
-            
-            public static kEpsilon: number;
-            
-            public static kEpsilonNormalSqrt: number;
-            /** X component of the vector. */
-            public x: number;
-            /** Y component of the vector. */
-            public y: number;
-            /** Z component of the vector. */
-            public z: number;
-            /** Returns this vector with a magnitude of 1 (Read Only). */
-            public get normalized(): UnityEngine.Vector3;
-            
-            /** Returns the length of this vector (Read Only). */
-            public get magnitude(): number;
-            
-            /** Returns the squared length of this vector (Read Only). */
-            public get sqrMagnitude(): number;
-            
-            /** Shorthand for writing Vector3(0, 0, 0). */
-            public static get zero(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(1, 1, 1). */
-            public static get one(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(0, 0, 1). */
-            public static get forward(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(0, 0, -1). */
-            public static get back(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(0, 1, 0). */
-            public static get up(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(0, -1, 0). */
-            public static get down(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(-1, 0, 0). */
-            public static get left(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(1, 0, 0). */
-            public static get right(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity). */
-            public static get positiveInfinity(): UnityEngine.Vector3;
-            
-            /** Shorthand for writing Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity). */
-            public static get negativeInfinity(): UnityEngine.Vector3;
-            
-            /** Spherically interpolates between two vectors. */
-            public static Slerp($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
-            /** Spherically interpolates between two vectors. */
-            public static SlerpUnclamped($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
-            /** Makes vectors normalized and orthogonal to each other. */
-            public static OrthoNormalize($normal: $Ref<UnityEngine.Vector3>, $tangent: $Ref<UnityEngine.Vector3>):void;
-            /** Makes vectors normalized and orthogonal to each other. */
-            public static OrthoNormalize($normal: $Ref<UnityEngine.Vector3>, $tangent: $Ref<UnityEngine.Vector3>, $binormal: $Ref<UnityEngine.Vector3>):void;
-            /** Rotates a vector current towards target.
-             * @param current The vector being managed.
-             * @param target The vector.
-             * @param maxRadiansDelta The maximum angle in radians allowed for this rotation.
-             * @param maxMagnitudeDelta The maximum allowed change in vector magnitude for this rotation.
-             * @returns The location that RotateTowards generates. 
-             */
-            public static RotateTowards($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $maxRadiansDelta: number, $maxMagnitudeDelta: number):UnityEngine.Vector3;
-            /** Linearly interpolates between two points.
-             * @param a Start value, returned when t = 0.
-             * @param b End value, returned when t = 1.
-             * @param t Value used to interpolate between a and b.
-             * @returns Interpolated value, equals to a + (b - a) * t. 
-             */
-            public static Lerp($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
-            /** Linearly interpolates between two vectors. */
-            public static LerpUnclamped($a: UnityEngine.Vector3, $b: UnityEngine.Vector3, $t: number):UnityEngine.Vector3;
-            /** Calculate a position between the points specified by current and target, moving no farther than the distance specified by maxDistanceDelta.
-             * @param current The position to move from.
-             * @param target The position to move towards.
-             * @param maxDistanceDelta Distance to move current per call.
-             * @returns The new position. 
-             */
-            public static MoveTowards($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $maxDistanceDelta: number):UnityEngine.Vector3;
-            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
-             * @param target The position we are trying to reach.
-             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
-             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
-             * @param maxSpeed Optionally allows you to clamp the maximum speed.
-             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
-             */
-            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number, $maxSpeed: number):UnityEngine.Vector3;
-            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
-             * @param target The position we are trying to reach.
-             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
-             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
-             * @param maxSpeed Optionally allows you to clamp the maximum speed.
-             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
-             */
-            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number):UnityEngine.Vector3;
-            /** Gradually changes a vector towards a desired goal over time. * @param current The current position.
-             * @param target The position we are trying to reach.
-             * @param currentVelocity The current velocity, this value is modified by the function every time you call it.
-             * @param smoothTime Approximately the time it will take to reach the target. A smaller value will reach the target faster.
-             * @param maxSpeed Optionally allows you to clamp the maximum speed.
-             * @param deltaTime The time since the last call to this function. By default Time.deltaTime.
-             */
-            public static SmoothDamp($current: UnityEngine.Vector3, $target: UnityEngine.Vector3, $currentVelocity: $Ref<UnityEngine.Vector3>, $smoothTime: number, $maxSpeed: number, $deltaTime: number):UnityEngine.Vector3;
-            
-            public get_Item($index: number):number;
-            
-            public set_Item($index: number, $value: number):void;
-            /** Set x, y and z components of an existing Vector3. */
-            public Set($newX: number, $newY: number, $newZ: number):void;
-            /** Multiplies two vectors component-wise. */
-            public static Scale($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Multiplies every component of this vector by the same component of scale. */
-            public Scale($scale: UnityEngine.Vector3):void;
-            /** Cross Product of two vectors. */
-            public static Cross($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Returns true if the given vector is exactly equal to this vector. */
-            public Equals($other: any):boolean;
-            
-            public Equals($other: UnityEngine.Vector3):boolean;
-            /** Reflects a vector off the plane defined by a normal. */
-            public static Reflect($inDirection: UnityEngine.Vector3, $inNormal: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Makes this vector have a magnitude of 1. */
-            public static Normalize($value: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public Normalize():void;
-            /** Dot Product of two vectors. */
-            public static Dot($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):number;
-            /** Projects a vector onto another vector. */
-            public static Project($vector: UnityEngine.Vector3, $onNormal: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Projects a vector onto a plane defined by a normal orthogonal to the plane.
-             * @param planeNormal The direction from the vector towards the plane.
-             * @param vector The location of the vector above the plane.
-             * @returns The location of the vector on the plane. 
-             */
-            public static ProjectOnPlane($vector: UnityEngine.Vector3, $planeNormal: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Returns the angle in degrees between from and to.
-             * @param from The vector from which the angular difference is measured.
-             * @param to The vector to which the angular difference is measured.
-             * @returns The angle in degrees between the two vectors. 
-             */
-            public static Angle($from: UnityEngine.Vector3, $to: UnityEngine.Vector3):number;
-            /** Returns the signed angle in degrees between from and to. * @param from The vector from which the angular difference is measured.
-             * @param to The vector to which the angular difference is measured.
-             * @param axis A vector around which the other vectors are rotated.
-             */
-            public static SignedAngle($from: UnityEngine.Vector3, $to: UnityEngine.Vector3, $axis: UnityEngine.Vector3):number;
-            /** Returns the distance between a and b. */
-            public static Distance($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):number;
-            /** Returns a copy of vector with its magnitude clamped to maxLength. */
-            public static ClampMagnitude($vector: UnityEngine.Vector3, $maxLength: number):UnityEngine.Vector3;
-            
-            public static Magnitude($vector: UnityEngine.Vector3):number;
-            
-            public static SqrMagnitude($vector: UnityEngine.Vector3):number;
-            /** Returns a vector that is made from the smallest components of two vectors. */
-            public static Min($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Returns a vector that is made from the largest components of two vectors. */
-            public static Max($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_Addition($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_Subtraction($a: UnityEngine.Vector3, $b: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_UnaryNegation($a: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_Multiply($a: UnityEngine.Vector3, $d: number):UnityEngine.Vector3;
-            
-            public static op_Multiply($d: number, $a: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_Division($a: UnityEngine.Vector3, $d: number):UnityEngine.Vector3;
-            
-            public static op_Equality($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):boolean;
-            
-            public static op_Inequality($lhs: UnityEngine.Vector3, $rhs: UnityEngine.Vector3):boolean;
-            
-            public ToString():string;
-            /** Returns a formatted string for this vector. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string):string;
-            /** Returns a formatted string for this vector. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
-            
-            public constructor($x: number, $y: number, $z: number);
-            
-            public constructor($x: number, $y: number);
-            
-        }
-        
-        /** Quaternions are used to represent rotations. */
-        class Quaternion extends System.ValueType implements System.IEquatable$1<UnityEngine.Quaternion>, System.IFormattable{ 
-            /** X component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
-            public x: number;
-            /** Y component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
-            public y: number;
-            /** Z component of the Quaternion. Don't modify this directly unless you know quaternions inside out. */
-            public z: number;
-            /** W component of the Quaternion. Do not directly modify quaternions. */
-            public w: number;
-            
-            public static kEpsilon: number;
-            /** The identity rotation (Read Only). */
-            public static get identity(): UnityEngine.Quaternion;
-            
-            /** Returns or sets the euler angle representation of the rotation. */
-            public get eulerAngles(): UnityEngine.Vector3;
-            public set eulerAngles(value: UnityEngine.Vector3);
-            /** Returns this quaternion with a magnitude of 1 (Read Only). */
-            public get normalized(): UnityEngine.Quaternion;
-            
-            /** Creates a rotation which rotates from fromDirection to toDirection. */
-            public static FromToRotation($fromDirection: UnityEngine.Vector3, $toDirection: UnityEngine.Vector3):UnityEngine.Quaternion;
-            /** Returns the Inverse of rotation. */
-            public static Inverse($rotation: UnityEngine.Quaternion):UnityEngine.Quaternion;
-            /** Spherically interpolates between quaternions a and b by ratio t. The parameter t is clamped to the range [0, 1].
-             * @param a Start value, returned when t = 0.
-             * @param b End value, returned when t = 1.
-             * @param t Interpolation ratio.
-             * @returns A quaternion spherically interpolated between quaternions a and b. 
-             */
-            public static Slerp($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
-            /** Spherically interpolates between a and b by t. The parameter t is not clamped. */
-            public static SlerpUnclamped($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
-            /** Interpolates between a and b by t and normalizes the result afterwards. The parameter t is clamped to the range [0, 1]. */
-            public static Lerp($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
-            /** Interpolates between a and b by t and normalizes the result afterwards. The parameter t is not clamped. */
-            public static LerpUnclamped($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion, $t: number):UnityEngine.Quaternion;
-            /** Creates a rotation which rotates angle degrees around axis. */
-            public static AngleAxis($angle: number, $axis: UnityEngine.Vector3):UnityEngine.Quaternion;
-            /** Creates a rotation with the specified forward and upwards directions. * @param forward The direction to look in.
-             * @param upwards The vector that defines in which direction up is.
-             */
-            public static LookRotation($forward: UnityEngine.Vector3, $upwards: UnityEngine.Vector3):UnityEngine.Quaternion;
-            /** Creates a rotation with the specified forward and upwards directions. * @param forward The direction to look in.
-             * @param upwards The vector that defines in which direction up is.
-             */
-            public static LookRotation($forward: UnityEngine.Vector3):UnityEngine.Quaternion;
-            
-            public get_Item($index: number):number;
-            
-            public set_Item($index: number, $value: number):void;
-            /** Set x, y, z and w components of an existing Quaternion. */
-            public Set($newX: number, $newY: number, $newZ: number, $newW: number):void;
-            
-            public static op_Multiply($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):UnityEngine.Quaternion;
-            
-            public static op_Multiply($rotation: UnityEngine.Quaternion, $point: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public static op_Equality($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):boolean;
-            
-            public static op_Inequality($lhs: UnityEngine.Quaternion, $rhs: UnityEngine.Quaternion):boolean;
-            /** The dot product between two rotations. */
-            public static Dot($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion):number;
-            /** Creates a rotation with the specified forward and upwards directions. * @param view The direction to look in.
-             * @param up The vector that defines in which direction up is.
-             */
-            public SetLookRotation($view: UnityEngine.Vector3):void;
-            /** Creates a rotation with the specified forward and upwards directions. * @param view The direction to look in.
-             * @param up The vector that defines in which direction up is.
-             */
-            public SetLookRotation($view: UnityEngine.Vector3, $up: UnityEngine.Vector3):void;
-            /** Returns the angle in degrees between two rotations a and b. */
-            public static Angle($a: UnityEngine.Quaternion, $b: UnityEngine.Quaternion):number;
-            /** Returns a rotation that rotates z degrees around the z axis, x degrees around the x axis, and y degrees around the y axis; applied in that order. */
-            public static Euler($x: number, $y: number, $z: number):UnityEngine.Quaternion;
-            /** Returns a rotation that rotates z degrees around the z axis, x degrees around the x axis, and y degrees around the y axis. */
-            public static Euler($euler: UnityEngine.Vector3):UnityEngine.Quaternion;
-            /** Converts a rotation to angle-axis representation (angles in degrees). */
-            public ToAngleAxis($angle: $Ref<number>, $axis: $Ref<UnityEngine.Vector3>):void;
-            /** Creates a rotation which rotates from fromDirection to toDirection. */
-            public SetFromToRotation($fromDirection: UnityEngine.Vector3, $toDirection: UnityEngine.Vector3):void;
-            /** Rotates a rotation from towards to. */
-            public static RotateTowards($from: UnityEngine.Quaternion, $to: UnityEngine.Quaternion, $maxDegreesDelta: number):UnityEngine.Quaternion;
-            /** Converts this quaternion to one with the same orientation but with a magnitude of 1. */
-            public static Normalize($q: UnityEngine.Quaternion):UnityEngine.Quaternion;
-            
-            public Normalize():void;
-            
-            public Equals($other: any):boolean;
-            
-            public Equals($other: UnityEngine.Quaternion):boolean;
-            
-            public ToString():string;
-            /** Returns a formatted string of the Quaternion. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string):string;
-            /** Returns a formatted string of the Quaternion. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
-            
-            public constructor($x: number, $y: number, $z: number, $w: number);
             
         }
         
@@ -1779,184 +3135,6 @@ declare module 'csharp' {
             public set rotationWeight(value: number);
             
             public constructor($positionXYZWeight: UnityEngine.Vector3, $rotationWeight: number);
-            
-        }
-        
-        /** Position, rotation and scale of an object. */
-        class Transform extends UnityEngine.Component implements System.Collections.IEnumerable{ 
-            /** The world space position of the Transform. */
-            public get position(): UnityEngine.Vector3;
-            public set position(value: UnityEngine.Vector3);
-            /** Position of the transform relative to the parent transform. */
-            public get localPosition(): UnityEngine.Vector3;
-            public set localPosition(value: UnityEngine.Vector3);
-            /** The rotation as Euler angles in degrees. */
-            public get eulerAngles(): UnityEngine.Vector3;
-            public set eulerAngles(value: UnityEngine.Vector3);
-            /** The rotation as Euler angles in degrees relative to the parent transform's rotation. */
-            public get localEulerAngles(): UnityEngine.Vector3;
-            public set localEulerAngles(value: UnityEngine.Vector3);
-            /** The red axis of the transform in world space. */
-            public get right(): UnityEngine.Vector3;
-            public set right(value: UnityEngine.Vector3);
-            /** The green axis of the transform in world space. */
-            public get up(): UnityEngine.Vector3;
-            public set up(value: UnityEngine.Vector3);
-            /** Returns a normalized vector representing the blue axis of the transform in world space. */
-            public get forward(): UnityEngine.Vector3;
-            public set forward(value: UnityEngine.Vector3);
-            /** A Quaternion that stores the rotation of the Transform in world space. */
-            public get rotation(): UnityEngine.Quaternion;
-            public set rotation(value: UnityEngine.Quaternion);
-            /** The rotation of the transform relative to the transform rotation of the parent. */
-            public get localRotation(): UnityEngine.Quaternion;
-            public set localRotation(value: UnityEngine.Quaternion);
-            /** The scale of the transform relative to the GameObjects parent. */
-            public get localScale(): UnityEngine.Vector3;
-            public set localScale(value: UnityEngine.Vector3);
-            /** The parent of the transform. */
-            public get parent(): UnityEngine.Transform;
-            public set parent(value: UnityEngine.Transform);
-            /** Matrix that transforms a point from world space into local space (Read Only). */
-            public get worldToLocalMatrix(): UnityEngine.Matrix4x4;
-            
-            /** Matrix that transforms a point from local space into world space (Read Only). */
-            public get localToWorldMatrix(): UnityEngine.Matrix4x4;
-            
-            /** Returns the topmost transform in the hierarchy. */
-            public get root(): UnityEngine.Transform;
-            
-            /** The number of children the parent Transform has. */
-            public get childCount(): number;
-            
-            /** The global scale of the object (Read Only). */
-            public get lossyScale(): UnityEngine.Vector3;
-            
-            /** Has the transform changed since the last time the flag was set to 'false'? */
-            public get hasChanged(): boolean;
-            public set hasChanged(value: boolean);
-            /** The transform capacity of the transform's hierarchy data structure. */
-            public get hierarchyCapacity(): number;
-            public set hierarchyCapacity(value: number);
-            /** The number of transforms in the transform's hierarchy data structure. */
-            public get hierarchyCount(): number;
-            
-            /** Set the parent of the transform. * @param parent The parent Transform to use.
-             * @param worldPositionStays If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.
-             */
-            public SetParent($p: UnityEngine.Transform):void;
-            /** Set the parent of the transform. * @param parent The parent Transform to use.
-             * @param worldPositionStays If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before.
-             */
-            public SetParent($parent: UnityEngine.Transform, $worldPositionStays: boolean):void;
-            /** Sets the world space position and rotation of the Transform component. */
-            public SetPositionAndRotation($position: UnityEngine.Vector3, $rotation: UnityEngine.Quaternion):void;
-            /** Moves the transform in the direction and distance of translation. */
-            public Translate($translation: UnityEngine.Vector3, $relativeTo: UnityEngine.Space):void;
-            /** Moves the transform in the direction and distance of translation. */
-            public Translate($translation: UnityEngine.Vector3):void;
-            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
-            public Translate($x: number, $y: number, $z: number, $relativeTo: UnityEngine.Space):void;
-            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
-            public Translate($x: number, $y: number, $z: number):void;
-            /** Moves the transform in the direction and distance of translation. */
-            public Translate($translation: UnityEngine.Vector3, $relativeTo: UnityEngine.Transform):void;
-            /** Moves the transform by x along the x axis, y along the y axis, and z along the z axis. */
-            public Translate($x: number, $y: number, $z: number, $relativeTo: UnityEngine.Transform):void;
-            /** Applies a rotation of eulerAngles.z degrees around the z-axis, eulerAngles.x degrees around the x-axis, and eulerAngles.y degrees around the y-axis (in that order). * @param eulers The rotation to apply in euler angles.
-             * @param relativeTo Determines whether to rotate the GameObject either locally to  the GameObject or relative to the Scene in world space.
-             */
-            public Rotate($eulers: UnityEngine.Vector3, $relativeTo: UnityEngine.Space):void;
-            /** Applies a rotation of eulerAngles.z degrees around the z-axis, eulerAngles.x degrees around the x-axis, and eulerAngles.y degrees around the y-axis (in that order). * @param eulers The rotation to apply in euler angles.
-             */
-            public Rotate($eulers: UnityEngine.Vector3):void;
-            /** The implementation of this method applies a rotation of zAngle degrees around the z axis, xAngle degrees around the x axis, and yAngle degrees around the y axis (in that order). * @param relativeTo Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.
-             * @param xAngle Degrees to rotate the GameObject around the X axis.
-             * @param yAngle Degrees to rotate the GameObject around the Y axis.
-             * @param zAngle Degrees to rotate the GameObject around the Z axis.
-             */
-            public Rotate($xAngle: number, $yAngle: number, $zAngle: number, $relativeTo: UnityEngine.Space):void;
-            /** The implementation of this method applies a rotation of zAngle degrees around the z axis, xAngle degrees around the x axis, and yAngle degrees around the y axis (in that order). * @param xAngle Degrees to rotate the GameObject around the X axis.
-             * @param yAngle Degrees to rotate the GameObject around the Y axis.
-             * @param zAngle Degrees to rotate the GameObject around the Z axis.
-             */
-            public Rotate($xAngle: number, $yAngle: number, $zAngle: number):void;
-            /** Rotates the object around the given axis by the number of degrees defined by the given angle. * @param angle The degrees of rotation to apply.
-             * @param axis The axis to apply rotation to.
-             * @param relativeTo Determines whether to rotate the GameObject either locally to the GameObject or relative to the Scene in world space.
-             */
-            public Rotate($axis: UnityEngine.Vector3, $angle: number, $relativeTo: UnityEngine.Space):void;
-            /** Rotates the object around the given axis by the number of degrees defined by the given angle. * @param axis The axis to apply rotation to.
-             * @param angle The degrees of rotation to apply.
-             */
-            public Rotate($axis: UnityEngine.Vector3, $angle: number):void;
-            /** Rotates the transform about axis passing through point in world coordinates by angle degrees. */
-            public RotateAround($point: UnityEngine.Vector3, $axis: UnityEngine.Vector3, $angle: number):void;
-            /** Rotates the transform so the forward vector points at target's current position. * @param target Object to point towards.
-             * @param worldUp Vector specifying the upward direction.
-             */
-            public LookAt($target: UnityEngine.Transform, $worldUp: UnityEngine.Vector3):void;
-            /** Rotates the transform so the forward vector points at target's current position. * @param target Object to point towards.
-             * @param worldUp Vector specifying the upward direction.
-             */
-            public LookAt($target: UnityEngine.Transform):void;
-            /** Rotates the transform so the forward vector points at worldPosition. * @param worldPosition Point to look at.
-             * @param worldUp Vector specifying the upward direction.
-             */
-            public LookAt($worldPosition: UnityEngine.Vector3, $worldUp: UnityEngine.Vector3):void;
-            /** Rotates the transform so the forward vector points at worldPosition. * @param worldPosition Point to look at.
-             * @param worldUp Vector specifying the upward direction.
-             */
-            public LookAt($worldPosition: UnityEngine.Vector3):void;
-            /** Transforms direction from local space to world space. */
-            public TransformDirection($direction: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms direction x, y, z from local space to world space. */
-            public TransformDirection($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            /** Transforms a direction from world space to local space. The opposite of Transform.TransformDirection. */
-            public InverseTransformDirection($direction: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms the direction x, y, z from world space to local space. The opposite of Transform.TransformDirection. */
-            public InverseTransformDirection($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            /** Transforms vector from local space to world space. */
-            public TransformVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms vector x, y, z from local space to world space. */
-            public TransformVector($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            /** Transforms a vector from world space to local space. The opposite of Transform.TransformVector. */
-            public InverseTransformVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms the vector x, y, z from world space to local space. The opposite of Transform.TransformVector. */
-            public InverseTransformVector($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            /** Transforms position from local space to world space. */
-            public TransformPoint($position: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms the position x, y, z from local space to world space. */
-            public TransformPoint($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            /** Transforms position from world space to local space. */
-            public InverseTransformPoint($position: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms the position x, y, z from world space to local space. The opposite of Transform.TransformPoint. */
-            public InverseTransformPoint($x: number, $y: number, $z: number):UnityEngine.Vector3;
-            
-            public DetachChildren():void;
-            
-            public SetAsFirstSibling():void;
-            
-            public SetAsLastSibling():void;
-            /** Sets the sibling index. * @param index Index to set.
-             */
-            public SetSiblingIndex($index: number):void;
-            
-            public GetSiblingIndex():number;
-            /** Finds a child by n and returns it.
-             * @param n Name of child to be found.
-             * @returns The returned child transform or null if no child is found. 
-             */
-            public Find($n: string):UnityEngine.Transform;
-            /** Is this transform a child of parent? */
-            public IsChildOf($parent: UnityEngine.Transform):boolean;
-            
-            public GetEnumerator():System.Collections.IEnumerator;
-            /** Returns a transform child by index.
-             * @param index Index of the child transform to return. Must be smaller than Transform.childCount.
-             * @returns Transform child by index. 
-             */
-            public GetChild($index: number):UnityEngine.Transform;
             
         }
         
@@ -2265,71 +3443,6 @@ declare module 'csharp' {
             public static op_Inequality($x: UnityEngine.TrackedReference, $y: UnityEngine.TrackedReference):boolean;
             
             public static op_Implicit($exists: UnityEngine.TrackedReference):boolean;
-            
-        }
-        
-        /** Represents an axis aligned bounding box. */
-        class Bounds extends System.ValueType implements System.IEquatable$1<UnityEngine.Bounds>, System.IFormattable{ 
-            /** The center of the bounding box. */
-            public get center(): UnityEngine.Vector3;
-            public set center(value: UnityEngine.Vector3);
-            /** The total size of the box. This is always twice as large as the extents. */
-            public get size(): UnityEngine.Vector3;
-            public set size(value: UnityEngine.Vector3);
-            /** The extents of the Bounding Box. This is always half of the size of the Bounds. */
-            public get extents(): UnityEngine.Vector3;
-            public set extents(value: UnityEngine.Vector3);
-            /** The minimal point of the box. This is always equal to center-extents. */
-            public get min(): UnityEngine.Vector3;
-            public set min(value: UnityEngine.Vector3);
-            /** The maximal point of the box. This is always equal to center+extents. */
-            public get max(): UnityEngine.Vector3;
-            public set max(value: UnityEngine.Vector3);
-            
-            public Equals($other: any):boolean;
-            
-            public Equals($other: UnityEngine.Bounds):boolean;
-            
-            public static op_Equality($lhs: UnityEngine.Bounds, $rhs: UnityEngine.Bounds):boolean;
-            
-            public static op_Inequality($lhs: UnityEngine.Bounds, $rhs: UnityEngine.Bounds):boolean;
-            /** Sets the bounds to the min and max value of the box. */
-            public SetMinMax($min: UnityEngine.Vector3, $max: UnityEngine.Vector3):void;
-            /** Grows the Bounds to include the point. */
-            public Encapsulate($point: UnityEngine.Vector3):void;
-            /** Grow the bounds to encapsulate the bounds. */
-            public Encapsulate($bounds: UnityEngine.Bounds):void;
-            /** Expand the bounds by increasing its size by amount along each side. */
-            public Expand($amount: number):void;
-            /** Expand the bounds by increasing its size by amount along each side. */
-            public Expand($amount: UnityEngine.Vector3):void;
-            /** Does another bounding box intersect with this bounding box? */
-            public Intersects($bounds: UnityEngine.Bounds):boolean;
-            /** Does ray intersect this bounding box? */
-            public IntersectRay($ray: UnityEngine.Ray):boolean;
-            /** Does ray intersect this bounding box? */
-            public IntersectRay($ray: UnityEngine.Ray, $distance: $Ref<number>):boolean;
-            
-            public ToString():string;
-            /** Returns a formatted string for the bounds. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string):string;
-            /** Returns a formatted string for the bounds. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
-            /** Is point contained in the bounding box? */
-            public Contains($point: UnityEngine.Vector3):boolean;
-            /** The smallest squared distance between the point and this bounding box. */
-            public SqrDistance($point: UnityEngine.Vector3):number;
-            /** The closest point on the bounding box.
-             * @param point Arbitrary point.
-             * @returns The point on the bounding box or inside the bounding box. 
-             */
-            public ClosestPoint($point: UnityEngine.Vector3):UnityEngine.Vector3;
-            
-            public constructor($center: UnityEngine.Vector3, $size: UnityEngine.Vector3);
             
         }
         
@@ -3032,36 +4145,6 @@ declare module 'csharp' {
             /** Asset object being loaded (Read Only). */
             public get assetBundle(): UnityEngine.AssetBundle;
             
-            
-            public constructor();
-            
-        }
-        
-        /** Asynchronous operation coroutine. */
-        class AsyncOperation extends UnityEngine.YieldInstruction{ 
-            /** Has the operation finished? (Read Only) */
-            public get isDone(): boolean;
-            
-            /** What's the operation's progress. (Read Only) */
-            public get progress(): number;
-            
-            /** Priority lets you tweak in which order async operation calls will be performed. */
-            public get priority(): number;
-            public set priority(value: number);
-            /** Allow Scenes to be activated as soon as it is ready. */
-            public get allowSceneActivation(): boolean;
-            public set allowSceneActivation(value: boolean);
-            
-            public add_completed($value: System.Action$1<UnityEngine.AsyncOperation>):void;
-            
-            public remove_completed($value: System.Action$1<UnityEngine.AsyncOperation>):void;
-            
-            public constructor();
-            
-        }
-        
-        /** Base class for all yield instructions. */
-        class YieldInstruction extends System.Object{ 
             
             public constructor();
             
@@ -5301,185 +6384,6 @@ declare module 'csharp' {
         
         /** Describes different types of camera. */
         enum CameraType{ Game = 1, SceneView = 2, Preview = 4, VR = 8, Reflection = 16 }
-        
-        /** A standard 4x4 transformation matrix. */
-        class Matrix4x4 extends System.ValueType implements System.IEquatable$1<UnityEngine.Matrix4x4>, System.IFormattable{ 
-            
-            public m00: number;
-            
-            public m10: number;
-            
-            public m20: number;
-            
-            public m30: number;
-            
-            public m01: number;
-            
-            public m11: number;
-            
-            public m21: number;
-            
-            public m31: number;
-            
-            public m02: number;
-            
-            public m12: number;
-            
-            public m22: number;
-            
-            public m32: number;
-            
-            public m03: number;
-            
-            public m13: number;
-            
-            public m23: number;
-            
-            public m33: number;
-            /** Attempts to get a rotation quaternion from this matrix. */
-            public get rotation(): UnityEngine.Quaternion;
-            
-            /** Attempts to get a scale value from the matrix. (Read Only) */
-            public get lossyScale(): UnityEngine.Vector3;
-            
-            /** Checks whether this is an identity matrix. (Read Only) */
-            public get isIdentity(): boolean;
-            
-            /** The determinant of the matrix. (Read Only) */
-            public get determinant(): number;
-            
-            /** This property takes a projection matrix and returns the six plane coordinates that define a projection frustum. */
-            public get decomposeProjection(): UnityEngine.FrustumPlanes;
-            
-            /** The inverse of this matrix. (Read Only) */
-            public get inverse(): UnityEngine.Matrix4x4;
-            
-            /** Returns the transpose of this matrix (Read Only). */
-            public get transpose(): UnityEngine.Matrix4x4;
-            
-            /** Returns a matrix with all elements set to zero (Read Only). */
-            public static get zero(): UnityEngine.Matrix4x4;
-            
-            /** Returns the identity matrix (Read Only). */
-            public static get identity(): UnityEngine.Matrix4x4;
-            
-            
-            public ValidTRS():boolean;
-            
-            public static Determinant($m: UnityEngine.Matrix4x4):number;
-            /** Creates a translation, rotation and scaling matrix. */
-            public static TRS($pos: UnityEngine.Vector3, $q: UnityEngine.Quaternion, $s: UnityEngine.Vector3):UnityEngine.Matrix4x4;
-            /** Sets this matrix to a translation, rotation and scaling matrix. */
-            public SetTRS($pos: UnityEngine.Vector3, $q: UnityEngine.Quaternion, $s: UnityEngine.Vector3):void;
-            /** Computes the inverse of a 3D affine matrix.
-             * @param input Input matrix to invert.
-             * @param result The result of the inversion. Equal to the input matrix if the function fails.
-             * @returns Returns true and a valid result if the function succeeds, false and a copy of the input matrix if the function fails. 
-             */
-            public static Inverse3DAffine($input: UnityEngine.Matrix4x4, $result: $Ref<UnityEngine.Matrix4x4>):boolean;
-            
-            public static Inverse($m: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
-            
-            public static Transpose($m: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
-            /** Create an orthogonal projection matrix.
-             * @param left Left-side x-coordinate.
-             * @param right Right-side x-coordinate.
-             * @param bottom Bottom y-coordinate.
-             * @param top Top y-coordinate.
-             * @param zNear Near depth clipping plane value.
-             * @param zFar Far depth clipping plane value.
-             * @returns The projection matrix. 
-             */
-            public static Ortho($left: number, $right: number, $bottom: number, $top: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
-            /** Create a perspective projection matrix.
-             * @param fov Vertical field-of-view in degrees.
-             * @param aspect Aspect ratio (width divided by height).
-             * @param zNear Near depth clipping plane value.
-             * @param zFar Far depth clipping plane value.
-             * @returns The projection matrix. 
-             */
-            public static Perspective($fov: number, $aspect: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
-            /** Create a "look at" matrix.
-             * @param from The source point.
-             * @param to The target point.
-             * @param up The vector describing the up direction (typically Vector3.up).
-             * @returns The resulting transformation matrix. 
-             */
-            public static LookAt($from: UnityEngine.Vector3, $to: UnityEngine.Vector3, $up: UnityEngine.Vector3):UnityEngine.Matrix4x4;
-            /** This function returns a projection matrix with viewing frustum that has a near plane defined by the coordinates that were passed in.
-             * @param left The X coordinate of the left side of the near projection plane in view space.
-             * @param right The X coordinate of the right side of the near projection plane in view space.
-             * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
-             * @param top The Y coordinate of the top side of the near projection plane in view space.
-             * @param zNear Z distance to the near plane from the origin in view space.
-             * @param zFar Z distance to the far plane from the origin in view space.
-             * @param frustumPlanes Frustum planes struct that contains the view space coordinates of that define a viewing frustum.
-             * @returns A projection matrix with a viewing frustum defined by the plane coordinates passed in. 
-             */
-            public static Frustum($left: number, $right: number, $bottom: number, $top: number, $zNear: number, $zFar: number):UnityEngine.Matrix4x4;
-            /** This function returns a projection matrix with viewing frustum that has a near plane defined by the coordinates that were passed in.
-             * @param left The X coordinate of the left side of the near projection plane in view space.
-             * @param right The X coordinate of the right side of the near projection plane in view space.
-             * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
-             * @param top The Y coordinate of the top side of the near projection plane in view space.
-             * @param zNear Z distance to the near plane from the origin in view space.
-             * @param zFar Z distance to the far plane from the origin in view space.
-             * @param frustumPlanes Frustum planes struct that contains the view space coordinates of that define a viewing frustum.
-             * @returns A projection matrix with a viewing frustum defined by the plane coordinates passed in. 
-             */
-            public static Frustum($fp: UnityEngine.FrustumPlanes):UnityEngine.Matrix4x4;
-            
-            public get_Item($index: number):number;
-            
-            public set_Item($index: number, $value: number):void;
-            
-            public Equals($other: any):boolean;
-            
-            public Equals($other: UnityEngine.Matrix4x4):boolean;
-            
-            public static op_Multiply($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):UnityEngine.Matrix4x4;
-            
-            public static op_Multiply($lhs: UnityEngine.Matrix4x4, $vector: UnityEngine.Vector4):UnityEngine.Vector4;
-            
-            public static op_Equality($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):boolean;
-            
-            public static op_Inequality($lhs: UnityEngine.Matrix4x4, $rhs: UnityEngine.Matrix4x4):boolean;
-            /** Get a column of the matrix. */
-            public GetColumn($index: number):UnityEngine.Vector4;
-            /** Returns a row of the matrix. */
-            public GetRow($index: number):UnityEngine.Vector4;
-            /** Sets a column of the matrix. */
-            public SetColumn($index: number, $column: UnityEngine.Vector4):void;
-            /** Sets a row of the matrix. */
-            public SetRow($index: number, $row: UnityEngine.Vector4):void;
-            /** Transforms a position by this matrix (generic). */
-            public MultiplyPoint($point: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms a position by this matrix (fast). */
-            public MultiplyPoint3x4($point: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Transforms a direction by this matrix. */
-            public MultiplyVector($vector: UnityEngine.Vector3):UnityEngine.Vector3;
-            /** Returns a plane that is transformed in space. */
-            public TransformPlane($plane: UnityEngine.Plane):UnityEngine.Plane;
-            /** Creates a scaling matrix. */
-            public static Scale($vector: UnityEngine.Vector3):UnityEngine.Matrix4x4;
-            /** Creates a translation matrix. */
-            public static Translate($vector: UnityEngine.Vector3):UnityEngine.Matrix4x4;
-            /** Creates a rotation matrix. */
-            public static Rotate($q: UnityEngine.Quaternion):UnityEngine.Matrix4x4;
-            
-            public ToString():string;
-            /** Returns a formatted string for this matrix. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string):string;
-            /** Returns a formatted string for this matrix. * @param format A numeric format string.
-             * @param formatProvider An object that specifies culture-specific formatting.
-             */
-            public ToString($format: string, $formatProvider: System.IFormatProvider):string;
-            
-            public constructor($column0: UnityEngine.Vector4, $column1: UnityEngine.Vector4, $column2: UnityEngine.Vector4, $column3: UnityEngine.Vector4);
-            
-        }
         
         /** Values for Camera.clearFlags, determining what to clear when rendering a Camera. */
         enum CameraClearFlags{ Skybox = 1, Color = 2, SolidColor = 2, Depth = 3, Nothing = 4 }
@@ -25086,257 +25990,6 @@ declare module 'csharp' {
         
         
     }
-    namespace System {
-        
-        class Void extends System.ValueType{ 
-            
-        }
-        
-        
-        class ValueType extends System.Object{ 
-            
-        }
-        
-        
-        class Object{ 
-            
-        }
-        
-        
-        interface MulticastDelegate { (...args:any[]) : any; } 
-        var MulticastDelegate: {new (func: (...args:any[]) => any): MulticastDelegate;}
-        
-        
-        class Delegate extends System.Object implements System.ICloneable, System.Runtime.Serialization.ISerializable{ 
-            
-        }
-        
-        
-        interface ICloneable{ 
-            
-        }
-        
-        
-        interface IAsyncResult{ 
-            
-        }
-        
-        
-        interface AsyncCallback { (ar: System.IAsyncResult) : void; } 
-        var AsyncCallback: {new (func: (ar: System.IAsyncResult) => void): AsyncCallback;}
-        
-        
-        class IntPtr extends System.ValueType implements System.Runtime.Serialization.ISerializable{ 
-            
-        }
-        
-        
-        class Exception extends System.Object implements System.Runtime.InteropServices._Exception, System.Runtime.Serialization.ISerializable{ 
-            
-        }
-        
-        
-        class String extends System.Object implements System.ICloneable, System.Collections.IEnumerable, System.IComparable, System.IComparable$1<string>, System.IConvertible, System.IEquatable$1<string>, System.Collections.Generic.IEnumerable$1<number>{ 
-            
-        }
-        
-        
-        interface IComparable{ 
-            
-        }
-        
-        
-        interface IComparable$1<T>{ 
-            
-        }
-        
-        
-        interface IConvertible{ 
-            
-        }
-        
-        
-        interface IEquatable$1<T>{ 
-            
-        }
-        
-        
-        class Char extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>{ 
-            
-        }
-        
-        
-        interface IDisposable{ 
-            
-        }
-        
-        
-        class Array extends System.Object implements System.ICloneable, System.Collections.IEnumerable, System.Collections.IList, System.Collections.IStructuralComparable, System.Collections.IStructuralEquatable, System.Collections.ICollection{ 
-            
-        }
-        
-        
-        class Boolean extends System.ValueType implements System.IComparable, System.IComparable$1<boolean>, System.IConvertible, System.IEquatable$1<boolean>{ 
-            
-        }
-        
-        
-        class SByte extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        interface IFormattable{ 
-            
-        }
-        
-        
-        class Int16 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Int32 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Int64 extends System.ValueType implements System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Single extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Double extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Byte extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class Enum extends System.ValueType implements System.IComparable, System.IConvertible, System.IFormattable{ 
-            
-        }
-        
-        
-        class Attribute extends System.Object implements System.Runtime.InteropServices._Attribute{ 
-            
-        }
-        
-        
-        class Type extends System.Reflection.MemberInfo implements System.Reflection.IReflect, System.Runtime.InteropServices._Type, System.Reflection.ICustomAttributeProvider, System.Runtime.InteropServices._MemberInfo{ 
-            
-        }
-        
-        
-        class UInt32 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class UInt64 extends System.ValueType implements System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>, System.IFormattable{ 
-            
-        }
-        
-        
-        class MarshalByRefObject extends System.Object{ 
-            
-        }
-        
-        
-        interface Action$1<T> { (obj: T) : void; } 
-        
-        
-        class Nullable$1<T> extends System.ValueType{ 
-            
-        }
-        
-        
-        interface Func$1<TResult> { () : TResult; } 
-        
-        
-        interface Action { () : void; } 
-        var Action: {new (func: () => void): Action;}
-        
-        
-        interface Action$2<T1, T2> { (arg1: T1, arg2: T2) : void; } 
-        
-        
-        class DateTime extends System.ValueType implements System.IComparable, System.IComparable$1<Date>, System.IConvertible, System.IEquatable$1<Date>, System.Runtime.Serialization.ISerializable, System.IFormattable{ 
-            
-        }
-        
-        
-        interface IFormatProvider{ 
-            
-        }
-        
-        
-        class UInt16 extends System.ValueType implements System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>, System.IFormattable{ 
-            
-        }
-        
-        
-        class SystemException extends System.Exception implements System.Runtime.InteropServices._Exception, System.Runtime.Serialization.ISerializable{ 
-            
-        }
-        
-        
-        interface Action$3<T1, T2, T3> { (arg1: T1, arg2: T2, arg3: T3) : void; } 
-        
-        
-        interface Func$2<T, TResult> { (arg: T) : TResult; } 
-        
-        
-    }
-    namespace System.Runtime.Serialization {
-        
-        interface ISerializable{ 
-            
-        }
-        
-        
-        interface IDeserializationCallback{ 
-            
-        }
-        
-        
-    }
-    namespace System.Runtime.InteropServices {
-        
-        interface _Exception{ 
-            
-        }
-        
-        
-        interface _Attribute{ 
-            
-        }
-        
-        
-        interface _MemberInfo{ 
-            
-        }
-        
-        
-        interface _Type{ 
-            
-        }
-        
-        
-        interface _Assembly{ 
-            
-        }
-        
-        
-    }
     namespace System.Collections {
         
         interface IEnumerable{ 
@@ -25377,17 +26030,17 @@ declare module 'csharp' {
     }
     namespace System.Collections.Generic {
         
-        interface IEnumerable$1<T> extends System.Collections.IEnumerable{ 
-            
-        }
-        
-        
         interface IList$1<T> extends System.Collections.IEnumerable, System.Collections.Generic.ICollection$1<T>, System.Collections.Generic.IEnumerable$1<T>{ 
             
         }
         
         
         interface ICollection$1<T> extends System.Collections.IEnumerable, System.Collections.Generic.IEnumerable$1<T>{ 
+            
+        }
+        
+        
+        interface IEnumerable$1<T> extends System.Collections.IEnumerable{ 
             
         }
         
@@ -25433,6 +26086,54 @@ declare module 'csharp' {
         
         
     }
+    namespace UnityEngine.AI.NavMesh {
+        
+        interface OnNavMeshPreUpdate { () : void; } 
+        var OnNavMeshPreUpdate: {new (func: () => void): OnNavMeshPreUpdate;}
+        
+        
+    }
+    namespace System.Runtime.Serialization {
+        
+        interface ISerializable{ 
+            
+        }
+        
+        
+        interface IDeserializationCallback{ 
+            
+        }
+        
+        
+    }
+    namespace System.Runtime.InteropServices {
+        
+        interface _Exception{ 
+            
+        }
+        
+        
+        interface _Attribute{ 
+            
+        }
+        
+        
+        interface _MemberInfo{ 
+            
+        }
+        
+        
+        interface _Type{ 
+            
+        }
+        
+        
+        interface _Assembly{ 
+            
+        }
+        
+        
+    }
     namespace UnityEngine.Playables {
         /** Use the PlayableGraph to manage Playable creations and destructions. */
         class PlayableGraph extends System.ValueType{ 
@@ -25441,6 +26142,16 @@ declare module 'csharp' {
         
         
         interface IPlayable{ 
+            
+        }
+        
+        /** A base class for assets that can be used to instantiate a Playable at runtime. */
+        class PlayableAsset extends UnityEngine.ScriptableObject implements UnityEngine.Playables.IPlayableAsset{ 
+            
+        }
+        
+        
+        interface IPlayableAsset{ 
             
         }
         
@@ -29796,6 +30507,70 @@ declare module 'csharp' {
         }
         
         
+        class Extensions extends System.Object{ 
+            
+            public static IsNull($o: UnityEngine.Object):boolean;
+            
+        }
+        
+        
+        class GameUtility extends System.Object{ 
+            
+            public static AssetsFolderName: string;
+            
+            public static FormatToUnityPath($path: string):string;
+            
+            public static FormatToSysFilePath($path: string):string;
+            
+            public static GetPlatform():string;
+            
+            public static IsMobile():boolean;
+            
+            public static FullPathToAssetPath($full_path: string):string;
+            
+            public static GetFileExtension($path: string):string;
+            
+            public static GetSpecifyFilesInFolder($path: string, $extensions?: System.Array$1<string>, $exclude?: boolean):System.Array$1<string>;
+            
+            public static GetSpecifyFilesInFolder($path: string, $pattern: string):System.Array$1<string>;
+            
+            public static GetAllFilesInFolder($path: string):System.Array$1<string>;
+            
+            public static GetAllDirsInFolder($path: string):System.Array$1<string>;
+            
+            public static CheckFileAndCreateDirWhenNeeded($filePath: string):void;
+            
+            public static CheckDirAndCreateWhenNeeded($folderPath: string):void;
+            
+            public static SafeWriteAllBytes($outFile: string, $outBytes: System.Array$1<number>):boolean;
+            
+            public static SafeWriteAllLines($outFile: string, $outLines: System.Array$1<string>):boolean;
+            
+            public static SafeWriteAllText($outFile: string, $text: string):boolean;
+            
+            public static SafeReadAllBytes($inFile: string):System.Array$1<number>;
+            
+            public static SafeReadAllLines($inFile: string):System.Array$1<string>;
+            
+            public static SafeReadAllText($inFile: string):string;
+            
+            public static DeleteDirectory($dirPath: string):void;
+            
+            public static SafeClearDir($folderPath: string):boolean;
+            
+            public static SafeDeleteDir($folderPath: string):boolean;
+            
+            public static SafeDeleteFile($filePath: string):boolean;
+            
+            public static SafeRenameFile($sourceFileName: string, $destFileName: string):boolean;
+            
+            public static SafeCopyFile($fromFile: string, $toFile: string):boolean;
+            
+            public constructor();
+            
+        }
+        
+        
         class LaunchPage extends UnityEngine.MonoBehaviour{ 
             
             public static URL: string;
@@ -30074,6 +30849,6225 @@ declare module 'csharp' {
     namespace UnityEngine.ResourceManagement.ResourceProviders {
         
         class SceneInstance extends System.ValueType{ 
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime {
+        
+        class BehaviorTree extends BehaviorDesigner.Runtime.Behavior implements BehaviorDesigner.Runtime.IBehavior{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class Behavior extends UnityEngine.MonoBehaviour implements BehaviorDesigner.Runtime.IBehavior{ 
+            
+        }
+        
+        
+        interface IBehavior{ 
+            
+        }
+        
+        
+        class ExternalBehaviorTree extends BehaviorDesigner.Runtime.ExternalBehavior implements BehaviorDesigner.Runtime.IBehavior{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class ExternalBehavior extends UnityEngine.ScriptableObject implements BehaviorDesigner.Runtime.IBehavior{ 
+            
+        }
+        
+        
+        class SharedAnimationCurve extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.AnimationCurve>{ 
+            
+            public static op_Implicit($value: UnityEngine.AnimationCurve):BehaviorDesigner.Runtime.SharedAnimationCurve;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVariable$1<T> extends BehaviorDesigner.Runtime.SharedVariable{ 
+            
+        }
+        
+        
+        class SharedVariable extends System.Object{ 
+            
+        }
+        
+        
+        class SharedBehaviour extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Behaviour>{ 
+            
+            public static op_Explicit($value: UnityEngine.Behaviour):BehaviorDesigner.Runtime.SharedBehaviour;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedBool extends BehaviorDesigner.Runtime.SharedVariable$1<boolean>{ 
+            
+            public static op_Implicit($value: boolean):BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedCollider extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Collider>{ 
+            
+            public static op_Implicit($value: UnityEngine.Collider):BehaviorDesigner.Runtime.SharedCollider;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedColor extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Color>{ 
+            
+            public static op_Implicit($value: UnityEngine.Color):BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedFloat extends BehaviorDesigner.Runtime.SharedVariable$1<number>{ 
+            
+            public static op_Implicit($value: number):BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedGameObject extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.GameObject>{ 
+            
+            public static op_Implicit($value: UnityEngine.GameObject):BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedGameObjectList extends BehaviorDesigner.Runtime.SharedVariable$1<System.Collections.Generic.List$1<UnityEngine.GameObject>>{ 
+            
+            public static op_Implicit($value: System.Collections.Generic.List$1<UnityEngine.GameObject>):BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedInt extends BehaviorDesigner.Runtime.SharedVariable$1<number>{ 
+            
+            public static op_Implicit($value: number):BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedLayerMask extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.LayerMask>{ 
+            
+            public static op_Implicit($value: UnityEngine.LayerMask):BehaviorDesigner.Runtime.SharedLayerMask;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedMaterial extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Material>{ 
+            
+            public static op_Implicit($value: UnityEngine.Material):BehaviorDesigner.Runtime.SharedMaterial;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedObject extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Object>{ 
+            
+            public static op_Explicit($value: UnityEngine.Object):BehaviorDesigner.Runtime.SharedObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedObjectList extends BehaviorDesigner.Runtime.SharedVariable$1<System.Collections.Generic.List$1<UnityEngine.Object>>{ 
+            
+            public static op_Implicit($value: System.Collections.Generic.List$1<UnityEngine.Object>):BehaviorDesigner.Runtime.SharedObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedQuaternion extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Quaternion>{ 
+            
+            public static op_Implicit($value: UnityEngine.Quaternion):BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedRect extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Rect>{ 
+            
+            public static op_Implicit($value: UnityEngine.Rect):BehaviorDesigner.Runtime.SharedRect;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedString extends BehaviorDesigner.Runtime.SharedVariable$1<string>{ 
+            
+            public static op_Implicit($value: string):BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedTransform extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Transform>{ 
+            
+            public static op_Implicit($value: UnityEngine.Transform):BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedTransformList extends BehaviorDesigner.Runtime.SharedVariable$1<System.Collections.Generic.List$1<UnityEngine.Transform>>{ 
+            
+            public static op_Implicit($value: System.Collections.Generic.List$1<UnityEngine.Transform>):BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedUInt extends BehaviorDesigner.Runtime.SharedVariable$1<number>{ 
+            
+            public static op_Implicit($value: number):BehaviorDesigner.Runtime.SharedUInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVector2 extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Vector2>{ 
+            
+            public static op_Implicit($value: UnityEngine.Vector2):BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVector2Int extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Vector2Int>{ 
+            
+            public static op_Implicit($value: UnityEngine.Vector2Int):BehaviorDesigner.Runtime.SharedVector2Int;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVector3 extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Vector3>{ 
+            
+            public static op_Implicit($value: UnityEngine.Vector3):BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVector3Int extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Vector3Int>{ 
+            
+            public static op_Implicit($value: UnityEngine.Vector3Int):BehaviorDesigner.Runtime.SharedVector3Int;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedVector4 extends BehaviorDesigner.Runtime.SharedVariable$1<UnityEngine.Vector4>{ 
+            
+            public static op_Implicit($value: UnityEngine.Vector4):BehaviorDesigner.Runtime.SharedVector4;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedGenericVariable extends BehaviorDesigner.Runtime.SharedVariable$1<BehaviorDesigner.Runtime.GenericVariable>{ 
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks {
+        
+        class BehaviorTreeReference extends BehaviorDesigner.Runtime.Tasks.BehaviorReference{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class BehaviorReference extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+        }
+        
+        
+        class Action extends BehaviorDesigner.Runtime.Tasks.Task{ 
+            
+        }
+        
+        
+        class Task extends System.Object{ 
+            
+        }
+        
+        
+        class Idle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        enum TaskStatus{ Inactive = 0, Failure = 1, Success = 2, Running = 3 }
+        
+        
+        class Log extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public text: BehaviorDesigner.Runtime.SharedString;
+            
+            public logError: BehaviorDesigner.Runtime.SharedBool;
+            
+            public logTime: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class PerformInterruption extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public interruptTasks: System.Array$1<BehaviorDesigner.Runtime.Tasks.Interrupt>;
+            
+            public interruptSuccess: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Interrupt extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public DoInterrupt($status: BehaviorDesigner.Runtime.Tasks.TaskStatus):void;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetFieldValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fieldName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fieldValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPropertyValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public propertyName: BehaviorDesigner.Runtime.SharedString;
+            
+            public propertyValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class InvokeMethod extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public methodName: BehaviorDesigner.Runtime.SharedString;
+            
+            public parameter1: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public parameter2: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public parameter3: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public parameter4: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetFieldValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fieldName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fieldValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPropertyValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public propertyName: BehaviorDesigner.Runtime.SharedString;
+            
+            public propertyValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RestartBehaviorTree extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public behaviorGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public group: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SendEvent extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public eventName: BehaviorDesigner.Runtime.SharedString;
+            
+            public group: BehaviorDesigner.Runtime.SharedInt;
+            
+            public argument1: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public argument2: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public argument3: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StackedAction extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public actions: System.Array$1<BehaviorDesigner.Runtime.Tasks.Action>;
+            
+            public comparisonType: BehaviorDesigner.Runtime.Tasks.StackedAction.ComparisonType;
+            
+            public graphLabel: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StartBehaviorTree extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public behaviorGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public group: BehaviorDesigner.Runtime.SharedInt;
+            
+            public waitForCompletion: BehaviorDesigner.Runtime.SharedBool;
+            
+            public synchronizeVariables: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StopBehaviorTree extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public behaviorGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public group: BehaviorDesigner.Runtime.SharedInt;
+            
+            public pauseBehavior: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Wait extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public waitTime: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public randomWait: BehaviorDesigner.Runtime.SharedBool;
+            
+            public randomWaitMin: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public randomWaitMax: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Parallel extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class Composite extends BehaviorDesigner.Runtime.Tasks.ParentTask{ 
+            
+        }
+        
+        
+        class ParentTask extends BehaviorDesigner.Runtime.Tasks.Task{ 
+            
+        }
+        
+        
+        class ParallelComplete extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class ParallelSelector extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class PrioritySelector extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomSelector extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public seed: number;
+            
+            public useSeed: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomSequence extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public seed: number;
+            
+            public useSeed: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Selector extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class SelectorEvaluator extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class Sequence extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class UtilitySelector extends BehaviorDesigner.Runtime.Tasks.Composite{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasReceivedEvent extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public eventName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storedValue1: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public storedValue2: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public storedValue3: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Conditional extends BehaviorDesigner.Runtime.Tasks.Task{ 
+            
+        }
+        
+        
+        class HasEnteredCollision extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public collidedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasEnteredCollision2D extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public collidedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasEnteredTrigger extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public otherGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasEnteredTrigger2D extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public otherGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasExitedCollision extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public collidedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasExitedCollision2D extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public collidedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasExitedTrigger extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public otherGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasExitedTrigger2D extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public otherGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomProbability extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public successProbability: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public seed: BehaviorDesigner.Runtime.SharedInt;
+            
+            public useSeed: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareFieldValue extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fieldName: BehaviorDesigner.Runtime.SharedString;
+            
+            public compareValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ComparePropertyValue extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public componentName: BehaviorDesigner.Runtime.SharedString;
+            
+            public propertyName: BehaviorDesigner.Runtime.SharedString;
+            
+            public compareValue: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StackedConditional extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public conditionals: System.Array$1<BehaviorDesigner.Runtime.Tasks.Conditional>;
+            
+            public comparisonType: BehaviorDesigner.Runtime.Tasks.StackedConditional.ComparisonType;
+            
+            public graphLabel: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ConditionalEvaluator extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public reevaluate: BehaviorDesigner.Runtime.SharedBool;
+            
+            public conditionalTask: BehaviorDesigner.Runtime.Tasks.Conditional;
+            
+            public graphLabel: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Decorator extends BehaviorDesigner.Runtime.Tasks.ParentTask{ 
+            
+        }
+        
+        
+        class Cooldown extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public duration: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Inverter extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class Repeater extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public count: BehaviorDesigner.Runtime.SharedInt;
+            
+            public repeatForever: BehaviorDesigner.Runtime.SharedBool;
+            
+            public endOnFailure: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ReturnFailure extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class ReturnSuccess extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class TaskGuard extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public maxTaskAccessCount: BehaviorDesigner.Runtime.SharedInt;
+            
+            public linkedTaskGuards: System.Array$1<BehaviorDesigner.Runtime.Tasks.TaskGuard>;
+            
+            public waitUntilTaskAvailable: BehaviorDesigner.Runtime.SharedBool;
+            
+            public taskExecuting($increase: boolean):void;
+            
+            public constructor();
+            
+        }
+        
+        
+        class UntilFailure extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class UntilSuccess extends BehaviorDesigner.Runtime.Tasks.Decorator{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class EntryTask extends BehaviorDesigner.Runtime.Tasks.ParentTask{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class ObjectDrawerAttribute extends System.Attribute implements System.Runtime.InteropServices._Attribute{ 
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.StackedAction {
+        
+        enum ComparisonType{ Sequence = 0, Selector = 1 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.StackedConditional {
+        
+        enum ComparisonType{ Sequence = 0, Selector = 1 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3 {
+        
+        class Angle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public firstVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public secondVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ClampMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public maxLength: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Distance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public firstVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public secondVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Dot extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public leftHandSide: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public rightHandSide: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetForwardVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRightVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSqrMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetUpVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVector2 extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetXYZ extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeX: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeY: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeZ: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Lerp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public toVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public lerpAmount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MoveTowards extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public currentPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public targetPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public speed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Multiply extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public multiplyBy: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Normalize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Operator extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3.Operator.Operation;
+            
+            public firstVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public secondVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RotateTowards extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public currentRotation: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public targetRotation: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public maxDegreesDelta: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public maxMagnitudeDelta: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Value: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetXYZ extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public xValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public yValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public zValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3.Operator {
+        
+        enum Operation{ Add = 0, Subtract = 1, Scale = 2 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityVector2 {
+        
+        class ClampMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public maxLength: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Distance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public firstVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public secondVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Dot extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public leftHandSide: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public rightHandSide: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRightVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSqrMagnitude extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetUpVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVector3 extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector3Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetXY extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeX: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeY: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Lerp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public toVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public lerpAmount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MoveTowards extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public currentPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public targetPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public speed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Multiply extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public multiplyBy: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Normalize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Operator extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.UnityVector2.Operator.Operation;
+            
+            public firstVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public secondVector2: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Value: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetXY extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public vector2Variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public xValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public yValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityVector2.Operator {
+        
+        enum Operation{ Add = 0, Subtract = 1, Scale = 2 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityTransform {
+        
+        class Find extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public transformName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngleToTarget extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public targetObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public targetPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public ignoreHeight: BehaviorDesigner.Runtime.SharedBool;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetChild extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public index: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetChildCount extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetEulerAngles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetForwardVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLocalEulerAngles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLocalPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLocalRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLocalScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetParent extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRightVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetUpVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsChildOf extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public transformName: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class LookAt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public targetLookAt: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public worldPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public worldUp: UnityEngine.Vector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Rotate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public eulerAngles: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public relativeTo: UnityEngine.Space;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RotateAround extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public point: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public axis: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public angle: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetEulerAngles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public eulerAngles: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetForwardVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLocalEulerAngles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public localEulerAngles: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLocalPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public localPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLocalRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public localRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLocalScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public localScale: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetParent extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public parent: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRightVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetUpVector extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Translate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public translation: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public relativeTo: UnityEngine.Space;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Timeline {
+        
+        class IsPaused extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsPlaying extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Pause extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Play extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public playableAsset: UnityEngine.Playables.PlayableAsset;
+            
+            public stopWhenComplete: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Resume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public stopWhenComplete: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Stop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityTime {
+        
+        class GetDeltaTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRealtimeSinceStartup extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTimeScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetTimeScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public timeScale: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityString {
+        
+        class BuildString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public source: System.Array$1<BehaviorDesigner.Runtime.SharedString>;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareTo extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public firstString: BehaviorDesigner.Runtime.SharedString;
+            
+            public secondString: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Format extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public format: BehaviorDesigner.Runtime.SharedString;
+            
+            public variables: System.Array$1<BehaviorDesigner.Runtime.SharedGenericVariable>;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLength extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetString: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRandomString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public source: System.Array$1<BehaviorDesigner.Runtime.SharedString>;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSubstring extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetString: BehaviorDesigner.Runtime.SharedString;
+            
+            public startIndex: BehaviorDesigner.Runtime.SharedInt;
+            
+            public length: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsNullOrEmpty extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetString: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Replace extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetString: BehaviorDesigner.Runtime.SharedString;
+            
+            public oldString: BehaviorDesigner.Runtime.SharedString;
+            
+            public newString: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedString;
+            
+            public value: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnitySphereCollider {
+        
+        class GetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public center: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables {
+        
+        class CompareSharedBool extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedBool;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedColor extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedColor;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedFloat extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedGameObject extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedGameObjectList extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedInt extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedInt;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedObject extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedObject;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedObjectList extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedObjectList;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedQuaternion extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedRect extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedRect;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedRect;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedString extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedString;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedTransform extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedTransformList extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedVector2 extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedVector3 extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareSharedVector4 extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedVector4;
+            
+            public compareTo: BehaviorDesigner.Runtime.SharedVector4;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedBool extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedColor extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedColor;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedFloat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedGameObject extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public valueCanBeNull: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedGameObjectList extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedInt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedObject extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedObject;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedObjectList extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedObjectList;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedQuaternion extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedRect extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedRect;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedRect;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedString;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedTransform extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedTransformList extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedVector2 extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedVector3 extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSharedVector4 extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetValue: BehaviorDesigner.Runtime.SharedVector4;
+            
+            public targetVariable: BehaviorDesigner.Runtime.SharedVector4;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedGameObjectToTransform extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public sharedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public sharedTransform: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedGameObjectsToGameObjectList extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public gameObjects: System.Array$1<BehaviorDesigner.Runtime.SharedGameObject>;
+            
+            public storedGameObjectList: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedTransformToGameObject extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public sharedTransform: BehaviorDesigner.Runtime.SharedTransform;
+            
+            public sharedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SharedTransformsToTransformList extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public transforms: System.Array$1<BehaviorDesigner.Runtime.SharedTransform>;
+            
+            public storedTransformList: BehaviorDesigner.Runtime.SharedTransformList;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityRigidbody2D {
+        
+        class AddForce extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public force: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddForceAtPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public force: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddTorque extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public torque: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngularDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngularVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetGravityScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIsKinematic extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsKinematic extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsSleeping extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MovePosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MoveRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rotation: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAngularDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public angularDrag: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAngularVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public angularVelocity: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public drag: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetGravityScale extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public gravityScale: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIsKinematic extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public isKinematic: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public mass: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public velocity: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Sleep extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class WakeUp extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityRigidbody {
+        
+        class AddExplosionForce extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public explosionForce: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public explosionPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public explosionRadius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public upwardsModifier: number;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddForce extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public force: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddForceAtPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public force: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddRelativeForce extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public force: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddRelativeTorque extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public torque: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AddTorque extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public torque: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public forceMode: UnityEngine.ForceMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngularDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngularVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetCenterOfMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetFreezeRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIsKinematic extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetUseGravity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsKinematic extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsSleeping extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MovePosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MoveRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAngularDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public angularDrag: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAngularVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public angularVelocity: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCenterOfMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public centerOfMass: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetConstraints extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constraints: UnityEngine.RigidbodyConstraints;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetDrag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public drag: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetFreezeRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public freezeRotation: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIsKinematic extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public isKinematic: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMass extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public mass: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetUseGravity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public useGravity: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public velocity: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Sleep extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class UseGravity extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class WakeUp extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityRenderer {
+        
+        class IsVisible extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMaterial extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public material: BehaviorDesigner.Runtime.SharedMaterial;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion {
+        
+        class Angle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public firstRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public secondRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class AngleAxis extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public degrees: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public axis: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Dot extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public leftRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public rightRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Euler extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public eulerVector: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FromToRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromDirection: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public toDirection: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Identity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Inverse extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Lerp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public toQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public amount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class LookRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public forwardVector: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public secondVector3: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RotateTowards extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public toQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public maxDeltaDegrees: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Slerp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public toQuaternion: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public amount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityPlayerPrefs {
+        
+        class DeleteAll extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class DeleteKey extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetFloat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public defaultValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetInt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public defaultValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public defaultValue: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasKey extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Save extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetFloat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public value: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetInt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public value: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetString extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: BehaviorDesigner.Runtime.SharedString;
+            
+            public value: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityPhysics2D {
+        
+        class Circlecast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public originGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public originPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public direction: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public distance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public space: UnityEngine.Space;
+            
+            public storeHitObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeHitPoint: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeHitNormal: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeHitDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Linecast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public startPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public endPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Raycast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public originGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public originPosition: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public direction: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public distance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public space: UnityEngine.Space;
+            
+            public storeHitObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeHitPoint: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeHitNormal: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public storeHitDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityPhysics {
+        
+        class Linecast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public startPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public endPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Raycast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public originGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public originPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public direction: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public distance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public space: UnityEngine.Space;
+            
+            public storeHitObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeHitPoint: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeHitNormal: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeHitDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SphereCast extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public originGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public originPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public direction: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public distance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public layerMask: UnityEngine.LayerMask;
+            
+            public space: UnityEngine.Space;
+            
+            public storeHitObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeHitPoint: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeHitNormal: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public storeHitDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem {
+        
+        class Clear extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDuration extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetEmissionRate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetEnableEmission extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLoop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMaxParticles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetParticleCount extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPlaybackSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsAlive extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsPaused extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsPlaying extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsStopped extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Pause extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Play extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetEmissionRate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public emissionRate: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetEnableEmission extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public enable: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLoop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public loop: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMaxParticles extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public maxParticles: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPlaybackSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public playbackSpeed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartColor extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startColor: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartDelay extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startDelay: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartLifetime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startLifetime: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startRotation: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startSize: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStartSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public startSpeed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Simulate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Stop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent {
+        
+        class GetAcceleration extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAngularSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDestination extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIsStopped extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRemainingDistance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsStopped extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Move extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public offset: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ResetPath extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Resume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAcceleration extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public acceleration: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAngularSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public angularSpeed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetDestination extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public destination: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIsStopped extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public isStopped: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public speed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Stop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Warp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public newPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math {
+        
+        class BoolComparison extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public bool1: BehaviorDesigner.Runtime.SharedBool;
+            
+            public bool2: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class BoolFlip extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public boolVariable: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class BoolOperator extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolOperator.Operation;
+            
+            public bool1: BehaviorDesigner.Runtime.SharedBool;
+            
+            public bool2: BehaviorDesigner.Runtime.SharedBool;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FloatAbs extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public floatVariable: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FloatClamp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public floatVariable: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public minValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public maxValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FloatComparison extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatComparison.Operation;
+            
+            public float1: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public float2: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FloatOperator extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatOperator.Operation;
+            
+            public float1: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public float2: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IntAbs extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public intVariable: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IntClamp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public intVariable: BehaviorDesigner.Runtime.SharedInt;
+            
+            public minValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public maxValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IntComparison extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.Math.IntComparison.Operation;
+            
+            public integer1: BehaviorDesigner.Runtime.SharedInt;
+            
+            public integer2: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IntOperator extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public operation: BehaviorDesigner.Runtime.Tasks.Unity.Math.IntOperator.Operation;
+            
+            public integer1: BehaviorDesigner.Runtime.SharedInt;
+            
+            public integer2: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsFloatPositive extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public floatVariable: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsIntPositive extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public intVariable: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Lerp extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public toValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public lerpAmount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class LerpAngle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public fromValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public toValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public lerpAmount: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomBool extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomFloat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public min: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public max: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public inclusive: boolean;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class RandomInt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public min: BehaviorDesigner.Runtime.SharedInt;
+            
+            public max: BehaviorDesigner.Runtime.SharedInt;
+            
+            public inclusive: boolean;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetBool extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public boolValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetFloat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public floatValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetInt extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public intValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math.BoolOperator {
+        
+        enum Operation{ AND = 0, OR = 1, NAND = 2, XOR = 3 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatComparison {
+        
+        enum Operation{ LessThan = 0, LessThanOrEqualTo = 1, EqualTo = 2, NotEqualTo = 3, GreaterThanOrEqualTo = 4, GreaterThan = 5 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatOperator {
+        
+        enum Operation{ Add = 0, Subtract = 1, Multiply = 2, Divide = 3, Min = 4, Max = 5, Modulo = 6 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math.IntComparison {
+        
+        enum Operation{ LessThan = 0, LessThanOrEqualTo = 1, EqualTo = 2, NotEqualTo = 3, GreaterThanOrEqualTo = 4, GreaterThan = 5 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Math.IntOperator {
+        
+        enum Operation{ Add = 0, Subtract = 1, Multiply = 2, Divide = 3, Min = 4, Max = 5, Modulo = 6 }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityLight {
+        
+        class GetColor extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetCookieSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIntensity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRange extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetShadowBias extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetShadowStrength extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSpotAngle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetColor extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public color: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCookie extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public cookie: UnityEngine.Texture2D;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCookieSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public cookieSize: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCullingMask extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public cullingMask: UnityEngine.LayerMask;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIntensity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public intensity: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRange extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public range: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetShadowBias extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public shadowBias: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetShadowSoftnessStrength extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public shadowStrength: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetShadows extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public shadows: UnityEngine.LightShadows;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSpotAngle extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public spotAngle: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetType extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public type: UnityEngine.LightType;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityLayerMask {
+        
+        class GetLayer extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLayer extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public layerName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityInput {
+        
+        class GetAcceleration extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAxis extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public axisName: BehaviorDesigner.Runtime.SharedString;
+            
+            public multiplier: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAxisRaw extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public axisName: BehaviorDesigner.Runtime.SharedString;
+            
+            public multiplier: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetButton extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public buttonName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetKey extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public key: UnityEngine.KeyCode;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMouseButton extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public buttonIndex: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMousePosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsButtonDown extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public buttonName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsButtonUp extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public buttonName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsKeyDown extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public key: UnityEngine.KeyCode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsKeyUp extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public key: UnityEngine.KeyCode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsMouseDown extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public buttonIndex: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsMouseUp extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public buttonIndex: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject {
+        
+        class ActiveInHierarchy extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class ActiveSelf extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareLayerMask extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public layermask: UnityEngine.LayerMask;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CompareTag extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Destroy extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class DestroyImmediate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Find extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public gameObjectName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FindGameObjectsWithTag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedGameObjectList;
+            
+            public constructor();
+            
+        }
+        
+        
+        class FindWithTag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public random: BehaviorDesigner.Runtime.SharedBool;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetComponent extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public type: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Instantiate extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public rotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public storeResult: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SendMessage extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public message: BehaviorDesigner.Runtime.SharedString;
+            
+            public value: BehaviorDesigner.Runtime.SharedGenericVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetActive extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public active: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetTag extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityDebug {
+        
+        class DrawLine extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public start: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public end: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public color: BehaviorDesigner.Runtime.SharedColor;
+            
+            public duration: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public depthTest: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class DrawRay extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public start: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public direction: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public color: BehaviorDesigner.Runtime.SharedColor;
+            
+            public constructor();
+            
+        }
+        
+        
+        class LogFormat extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public textFormat: BehaviorDesigner.Runtime.SharedString;
+            
+            public logError: BehaviorDesigner.Runtime.SharedBool;
+            
+            public arg0: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public arg1: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public arg2: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public arg3: BehaviorDesigner.Runtime.SharedVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+        class LogValue extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public variable: BehaviorDesigner.Runtime.SharedGenericVariable;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.Collider {
+        
+        class GetEnabled extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public specifiedCollider: BehaviorDesigner.Runtime.SharedCollider;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetEnabled extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public specifiedCollider: BehaviorDesigner.Runtime.SharedCollider;
+            
+            public enabled: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D {
+        
+        class GetOffset extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetOffset extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public offset: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityCharacterController {
+        
+        class GetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetHeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSlopeLimit extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetStepOffset extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVelocity extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class HasColliderHit extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public tag: BehaviorDesigner.Runtime.SharedString;
+            
+            public collidedGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsGrounded extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Move extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public motion: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public center: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetHeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public height: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSlopeLimit extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public slopeLimit: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetStepOffset extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public stepOffset: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SimpleMove extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public speed: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityCapsuleCollider {
+        
+        class GetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDirection extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetHeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public center: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetDirection extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public direction: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetHeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public direction: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRadius extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public radius: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityBoxCollider2D {
+        
+        class GetSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public size: BehaviorDesigner.Runtime.SharedVector2;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityBoxCollider {
+        
+        class GetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetCenter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public center: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSize extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public size: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityBehaviour {
+        
+        class GetEnabled extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public specifiedObject: BehaviorDesigner.Runtime.SharedBehaviour;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsEnabled extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public specifiedObject: BehaviorDesigner.Runtime.SharedObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetEnabled extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public specifiedObject: BehaviorDesigner.Runtime.SharedBehaviour;
+            
+            public enabled: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAudioSource {
+        
+        class GetIgnoreListenerPause extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIgnoreListenerVolume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLoop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMaxDistance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMinDistance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetMute extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPitch extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetPriority extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSpread extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetTimeSamples extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetVolume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsPlaying extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Pause extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Play extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class PlayDelayed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public delay: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class PlayOneShot extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public clip: BehaviorDesigner.Runtime.SharedObject;
+            
+            public volumeScale: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class PlayScheduled extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAudioClip extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public audioClip: UnityEngine.AudioClip;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIgnoreListenerVolume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public ignoreListenerVolume: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIgnoreListenerPause extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public ignoreListenerPause: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLoop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public loop: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMaxDistance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public maxDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMinDistance extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public minDistance: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetMute extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public mute: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPitch extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public pitch: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetPriority extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public priority: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetRolloffMode extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rolloffMode: UnityEngine.AudioRolloffMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetScheduledEndTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetScheduledStartTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSpread extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public spread: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetTime extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public time: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetVelocityUpdateMode extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public velocityUpdateMode: UnityEngine.AudioVelocityUpdateMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetVolume extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public volume: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Stop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimator {
+        
+        class CrossFade extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public stateName: BehaviorDesigner.Runtime.SharedString;
+            
+            public transitionDuration: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public layer: number;
+            
+            public normalizedTime: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetApplyRootMotion extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetBoolParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDeltaPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetDeltaRotation extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetFloatParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetGravityWeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetIntegerParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetLayerWeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public index: BehaviorDesigner.Runtime.SharedInt;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetStringToHash extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public stateName: BehaviorDesigner.Runtime.SharedString;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class InterruptMatchTarget extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public completeMatch: boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsInTransition extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public index: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsName extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public index: BehaviorDesigner.Runtime.SharedInt;
+            
+            public name: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsParameterControlledByCurve extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class MatchTarget extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public matchPosition: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public matchRotation: BehaviorDesigner.Runtime.SharedQuaternion;
+            
+            public targetBodyPart: UnityEngine.AvatarTarget;
+            
+            public weightMaskPosition: UnityEngine.Vector3;
+            
+            public weightMaskRotation: number;
+            
+            public startNormalizedTime: number;
+            
+            public targetNormalizedTime: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Play extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public stateName: BehaviorDesigner.Runtime.SharedString;
+            
+            public layer: number;
+            
+            public normalizedTime: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetApplyRootMotion extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public rootMotion: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetBoolParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public boolValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public setOnce: boolean;
+            
+            public ResetValue($origVale: boolean):System.Collections.IEnumerator;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetFloatParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public floatValue: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public setOnce: boolean;
+            
+            public ResetValue($origVale: number):System.Collections.IEnumerator;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetIntegerParameter extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public intValue: BehaviorDesigner.Runtime.SharedInt;
+            
+            public setOnce: boolean;
+            
+            public ResetValue($origVale: number):System.Collections.IEnumerator;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLayerWeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public index: BehaviorDesigner.Runtime.SharedInt;
+            
+            public weight: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLookAtPosition extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public position: BehaviorDesigner.Runtime.SharedVector3;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetLookAtWeight extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public weight: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public bodyWeight: number;
+            
+            public headWeight: number;
+            
+            public eyesWeight: number;
+            
+            public clampWeight: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetSpeed extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public speed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetTrigger extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public paramaterName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StartPlayback extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StartRecording extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public frameCount: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StopPlayback extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class StopRecording extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class WaitForState extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public stateName: BehaviorDesigner.Runtime.SharedString;
+            
+            public layer: BehaviorDesigner.Runtime.SharedInt;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityAnimation {
+        
+        class Blend extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public targetWeight: number;
+            
+            public fadeLength: number;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CrossFade extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public animationSpeed: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public fadeLength: BehaviorDesigner.Runtime.SharedFloat;
+            
+            public playMode: UnityEngine.PlayMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class CrossFadeQueued extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public fadeLength: number;
+            
+            public queue: UnityEngine.QueueMode;
+            
+            public playMode: UnityEngine.PlayMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GetAnimatePhysics extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public storeValue: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class IsPlaying extends BehaviorDesigner.Runtime.Tasks.Conditional{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Play extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public playMode: UnityEngine.PlayMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class PlayQueued extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public queue: UnityEngine.QueueMode;
+            
+            public playMode: UnityEngine.PlayMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Rewind extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Sample extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetAnimatePhysics extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animatePhysics: BehaviorDesigner.Runtime.SharedBool;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SetWrapMode extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public wrapMode: UnityEngine.WrapMode;
+            
+            public constructor();
+            
+        }
+        
+        
+        class Stop extends BehaviorDesigner.Runtime.Tasks.Action{ 
+            
+            public targetGameObject: BehaviorDesigner.Runtime.SharedGameObject;
+            
+            public animationName: BehaviorDesigner.Runtime.SharedString;
+            
+            public constructor();
+            
+        }
+        
+        
+    }
+    namespace BehaviorDesigner.Runtime.ObjectDrawers {
+        
+        class FloatSliderAttribute extends BehaviorDesigner.Runtime.Tasks.ObjectDrawerAttribute implements System.Runtime.InteropServices._Attribute{ 
+            
+            public min: number;
+            
+            public max: number;
+            
+            public constructor($min: number, $max: number);
+            
+        }
+        
+        
+        class IntSliderAttribute extends BehaviorDesigner.Runtime.Tasks.ObjectDrawerAttribute implements System.Runtime.InteropServices._Attribute{ 
+            
+            public min: number;
+            
+            public max: number;
+            
+            public constructor($min: number, $max: number);
             
         }
         

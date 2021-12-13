@@ -1,3 +1,4 @@
+import BattleScene from "../../game/module/pvp/BattleScene";
 import { BaseScene } from "./BaseScene";
 import { SceneDef } from "./SceneDef";
 
@@ -12,7 +13,7 @@ export class SceneFactory{
 
         switch (sceneName){
             case SceneDef.BattleScene:
-                // scene = new LoginScene();
+                scene = new BattleScene();
                 break;
         }
 

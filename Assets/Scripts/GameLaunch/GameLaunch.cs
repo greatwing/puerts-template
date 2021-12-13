@@ -39,6 +39,6 @@ public class GameLaunch : MonoSingleton<GameLaunch>
 
     public void JsLuanchFinish()
     {
-        Debug.Log("JsLuanchFinish !!");
+        //Debug.Log("JsLuanchFinish !!");
     }
 }
