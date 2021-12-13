@@ -10,12 +10,16 @@ export default class BattleScene extends BaseScene {
         let objCW = UnityEngine.GameObject.Find("Team1/CubeWhite");
         let objCB = UnityEngine.GameObject.Find("Team2/CubeBlue");
         if(objCW && objCB) {
-            Logger.log(`objCW = ${objCW.name}`)
-            
-            let agent = objCW.GetComponent($typeof(UnityEngine.AI.NavMeshAgent)) as UnityEngine.AI.NavMeshAgent;
-            if(!agent.IsNull()) {
-                Logger.log(`find agent!!`)
+            let agentCW = objCW.GetComponent($typeof(UnityEngine.AI.NavMeshAgent)) as UnityEngine.AI.NavMeshAgent;
+            if(!agentCW.IsNull()) {
                 // agent.SetDestination(objCB.transform.position);
+                agentCW.SetDestination(new UnityEngine.Vector3(0,0,-2));
+            }
+
+            let agentCB = objCB.GetComponent($typeof(UnityEngine.AI.NavMeshAgent)) as UnityEngine.AI.NavMeshAgent;
+            if(!agentCB.IsNull()) {
+                // agent.SetDestination(objCB.transform.position);
+                agentCB.SetDestination(new UnityEngine.Vector3(0,0,2));
             }
         }
     }
