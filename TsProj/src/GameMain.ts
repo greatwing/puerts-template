@@ -1,8 +1,8 @@
 
 // import {UnitTest} from './unittest/UnitTest';
 import { JsManager ,GameLaunch } from 'csharp';
-// import { SceneDef } from './framework/scene/SceneDef';
-// import { S } from './global/GameConfig';
+import { SceneDef } from './framework/scene/SceneDef';
+import { S } from './global/GameConfig';
 import { Logger } from './framework/logger/Logger';
 // import { commonUI } from './data/ui/common';
 // import { UIServerListItem } from './game/module/login/ui/UIServerListItem';
@@ -16,7 +16,7 @@ class GameMain{
         JsManager.Instance.JsOnDispose = () => this.onDispose();
     }
 
-    public start() {
+    public async start() {
         
         try{
             Logger.log("Game start in JS....");
@@ -33,6 +33,7 @@ class GameMain{
 
             // //进入登录模块
             // await S.SceneManager.loadScene(SceneDef.LoginScene);
+            await S.SceneManager.loadScene(SceneDef.BattleScene);
 
             
             //JS启动完成，通知C#层

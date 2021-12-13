@@ -29,7 +29,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -39,8 +39,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 156
-        y: 33.5
+        x: 158.2
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Address
@@ -59,7 +59,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -69,8 +69,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Load from Effect
@@ -89,8 +89,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 135
-        y: 33.5
+        x: 137.4
+        y: 33.7
         width: 10
         height: 23
   - m_name: Load from Models
@@ -109,8 +109,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 143
-        y: 33.5
+        x: 146.2
+        y: 33.7
         width: 10
         height: 23
   - m_name: Load from Shaders
@@ -129,8 +129,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 148
-        y: 33.5
+        x: 151
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set To Model Group
@@ -149,7 +149,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -159,8 +159,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 155
-        y: 33.5
+        x: 157.4
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set To Shaders Group
@@ -179,7 +179,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -189,8 +189,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 166
-        y: 33.5
+        x: 168.6
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Address
@@ -209,7 +209,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -219,8 +219,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Address
@@ -239,7 +239,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -249,8 +249,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Address
@@ -269,7 +269,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -279,8 +279,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Load from Js
@@ -299,8 +299,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 115
-        y: 33.5
+        x: 117.4
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set  To Static Group
@@ -319,7 +319,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -329,8 +329,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 156
-        y: 33.5
+        x: 158.2
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Label
@@ -349,7 +349,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -359,8 +359,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 130
-        y: 33.5
+        x: 132.6
+        y: 33.7
         width: 10
         height: 23
   - m_name: Load from Scenes
@@ -379,8 +379,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set Asset Address
@@ -399,7 +399,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -409,8 +409,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 144
-        y: 33.5
+        x: 147
+        y: 33.7
         width: 10
         height: 23
   - m_name: Set To Scenes Group
@@ -429,7 +429,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.5
+        y: 30.7
         width: 21
         height: 29
     m_outputPoints:
@@ -439,8 +439,8 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 162
-        y: 33.5
+        x: 164.6
+        y: 33.7
         width: 10
         height: 23
   m_allConnections:
