@@ -7,7 +7,7 @@ const externals = {
 };
 
 module.exports = {
-	entry: './src/GameMain.ts',
+	entry: './src/index.js',
 	devtool: 'inline-source-map',
 	mode: 'development',
 	module: {

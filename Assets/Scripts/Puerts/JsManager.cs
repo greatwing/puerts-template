@@ -52,9 +52,6 @@ public class JsManager:MonoSingleton<JsManager>
         jsEnv.UsingAction<float, float>();
         jsEnv.UsingAction<string, byte[]>();
         jsEnv.UsingAction<Scene, LoadSceneMode>();
-        //jsEnv.UsingAction<TChannel, int>();
-        //jsEnv.UsingAction<int, GObject>();
-
     }
 
     public async void StartGame()

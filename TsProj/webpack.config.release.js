@@ -7,7 +7,7 @@ const externals = {
 };
 
 module.exports = {
-	entry: './src/GameMain.ts',
+	entry: './src/index.js',
 	mode: 'production',
 	module: {
 		rules: [
