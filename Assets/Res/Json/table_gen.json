@@ -1,0 +1,75 @@
+{
+	"@Tool": "github.com/davyxu/tabtoy",
+	"@Version": "",
+	"ConfigTable": [
+		{
+			"InitDiamond": 0,
+			"InitialCards": [
+				11004,
+				11003,
+				11002,
+				11010,
+				11000
+			],
+			"noticeversion": "1"
+		}
+	],
+	"ItemTable": [
+		{
+			"Desc": "闪亮的金币，能够购买一些简单的道具",
+			"ID": 1,
+			"Icon": "ItemIcon/tb_jinbi_da",
+			"Name": "金币",
+			"Quality": 0,
+			"Type": 2
+		},
+		{
+			"Desc": "稀有的钻石，能够购买一些昂贵道具",
+			"ID": 2,
+			"Icon": "ItemIcon/tb_jinbi3_da",
+			"Name": "钻石",
+			"Quality": 0,
+			"Type": 2
+		},
+		{
+			"Desc": "能够提升首领宝箱等级",
+			"ID": 3,
+			"Icon": "ItemIcon/tb_jinbi4_da",
+			"Name": "能量",
+			"Quality": 0,
+			"Type": 2
+		},
+		{
+			"Desc": "能够提升账号等级",
+			"ID": 4,
+			"Icon": "ItemIcon/tb_jinbi5_da",
+			"Name": "经验",
+			"Quality": 0,
+			"Type": 2
+		},
+		{
+			"Desc": "",
+			"ID": 11000,
+			"Icon": "charactor/small/sos_004_m",
+			"Name": "安迪",
+			"Quality": 0,
+			"Type": 0
+		},
+		{
+			"Desc": "",
+			"ID": 11001,
+			"Icon": "charactor/small/sos_oumi_m",
+			"Name": "欧米",
+			"Quality": 0,
+			"Type": 0
+		},
+		{
+			"Desc": "",
+			"ID": 11002,
+			"Icon": "charactor/small/sos_chenguang_m",
+			"Name": "晨光",
+			"Quality": 0,
+			"Type": 0
+		}
+	]
+}

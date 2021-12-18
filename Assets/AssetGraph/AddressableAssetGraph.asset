@@ -15,8 +15,8 @@ MonoBehaviour:
   m_allNodes:
   - m_name: Set  To Static Group
     m_id: c1ab64af-0da2-424c-a409-5eeae33723d3
-    m_x: 444
-    m_y: 48
+    m_x: 432
+    m_y: 24
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -29,7 +29,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -39,14 +39,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 158.2
-        y: 33.7
+        x: 156
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Address
     m_id: 83e0ee57-48a9-4bc6-8bb1-eae7d35471a4
-    m_x: 240
-    m_y: 48
+    m_x: 228
+    m_y: 24
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -59,7 +59,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -69,14 +69,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Load from Effect
     m_id: 05be2cbe-27a8-44ec-b1ff-68f4467b45ad
-    m_x: 36
-    m_y: 48
+    m_x: 24
+    m_y: 24
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -89,14 +89,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 137.4
-        y: 33.7
+        x: 135
+        y: 33.5
         width: 10
         height: 23
   - m_name: Load from Models
     m_id: 2d389074-25a9-4783-bb27-8ea516985aa7
     m_x: 24
-    m_y: 252
+    m_y: 192
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -109,14 +109,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 146.2
-        y: 33.7
+        x: 143
+        y: 33.5
         width: 10
         height: 23
   - m_name: Load from Shaders
     m_id: 0fe54b6f-a9f0-4370-845c-093485aa38f9
     m_x: 24
-    m_y: 336
+    m_y: 276
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -129,14 +129,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 151
-        y: 33.7
+        x: 148
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set To Model Group
     m_id: c1f82aa7-621a-41d0-818b-0c7dbf5da5c4
     m_x: 432
-    m_y: 252
+    m_y: 192
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -149,7 +149,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -159,14 +159,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 157.4
-        y: 33.7
+        x: 155
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set To Shaders Group
     m_id: 4a94520f-b558-4a51-96e9-c5352f2fb228
     m_x: 432
-    m_y: 336
+    m_y: 276
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -179,7 +179,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -189,14 +189,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 168.6
-        y: 33.7
+        x: 166
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Address
     m_id: 2841b283-b920-404c-8fcd-7bffe75ef4c7
     m_x: 228
-    m_y: 168
+    m_y: 108
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -209,7 +209,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -219,14 +219,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Address
     m_id: f6af582c-9182-4781-b356-9d030119f74d
-    m_x: 216
-    m_y: 252
+    m_x: 228
+    m_y: 192
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -239,7 +239,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -249,14 +249,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Address
     m_id: ce6146f3-88f6-4f55-9780-1424957003d3
-    m_x: 216
-    m_y: 336
+    m_x: 228
+    m_y: 276
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -269,7 +269,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -279,14 +279,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Load from Js
     m_id: 38e4bd39-4230-4f7a-9678-20a273fdcc43
-    m_x: 36
-    m_y: 168
+    m_x: 24
+    m_y: 108
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -299,14 +299,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 117.4
-        y: 33.7
+        x: 115
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set  To Static Group
     m_id: 2119f83e-e287-4e55-9453-bd333c900357
-    m_x: 444
-    m_y: 168
+    m_x: 432
+    m_y: 108
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -319,7 +319,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -329,14 +329,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 158.2
-        y: 33.7
+        x: 156
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Label
     m_id: 54306f51-43a7-47d1-8398-bea278ebb0e3
-    m_x: 672
-    m_y: 168
+    m_x: 660
+    m_y: 108
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetLabel, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -349,7 +349,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -359,14 +359,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 132.6
-        y: 33.7
+        x: 130
+        y: 33.5
         width: 10
         height: 23
   - m_name: Load from Scenes
     m_id: d03817f8-49c7-424c-b0f4-343b6d8d4c40
     m_x: 24
-    m_y: 432
+    m_y: 360
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -379,14 +379,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set Asset Address
     m_id: c5d7bcee-e374-4c82-97d6-bab4b0bf61d8
     m_x: 228
-    m_y: 432
+    m_y: 360
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -399,7 +399,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -409,14 +409,14 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 147
-        y: 33.7
+        x: 144
+        y: 33.5
         width: 10
         height: 23
   - m_name: Set To Scenes Group
     m_id: 14b3ad3a-0e96-457c-b5c6-66eb3f98c34f
     m_x: 432
-    m_y: 432
+    m_y: 360
     m_nodeInstance:
       m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -429,7 +429,7 @@ MonoBehaviour:
       buttonRect:
         serializedVersion: 2
         x: 0
-        y: 30.7
+        y: 30.5
         width: 21
         height: 29
     m_outputPoints:
@@ -439,8 +439,88 @@ MonoBehaviour:
       isInput: 0
       buttonRect:
         serializedVersion: 2
-        x: 164.6
-        y: 33.7
+        x: 162
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: Load From Json
+    m_id: 245bb4e8-68ce-492f-97a9-d5eaae51460c
+    m_x: 24
+    m_y: 444
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.Loader, Unity.AssetGraph.Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2xvYWRQYXRoIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiJSZXMvSnNvbiJ9XX0sIm1fbG9hZFBhdGhHdWlkIjp7Im1fdmFsdWVzIjpbeyJ0YXJnZXRHcm91cCI6MCwidmFsdWUiOiI2NDFlYmU3YTU4MWIzOTY0OWI3ZWJjNWZmMDYxMDE2MSJ9XX0sIm1faWdub3JlUGF0dGVybnMiOltdLCJtX3Jlc3BvbmRUb0Fzc2V0Q2hhbmdlIjpmYWxzZX0=
+    m_inputPoints: []
+    m_outputPoints:
+    - id: d19d377f-7707-4ea9-a532-576529fe02d6
+      label: +
+      parentId: 245bb4e8-68ce-492f-97a9-d5eaae51460c
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 132
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: Set Asset Address
+    m_id: e87cafa7-44e0-4c1f-b9c2-57fbdc351e41
+    m_x: 228
+    m_y: 444
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.AddressableAssetAddress, Unity.AssetGraph.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2lzQWRkcmVzc2FibGUiOnRydWUsIm1faXNBbGxMb3dlckNhc2UiOmZhbHNlLCJtX21hdGNoUGF0dGVybiI6IkFzc2V0cy9SZXMvIiwibV9hZGRyZXNzUGF0dGVybiI6IiJ9
+    m_inputPoints:
+    - id: 88d1a0e3-c48f-4021-a42f-463fb1aa115b
+      label: '-'
+      parentId: e87cafa7-44e0-4c1f-b9c2-57fbdc351e41
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: c9abd804-b83c-484b-ba7c-1189d6a320b9
+      label: +
+      parentId: e87cafa7-44e0-4c1f-b9c2-57fbdc351e41
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 144
+        y: 33.5
+        width: 10
+        height: 23
+  - m_name: Set Asset Group
+    m_id: f348ac52-d6fd-4022-8e6a-6484a84cdc12
+    m_x: 432
+    m_y: 444
+    m_nodeInstance:
+      m_className: UnityEngine.AssetGraph.AddressableAssetGroup, Unity.AssetGraph.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      m_instanceData: B64|eyJtX2dyb3VwR3VpZCI6ImY5ODg5ZDdlYTRhMTM4YzQ3ODIwNGJiODUwMWFmYjA4In0=
+    m_inputPoints:
+    - id: c1f7e6e4-92aa-49de-b68f-97adc195db2b
+      label: '-'
+      parentId: f348ac52-d6fd-4022-8e6a-6484a84cdc12
+      isInput: 1
+      buttonRect:
+        serializedVersion: 2
+        x: 0
+        y: 30.5
+        width: 21
+        height: 29
+    m_outputPoints:
+    - id: 041a0062-550b-4721-8750-11bc453dc2e9
+      label: +
+      parentId: f348ac52-d6fd-4022-8e6a-6484a84cdc12
+      isInput: 0
+      buttonRect:
+        serializedVersion: 2
+        x: 133
+        y: 33.5
         width: 10
         height: 23
   m_allConnections:
@@ -510,7 +590,19 @@ MonoBehaviour:
     m_toNodeId: 14b3ad3a-0e96-457c-b5c6-66eb3f98c34f
     m_toNodeConnectionPoiontId: 80b6c637-ac7d-4c41-9836-195a9b01339a
     m_label: +
-  m_lastModified: 132837002291730162
+  - m_id: 6ab564fd-909b-42fb-9837-9e6e3d4a47dd
+    m_fromNodeId: 245bb4e8-68ce-492f-97a9-d5eaae51460c
+    m_fromNodeConnectionPointId: d19d377f-7707-4ea9-a532-576529fe02d6
+    m_toNodeId: e87cafa7-44e0-4c1f-b9c2-57fbdc351e41
+    m_toNodeConnectionPoiontId: 88d1a0e3-c48f-4021-a42f-463fb1aa115b
+    m_label: +
+  - m_id: 1695c7cd-c0ac-4718-987e-217a5dfb836b
+    m_fromNodeId: e87cafa7-44e0-4c1f-b9c2-57fbdc351e41
+    m_fromNodeConnectionPointId: c9abd804-b83c-484b-ba7c-1189d6a320b9
+    m_toNodeId: f348ac52-d6fd-4022-8e6a-6484a84cdc12
+    m_toNodeConnectionPoiontId: c1f7e6e4-92aa-49de-b68f-97adc195db2b
+    m_label: +
+  m_lastModified: 132842925011131365
   m_version: 2
   m_graphDescription: 
   m_useAsAssetPostprocessor: 0
