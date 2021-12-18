@@ -11,40 +11,7 @@ export class ResManager extends Singleton<ResManager>{
     constructor(){
         super();
     }
-
-    // async loadFairyGUIPackage(packageName:string){
-
-    //     try{
-    //         let count = this._pkgMap.get(packageName);
-    //         if(count == null || count < 1){
-    //             //没有缓存，加载
-    //             let address = packageName+"_fui.bytes";
-    //             let task = NiceTS.ResourceManager.LoadFairyGUIPackage(address,packageName);
-    //             await $promise(task);
-                
-    //             this._pkgMap.set(packageName, 1);
-    //         }
-    //         else{
-    //             this._pkgMap.set(packageName, count+1);
-    //         }
-    //     }catch(ex){
-    //         Logger.error(`Load fairyGUI :${packageName} : ${ex}`)
-    //     }
-    // }
     
-    // public releaseFairyGUIPackage(packageName){
-
-    //     let count = this._pkgMap.get(packageName);
-    //     if(count!=null && count>1){
-    //         this._pkgMap.set(packageName, count-1);
-    //     }else{
-
-    //         Logger.log(`release fagui package:${packageName}`);
-    //         this._pkgMap.delete(packageName);
-    //         NiceTS.ResourceManager.ReleaseFGUIPackage(packageName);
-    //     }
-    // }
-
     async loadScene(sceneName:string, mode = UnityEngine.SceneManagement.LoadSceneMode.Single){
         try{
           
