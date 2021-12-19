@@ -16,7 +16,62 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: e7f65bf24f938a543bf4790e0582406d
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: cdf3f504be3eb8b47a4e42c1058f862b
+    m_Address: puerts/nodepatch.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: b683129609435564183ea56122c60b10
+    m_Address: puerts/promises.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: 51a6545e6e7df90478e6c6d311af2dc6
+    m_Address: puerts/polyfill.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: e4ad7cfb94678584fac9daf9871fb6e0
+    m_Address: puerts/timer.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: 61deb7bae18ff06499e322e5f51951f9
+    m_Address: puerts/modular.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: 508e64dd023e0af4c995fe16df0194c7
+    m_Address: bundle.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: a5323a9c9f39ec54da731a66adeb6793
+    m_Address: puerts/cjsload.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: 4f43b53750ffb66439d221eacb247c1b
+    m_Address: puerts/csharp.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: ad660281b806eb142be05ffcaf671153
+    m_Address: puerts/events.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: 966c1cf16d346b74880b4e87702210af
+    m_Address: puerts/init.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
+  - m_GUID: d94936faca6c4c64a876588f2f3a30b4
+    m_Address: puerts/log.js
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - JS
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3d8eb5ae83fa54847acef405014f58ac, type: 2}
   m_SchemaSet:

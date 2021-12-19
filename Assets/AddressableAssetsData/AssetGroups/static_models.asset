@@ -16,7 +16,31 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 2d3dcd9ca98a8134898a6913c4214788
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 0b44cca2a588c46499bbda1069c9f3ac
+    m_Address: Models/BattleField/Materials/Textures/floor.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9b2b05196d953ac4da881cf8f61d8903
+    m_Address: Models/BattleField/Prefab/CubeWhite.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 10ac42b86b1caf143979779efade86e5
+    m_Address: Models/BattleField/Prefab/CubeBlue.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0a8d29a99925d1248833ba1608519cb3
+    m_Address: Models/BattleField/Materials/white.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 73391896cd0711a4c8fd7bdea6cf09e8
+    m_Address: Models/BattleField/Materials/floor.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 799368a773528864f9c6551772368ed4
+    m_Address: Models/BattleField/Materials/blue.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3d8eb5ae83fa54847acef405014f58ac, type: 2}
   m_SchemaSet:

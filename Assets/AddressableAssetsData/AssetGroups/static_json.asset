@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: f9889d7ea4a138c478204bb8501afb08
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 117361e2f43b4cf479d7bccaff4557e3
+    m_Address: Json/table_gen.json
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3d8eb5ae83fa54847acef405014f58ac, type: 2}
   m_SchemaSet:
