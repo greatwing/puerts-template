@@ -4,9 +4,8 @@ import { SceneDef } from '../framework/scene/SceneDef';
 import { S } from '../global/GameConfig';
 import { Logger } from '../framework/logger/Logger';
 import { LoadTable } from '../framework/table/table';
-import { tab } from '../framework/table/table_gen';
 
-class GameMain{
+export default class GameMain{
 
     constructor() {
         JsManager.Instance.JsOnApplicationQuit = () => this.onApplicationQuit();
@@ -43,6 +42,4 @@ class GameMain{
         Logger.log("Game onDispose in JS....");
     }
 }
-
-new GameMain().start();
 

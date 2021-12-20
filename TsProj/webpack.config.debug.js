@@ -7,7 +7,7 @@ const externals = {
 };
 
 module.exports = {
-	entry: './src/index.js',
+	entry: './src/index.ts',
 	devtool: 'inline-source-map',
 	mode: 'development',
 	module: {
