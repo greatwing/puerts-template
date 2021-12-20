@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using UnityEngine;
 
-namespace NiceTS
+namespace Framework
 {
 	internal class LogProviderFile : ILogProvider
 	{

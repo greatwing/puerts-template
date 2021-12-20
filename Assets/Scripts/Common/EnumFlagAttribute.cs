@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NiceTS
+namespace Framework
 {
 	public class EnumFlagAttribute : PropertyAttribute
 	{

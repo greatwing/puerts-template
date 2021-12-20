@@ -1,4 +1,4 @@
-namespace NiceTS
+namespace Framework
 {
 	public enum LogLevel
 	{

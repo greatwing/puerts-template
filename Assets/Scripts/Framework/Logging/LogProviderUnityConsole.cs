@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NiceTS
+namespace Framework
 {
 	internal class LogProviderUnityConsole : ILogProvider
 	{

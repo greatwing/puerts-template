@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace NiceTS
+namespace Framework
 {
     public class GlobalMonoBehavior:MonoSingleton<GlobalMonoBehavior>
 	{

@@ -30494,19 +30494,6 @@ declare module 'csharp' {
     }
     
         
-        class SlackLogMessage extends System.Object{ 
-            
-            public channel: string;
-            
-            public text: string;
-            
-            public username: string;
-            
-            public constructor();
-            
-        }
-        
-        
         class Extensions extends System.Object{ 
             
             public static IsNull($o: UnityEngine.Object):boolean;
@@ -30565,6 +30552,19 @@ declare module 'csharp' {
             public static SafeRenameFile($sourceFileName: string, $destFileName: string):boolean;
             
             public static SafeCopyFile($fromFile: string, $toFile: string):boolean;
+            
+            public constructor();
+            
+        }
+        
+        
+        class SlackLogMessage extends System.Object{ 
+            
+            public channel: string;
+            
+            public text: string;
+            
+            public username: string;
             
             public constructor();
             
@@ -30686,7 +30686,7 @@ declare module 'csharp' {
         
         
     }
-    namespace NiceTS {
+    namespace Framework {
         
         class EnumFlagAttribute extends UnityEngine.PropertyAttribute implements System.Runtime.InteropServices._Attribute{ 
             
@@ -30695,6 +30695,26 @@ declare module 'csharp' {
             public constructor();
             
             public constructor($name: string);
+            
+        }
+        
+        
+        class AddressableConfig extends System.Object{ 
+            
+            public static JSLable: string;
+            
+            public constructor();
+            
+        }
+        
+        
+        class GlobalMonoBehavior extends MonoSingleton$1<Framework.GlobalMonoBehavior>{ 
+            
+            public AddUpdate($e: Framework.GlobalMonoBehavior.OnUpdate):Framework.GlobalMonoBehavior.OnUpdate;
+            
+            public RemoveUpdate($e: Framework.GlobalMonoBehavior.OnUpdate):void;
+            
+            public constructor();
             
         }
         
@@ -30711,7 +30731,7 @@ declare module 'csharp' {
             
             CloseLog():void;
             
-            GetProvider($type: System.Type):NiceTS.ILogProvider;
+            GetProvider($type: System.Type):Framework.ILogProvider;
             
         }
         
@@ -30721,40 +30741,40 @@ declare module 'csharp' {
             public static get LogPath(): string;
             
             
-            public static get LogLevel(): NiceTS.LogLevel;
-            public static set LogLevel(value: NiceTS.LogLevel);
+            public static get LogLevel(): Framework.LogLevel;
+            public static set LogLevel(value: Framework.LogLevel);
             
-            public static SetLogProvider($logProvider: NiceTS.ILogProvider):void;
+            public static SetLogProvider($logProvider: Framework.ILogProvider):void;
             
-            public static EnableLogGroup($group: NiceTS.LogGroups):void;
+            public static EnableLogGroup($group: Framework.LogGroups):void;
             
-            public static DisableLogGroup($group: NiceTS.LogGroups):void;
+            public static DisableLogGroup($group: Framework.LogGroups):void;
             
             public static EnableAllLogGroups():void;
             
-            public static Verbose($group: NiceTS.LogGroups, $message: string):void;
+            public static Verbose($group: Framework.LogGroups, $message: string):void;
             
-            public static Verbose($group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static Verbose($group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
-            public static Debug($group: NiceTS.LogGroups, $message: string):void;
+            public static Debug($group: Framework.LogGroups, $message: string):void;
             
-            public static Debug($group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static Debug($group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
-            public static Warning($group: NiceTS.LogGroups, $message: string):void;
+            public static Warning($group: Framework.LogGroups, $message: string):void;
             
-            public static Warning($group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static Warning($group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
-            public static Error($group: NiceTS.LogGroups, $message: string):void;
+            public static Error($group: Framework.LogGroups, $message: string):void;
             
-            public static Error($group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static Error($group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
-            public static Assert($exprTrue: boolean, $group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static Assert($exprTrue: boolean, $group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
-            public static AssertDev($exprTrue: boolean, $group: NiceTS.LogGroups, $format: any, ...paramList: any[]):void;
+            public static AssertDev($exprTrue: boolean, $group: Framework.LogGroups, $format: any, ...paramList: any[]):void;
             
             public static Shutdown():void;
             
-            public static LoadLogSettingsFromLogSettingsAsset($logSettings: NiceTS.LogSettings):boolean;
+            public static LoadLogSettingsFromLogSettingsAsset($logSettings: Framework.LogSettings):boolean;
             
         }
         
@@ -30767,9 +30787,9 @@ declare module 'csharp' {
         
         class LogSettings extends UnityEngine.ScriptableObject{ 
             
-            public LogGroups: NiceTS.LogGroups;
+            public LogGroups: Framework.LogGroups;
             
-            public LogLevel: NiceTS.LogLevel;
+            public LogLevel: Framework.LogLevel;
             
             public LogToFile: boolean;
             
@@ -30787,31 +30807,9 @@ declare module 'csharp' {
         }
         
         
-        class AddressableConfig extends System.Object{ 
-            
-            public static JSLable: string;
-            
-            public constructor();
-            
-        }
-        
-        
-        class GlobalMonoBehavior extends MonoSingleton$1<NiceTS.GlobalMonoBehavior>{ 
-            
-            public AddUpdate($e: NiceTS.GlobalMonoBehavior.OnUpdate):NiceTS.GlobalMonoBehavior.OnUpdate;
-            
-            public RemoveUpdate($e: NiceTS.GlobalMonoBehavior.OnUpdate):void;
-            
-            public constructor();
-            
-        }
-        
-        
         class ResourceManager extends System.Object{ 
             
             public static OnFBLoadedHandle: System.Action$2<string, System.Array$1<number>>;
-            
-            public static init():void;
             
             public static PreloadJS($jsLabel: string):System.Threading.Tasks.Task$1<boolean>;
             
@@ -30839,7 +30837,7 @@ declare module 'csharp' {
         
         
     }
-    namespace NiceTS.GlobalMonoBehavior {
+    namespace Framework.GlobalMonoBehavior {
         
         interface OnUpdate { () : void; } 
         var OnUpdate: {new (func: () => void): OnUpdate;}

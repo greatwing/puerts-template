@@ -1,5 +1,5 @@
 using System;
-namespace NiceTS
+namespace Framework
 {
 	public interface ILogProvider
 	{

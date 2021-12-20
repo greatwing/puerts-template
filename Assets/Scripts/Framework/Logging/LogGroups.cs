@@ -1,6 +1,6 @@
 using System;
 
-namespace NiceTS
+namespace Framework
 {
 	[Flags]
 	public enum LogGroups

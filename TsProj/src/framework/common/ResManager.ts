@@ -1,7 +1,7 @@
 
 import { Singleton } from './Singleton';
 import { $promise } from 'puerts';
-import {NiceTS, UnityEngine} from 'csharp';
+import {Framework, UnityEngine} from 'csharp';
 import { Logger } from '../logger/Logger';
 
 export class ResManager extends Singleton<ResManager>{
@@ -15,7 +15,7 @@ export class ResManager extends Singleton<ResManager>{
     async loadScene(sceneName:string, mode = UnityEngine.SceneManagement.LoadSceneMode.Single){
         try{
           
-            let task = NiceTS.ResourceManager.LoadScene(sceneName, mode,(progress:Number)=>{
+            let task = Framework.ResourceManager.LoadScene(sceneName, mode,(progress:Number)=>{
                 Logger.log("load scene: "+progress)
             });
 
@@ -33,7 +33,7 @@ export class ResManager extends Singleton<ResManager>{
 
     async unloadScene(sceneInstance:UnityEngine.ResourceManagement.ResourceProviders.SceneInstance){
         try{
-            let task= NiceTS.ResourceManager.UnloadScene(sceneInstance)
+            let task= Framework.ResourceManager.UnloadScene(sceneInstance)
             let go = await $promise(task);
             return go;
         }catch(ex){
@@ -46,13 +46,13 @@ export class ResManager extends Singleton<ResManager>{
 
     public unloadSceneByName(sceneName:string){
 
-        NiceTS.ResourceManager.UnloadSceneByName(sceneName);
+        Framework.ResourceManager.UnloadSceneByName(sceneName);
     }
 
     async loadPrefab(address:string){
 
         try{
-            let task= NiceTS.ResourceManager.LoadPrefab(address);
+            let task= Framework.ResourceManager.LoadPrefab(address);
             let go = await $promise(task);
             return go;
         }catch(ex){
@@ -67,7 +67,7 @@ export class ResManager extends Singleton<ResManager>{
     async loadTextAsset(address:string){
 
         try{
-            let task = NiceTS.ResourceManager.LoadTextAsset(address);
+            let task = Framework.ResourceManager.LoadTextAsset(address);
             let go = await $promise(task);
             return go;
         }catch(ex){
@@ -81,7 +81,7 @@ export class ResManager extends Singleton<ResManager>{
     async loadTextBytes(address:string){
 
         try{
-            let task = NiceTS.ResourceManager.LoadTextBytes(address);
+            let task = Framework.ResourceManager.LoadTextBytes(address);
             let bytes = await $promise(task);
             return bytes;
         }catch(ex){
@@ -92,7 +92,7 @@ export class ResManager extends Singleton<ResManager>{
     async loadSprite(address:string){
 
         try{
-            let task = NiceTS.ResourceManager.LoadSprite(address);
+            let task = Framework.ResourceManager.LoadSprite(address);
             let go = await $promise(task);
             return go;
 
@@ -106,7 +106,7 @@ export class ResManager extends Singleton<ResManager>{
 
     public releaseAddressGO(go:any){
 
-        NiceTS.ResourceManager.ReleaseAddressGO(go);
+        Framework.ResourceManager.ReleaseAddressGO(go);
     }
 
 

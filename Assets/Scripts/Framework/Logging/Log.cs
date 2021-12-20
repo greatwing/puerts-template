@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace NiceTS
+namespace Framework
 {
 	public static class Log
 	{

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NiceTS
+namespace Framework
 {
 	internal class LogProviderMultiple : ILogProvider
 	{
